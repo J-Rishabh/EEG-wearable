@@ -1,0 +1,8 @@
+board:
+  name: eeg_wearable
+  vendor: rishabh
+  socs:
+  - name: nrf54l15
+    variants:
+    - name: xip
+      cpucluster: cpuflpr

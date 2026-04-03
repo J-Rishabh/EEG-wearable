@@ -1,0 +1,10 @@
+identifier: eeg_wearable/nrf54l15/cpuapp
+name: Behind-the-ear EEG wearable, nRF54L15
+vendor: rishabh
+arch: arm
+toolchain:
+  - zephyr
+sysbuild: true
+ram: 188
+flash: 1428
+supported: []

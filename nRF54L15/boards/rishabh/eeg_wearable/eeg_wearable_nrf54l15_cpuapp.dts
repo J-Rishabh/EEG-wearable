@@ -1,0 +1,181 @@
+/dts-v1/;
+#include <nordic/nrf54l15_cpuapp.dtsi>
+#include <dt-bindings/regulator/nrf5x.h>
+#include "eeg_wearable-pinctrl.dtsi"
+
+/ {
+    model = "Behind-the-ear EEG wearable, nRF54L15";
+    compatible = "rishabh,eeg-wearable-cpuapp";
+
+    chosen {
+        zephyr,code-partition = &slot0_partition;
+        zephyr,sram = &cpuapp_sram;
+        zephyr,flash = &cpuapp_rram;
+        zephyr,flash-controller = &rram_controller;
+        zephyr,uart-mcumgr = &uart20;
+    };
+
+    leds {
+        compatible = "gpio-leds";
+        led0: led_0 {
+            gpios = <&gpio1 9 GPIO_ACTIVE_HIGH>;
+            label = "Status LED";
+        };
+    };
+
+    /* IMU interrupt lines */
+    imu_interrupts: imu-interrupts {
+        compatible = "gpio-keys";
+        imu_int1: imu-int1 {
+            gpios = <&gpio1 7 (GPIO_PULL_DOWN | GPIO_ACTIVE_HIGH)>;
+            label = "IMU INT1";
+        };
+        imu_int2: imu-int2 {
+            gpios = <&gpio1 8 (GPIO_PULL_DOWN | GPIO_ACTIVE_HIGH)>;
+            label = "IMU INT2";
+        };
+    };
+
+    /* PMIC status signals */
+    pmic_signals: pmic-signals {
+        compatible = "gpio-keys";
+        pmic_err: pmic-err {
+            gpios = <&gpio0 2 (GPIO_PULL_UP | GPIO_ACTIVE_LOW)>;
+            label = "PMIC Error";
+        };
+        pmic_chg: pmic-chg {
+            gpios = <&gpio0 3 (GPIO_PULL_UP | GPIO_ACTIVE_LOW)>;
+            label = "PMIC Charging";
+        };
+    };
+
+    aliases {
+        led0     = &led0;
+        imu-int1 = &imu_int1;
+        imu-int2 = &imu_int2;
+        pmic-err = &pmic_err;
+        pmic-chg = &pmic_chg;
+    };
+};
+
+&grtc {
+    owned-channels = <0 1 2 3 4 5 6 7 8 9 10 11>;
+    /* Channels 7-11 reserved for Zero Latency IRQs, 3-4 for FLPR */
+    child-owned-channels = <3 4 7 8 9 10 11>;
+    status = "okay";
+};
+
+&clock {
+    status = "okay";
+};
+
+&lfxo {
+    load-capacitors = "internal";
+    load-capacitance-femtofarad = <17000>;
+};
+
+&hfxo {
+    load-capacitors = "internal";
+    load-capacitance-femtofarad = <15750>;
+};
+
+&regulators {
+    status = "okay";
+};
+
+&vregmain {
+    status = "okay";
+    regulator-initial-mode = <NRF5X_REG_MODE_DCDC>;
+};
+
+&adc {
+    /* Used for VBAT sense on P1.13 */
+    status = "okay";
+};
+
+&cpuapp_sram {
+    status = "okay";
+};
+
+/* --- GPIO banks --- */
+
+&gpio0 {
+    /* P0.00 ADS1299 START, P0.01 ADS1299 DRDY,
+       P0.02 PMIC_ERR,      P0.03 PMIC_CHG      */
+    status = "okay";
+};
+
+&gpio1 {
+    /* P1.02 IMU SDA,  P1.03 IMU SCL,
+       P1.05 UART TX,  P1.06 UART RX,
+       P1.07 IMU INT1, P1.08 IMU INT2,
+       P1.09 LED,      P1.13 VBAT sense (ADC)   */
+    status = "okay";
+};
+
+&gpio2 {
+    /* P2.03 ADS1299 PWDN,  P2.04 ADS1299 RESET,
+       P2.06 SPI SCK,       P2.08 SPI MOSI,
+       P2.09 SPI MISO,      P2.10 ADS1299 CS     */
+    status = "okay";
+};
+
+/* --- GPIOTE --- */
+
+&gpiote20 {
+    /* handles gpio1 and gpio2 interrupts */
+    status = "okay";
+};
+
+&gpiote30 {
+    /* handles gpio0 interrupts (DRDY, PMIC signals) */
+    status = "okay";
+};
+
+/* --- ADS1299 via spi00 (fast domain) --- */
+
+&spi00 {
+    status = "okay";
+    cs-gpios = <&gpio2 10 GPIO_ACTIVE_LOW>;
+    pinctrl-0 = <&spi00_default>;
+    pinctrl-1 = <&spi00_sleep>;
+    pinctrl-names = "default", "sleep";
+
+    ads1299: ads1299@0 {
+        compatible = "rishabh,ads1299";
+        reg = <0>;
+        spi-max-frequency = <4000000>;
+        drdy-gpios  = <&gpio0 1 GPIO_ACTIVE_LOW>;
+        start-gpios = <&gpio0 0 GPIO_ACTIVE_HIGH>;
+        pwdn-gpios  = <&gpio2 3 GPIO_ACTIVE_LOW>;
+        reset-gpios = <&gpio2 4 GPIO_ACTIVE_LOW>;
+    };
+};
+
+/* --- IMU via i2c22 --- */
+
+&i2c22 {
+    status = "okay";
+    pinctrl-0 = <&i2c22_default>;
+    pinctrl-1 = <&i2c22_sleep>;
+    pinctrl-names = "default", "sleep";
+    clock-frequency = <I2C_BITRATE_FAST>;  /* 400 kHz */
+
+    /* TODO: replace compatible and reg with your actual IMU */
+    imu: imu@68 {
+        compatible = "vnd,i2c-device";
+        reg = <0x68>;
+    };
+};
+
+/* --- Debug UART via uart20 --- */
+
+&uart20 {
+    status = "okay";
+    pinctrl-0 = <&uart20_default>;
+    pinctrl-1 = <&uart20_sleep>;
+    pinctrl-names = "default", "sleep";
+    current-speed = <115200>;
+};
+
+#include <nordic/nrf54l15_partition.dtsi>
