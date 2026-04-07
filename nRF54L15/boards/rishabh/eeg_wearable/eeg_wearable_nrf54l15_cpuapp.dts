@@ -1,6 +1,7 @@
 /dts-v1/;
 #include <nordic/nrf54l15_cpuapp.dtsi>
 #include <dt-bindings/regulator/nrf5x.h>
+#include <dt-bindings/adc/nrf-saadc.h>
 #include "eeg_wearable-pinctrl.dtsi"
 
 / {
@@ -34,6 +35,18 @@
             gpios = <&gpio1 8 (GPIO_PULL_DOWN | GPIO_ACTIVE_HIGH)>;
             label = "IMU INT2";
         };
+    };
+
+    /* VBAT resistor divider — R_top=2MΩ, R_bot=1MΩ (lower leg to GND).
+     * compatible = "voltage-divider" gives the DT compiler a binding that
+     * declares io-channels as phandle-array, which ADC_DT_SPEC_GET requires.
+     * The voltage-divider driver is NOT compiled (CONFIG_VOLTAGE_DIVIDER not set);
+     * the node is accessed directly via DT_NODELABEL in vbat.c. */
+    vbat_sense: vbat-sense {
+        compatible = "voltage-divider";
+        io-channels = <&adc 0>;
+        output-ohms = <1000000>;   /* R_bot = 1 MΩ (lower leg, measured node) */
+        full-ohms   = <3000000>;   /* R_top + R_bot = 3 MΩ (full path) */
     };
 
     /* PMIC status signals */
@@ -91,6 +104,22 @@
 &adc {
     /* Used for VBAT sense on P1.13 */
     status = "okay";
+    #address-cells = <1>;
+    #size-cells = <0>;
+
+    /* P1.13 = AIN6 on nRF54L15 (AIN0-7 map to P1.04/05/06/07/11/12/13/14).
+     * Gain 1/4, internal ref 0.6 V → full-scale 2.4 V.
+     * V_adc_max = 4.2 V_bat / 3 (divider) = 1.4 V → well within range.
+     * 8× oversampling reduces noise on the resistor divider mid-node. */
+    vbat_ch: channel@0 {
+        reg = <0>;
+        zephyr,gain = "ADC_GAIN_1_4";
+        zephyr,reference = "ADC_REF_INTERNAL";
+        zephyr,acquisition-time = <ADC_ACQ_TIME_DEFAULT>;
+        zephyr,input-positive = <NRF_SAADC_AIN6>;
+        zephyr,resolution = <12>;
+        zephyr,oversampling = <8>;
+    };
 };
 
 &cpuapp_sram {
@@ -159,12 +188,19 @@
     pinctrl-0 = <&i2c22_default>;
     pinctrl-1 = <&i2c22_sleep>;
     pinctrl-names = "default", "sleep";
-    clock-frequency = <I2C_BITRATE_FAST>;  /* 400 kHz */
+    clock-frequency = <I2C_BITRATE_STANDARD>;  /* 100 kHz — reduced for diagnostics */
 
-    /* TODO: replace compatible and reg with your actual IMU */
-    imu: imu@68 {
-        compatible = "vnd,i2c-device";
-        reg = <0x68>;
+    /* LIS2DW12 accelerometer + temperature sensor.
+     * I2C address 0x18 (ADDR pin pulled low per schematic).
+     * irq-gpios left out for now — INT1/INT2 are still accessible as gpio-keys
+     * via the imu_interrupts node above; wire them in here when you want
+     * data-ready or wakeup interrupts driven by the sensor driver. */
+    lis2dw12: lis2dw12@18 {
+        compatible = "st,lis2dw12";
+        reg = <0x18>;
+        odr = <50>;
+        range = <2>;
+        power-mode = <0>;
     };
 };
 

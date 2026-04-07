@@ -1,0 +1,2 @@
+C:\Users\risha\Documents\Princeton\SeniorThesis\EEG-wearable\python\recordings\eeg_20260406_212736.edf
+all leads grounded data ^

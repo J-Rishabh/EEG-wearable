@@ -1,0 +1,28 @@
+description: TI ADS1299 8-channel 24-bit EEG AFE
+
+compatible: "rishabh,ads1299"
+
+# Include standard SPI device properties (reg, spi-max-frequency, duplex,
+# frame-format, spi-cpol, spi-cpha, etc.) so SPI_DT_SPEC_GET() works.
+include: [spi-device.yaml]
+
+properties:
+  drdy-gpios:
+    type: phandle-array
+    required: true
+    description: DRDY interrupt pin — active low, driven by ADS1299
+
+  start-gpios:
+    type: phandle-array
+    required: true
+    description: START pin — active high, assert to begin continuous conversions
+
+  pwdn-gpios:
+    type: phandle-array
+    required: true
+    description: PWDN pin — active low, assert to power down ADS1299
+
+  reset-gpios:
+    type: phandle-array
+    required: true
+    description: RESET pin — active low, pulse low to reset ADS1299

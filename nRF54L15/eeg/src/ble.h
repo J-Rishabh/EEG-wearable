@@ -3,6 +3,7 @@
 
 #include <stdbool.h>
 #include <stdint.h>
+#include "imu.h"
 
 /**
  * Initialize BLE stack and start advertising as "EEG Wearable".
@@ -23,5 +24,15 @@ bool ble_eeg_subscribed(void);
  * @return 0 on success, negative errno on error.
  */
 int  ble_notify_eeg(const uint8_t *data, uint16_t len);
+
+/** True if the central has subscribed to IMU data notifications. */
+bool ble_imu_subscribed(void);
+
+/**
+ * Send one IMU sample via the IMU Data NOTIFY characteristic.
+ * Packet: 8 bytes little-endian (x_mg, y_mg, z_mg, temp_cdeg as int16).
+ * @return 0 on success, negative errno on error.
+ */
+int  ble_notify_imu(const struct imu_sample *sample);
 
 #endif /* BLE_H */
