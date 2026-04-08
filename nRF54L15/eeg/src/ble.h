@@ -35,4 +35,22 @@ bool ble_imu_subscribed(void);
  */
 int  ble_notify_imu(const struct imu_sample *sample);
 
+/** True if the central has subscribed to Device Status notifications. */
+bool ble_status_subscribed(void);
+
+/**
+ * Send device status via the Device Status NOTIFY characteristic.
+ * Packet format (4 bytes):
+ *   [0:1]  uint16_t LE  battery voltage in mV  (0 if VBAT unavailable)
+ *   [2]    uint8_t      battery state-of-charge percent  0–100
+ *   [3]    uint8_t      PMIC flags:  bit 0 = charging,  bit 1 = error
+ *
+ * @param vbat_mv   Battery voltage in millivolts.
+ * @param pct       State-of-charge 0–100.
+ * @param charging  True when nPM1100 CHG pin is asserted (actively charging).
+ * @param error     True when nPM1100 ERR pin is asserted (fault condition).
+ * @return 0 on success, negative errno on error.
+ */
+int  ble_notify_status(uint16_t vbat_mv, uint8_t pct, bool charging, bool error);
+
 #endif /* BLE_H */

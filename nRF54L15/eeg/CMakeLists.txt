@@ -11,4 +11,5 @@ target_sources(app PRIVATE
   src/imu.c
   src/vbat.c
   src/eeg.c
+  src/pmic.c
 )

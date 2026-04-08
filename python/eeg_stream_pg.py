@@ -63,8 +63,9 @@ TEST_MODE   = False
 DEVICE_NAME = "EEG Wearable"
 FS          = 250
 
-EEG_CHAR_UUID  = "12340002-1234-1234-1234-123456789abc"
-CTRL_CHAR_UUID = "12340004-1234-1234-1234-123456789abc"
+EEG_CHAR_UUID    = "12340002-1234-1234-1234-123456789abc"
+CTRL_CHAR_UUID   = "12340004-1234-1234-1234-123456789abc"
+STATUS_CHAR_UUID = "12340005-1234-1234-1234-123456789abc"
 
 MAX_DEQUE     = 15_000        # 60 s at 250 Hz
 WINDOW_SEC    = [5, 10, 30, 60]
@@ -161,6 +162,11 @@ class SharedState:
         self.ble_client   = None
         self.ble_loop     = None
         self.hw_test_mode = False   # True = ADS1299 internal square-wave test
+        # PMIC / battery status (updated every ~5 s from firmware)
+        self.vbat_mv      = 0
+        self.vbat_pct     = 0
+        self.pmic_charging = False
+        self.pmic_error    = False
 
     @property
     def window_samples(self) -> int:
@@ -266,6 +272,20 @@ def _parse_198(data: bytes):
     return idx, gains, uv, rails
 
 
+def _status_notify(sender, data: bytes):
+    """Parse the 4-byte Device Status characteristic packet from firmware."""
+    if len(data) < 4:
+        return
+    vbat_mv  = struct.unpack_from("<H", data, 0)[0]
+    pct      = data[2]
+    flags    = data[3]
+    with STATE.lock:
+        STATE.vbat_mv       = vbat_mv
+        STATE.vbat_pct      = pct
+        STATE.pmic_charging = bool(flags & 0x01)
+        STATE.pmic_error    = bool(flags & 0x02)
+
+
 _last_idx          = [-1]
 _pkt_count         = [0]
 _dbg_enabled       = [True]   # set False once data is confirmed flowing
@@ -295,11 +315,10 @@ def _ble_notify(sender, data: bytes):
             print(f"[BLE] Gap: expected idx={expected}, got {idx} "
                   f"(~{dropped} samples dropped)")
     _last_idx[0] = idx
-    rows = [uv[s] for s in range(8)]
     with STATE.lock:
-        STATE.pending.extend(rows)
+        STATE.pending.append(uv)           # push entire (8,8) batch — one object vs 8
         STATE.rails |= rails
-        if STATE.recording: STATE.rec_buf.extend(rows)
+        if STATE.recording: STATE.rec_buf.extend(uv)  # uv is (8,8); extend yields rows
 
 
 async def _ble_run():
@@ -349,6 +368,12 @@ async def _ble_run():
                             break
                         await client.start_notify(EEG_CHAR_UUID, _ble_notify)
                         subscribed = True
+                        # Best-effort subscribe to status — firmware may be older
+                        try:
+                            await client.start_notify(STATUS_CHAR_UUID, _status_notify)
+                            print("[BLE] Status characteristic subscribed")
+                        except Exception as se:
+                            print(f"[BLE] Status char not available (old firmware?): {se}")
                         break
                     except Exception as e:
                         print(f"[BLE] start_notify {sub_attempt + 1}/4 failed: {e}")
@@ -389,6 +414,10 @@ async def _ble_run():
 
                 try:
                     await client.stop_notify(EEG_CHAR_UUID)
+                except Exception:
+                    pass
+                try:
+                    await client.stop_notify(STATUS_CHAR_UUID)
                 except Exception:
                     pass
 
@@ -515,6 +544,20 @@ def _lbl(text: str, fg: str = "#666666") -> QtWidgets.QLabel:
     return lb
 
 
+def _fmt_scale(sc_uv: float) -> str:
+    """Format a ±scale value for the y-axis tick with 4 significant figures.
+    Switches to mV once the value reaches 1000 µV.
+    Examples: 100.0 µV, 1.240 mV, 12.40 mV, 124.0 mV
+    """
+    if sc_uv >= 1000.0:
+        mv  = sc_uv / 1000.0
+        dec = max(0, 3 - max(0, int(np.log10(mv))))
+        return f"{mv:.{dec}f} mV"
+    else:
+        dec = max(0, 3 - max(0, int(np.log10(max(sc_uv, 1.0)))))
+        return f"{sc_uv:.{dec}f} \u03bcV"
+
+
 # ──────────────────────────────────────────────────────────────────────────────
 # CUSTOM SIGNAL-PLOT WIDGET  (scroll-wheel row zoom)
 # ──────────────────────────────────────────────────────────────────────────────
@@ -543,6 +586,39 @@ class _SigPlotWidget(pg.PlotWidget):
 
 
 # ──────────────────────────────────────────────────────────────────────────────
+# COLORED AXIS ITEM  (per-row label colors matching waveform)
+# ──────────────────────────────────────────────────────────────────────────────
+
+class _ColoredAxisItem(pg.AxisItem):
+    """Left axis that colors each tick label to match its waveform row color."""
+
+    def drawPicture(self, p, axisSpec, tickSpecs, textSpecs):
+        p.setRenderHint(p.Antialiasing, False)
+        p.setRenderHint(p.TextAntialiasing, True)
+
+        # axis spine
+        pen, p1, p2 = axisSpec
+        p.setPen(pen)
+        p.drawLine(p1, p2)
+        p.translate(0.5, 0)   # pixel-alignment (matches pyqtgraph default)
+
+        # tick marks
+        for t_pen, t_p1, t_p2 in tickSpecs:
+            p.setPen(t_pen)
+            p.drawLine(t_p1, t_p2)
+
+        # tick labels — color per row
+        if self.style.get('tickFont') is not None:
+            p.setFont(self.style['tickFont'])
+        for rect, flags, text in textSpecs:
+            col = next(
+                (ROW_COLORS[r] for r in ROW_COLORS if text.startswith(r)),
+                "#aaaaaa")
+            p.setPen(pg.mkPen(col))
+            p.drawText(rect, flags, text)
+
+
+# ──────────────────────────────────────────────────────────────────────────────
 # MAIN WINDOW
 # ──────────────────────────────────────────────────────────────────────────────
 
@@ -565,30 +641,89 @@ class EEGWindow(QtWidgets.QMainWindow):
         FFT_EVERY = 6
         HR_EVERY  = 25
 
+        # Pre-computed mappings — avoid repeated dict/index lookups inside hot loop
+        _ROW_RAIL_CH = {
+            "EOG": [0], "ECG": [1], "EMG": [1, 2],
+            "EEG occipital": [3, 5], "EEG central": [4], "EEG frontal": [5],
+        }
+        _ROW_TO_CH = {row: DERIVED_LABELS.index(row) for row in DERIVED_LABELS}
+
+        # Style-change caches — skip expensive Qt calls when value unchanged
+        _last_pen_col = {}   # curve_item_id → last color string
+        _last_vis     = {}   # curve_item_id → last bool
+        _last_bias_col  = [None]
+        _last_bat_state = [None]  # last (bar_color, status_text) tuple
+
         def _update():
             _t0 = time.perf_counter()
             if _last_t[0]:
                 _pt["interval"] += _t0 - _last_t[0]
             _last_t[0] = _t0
 
-            # 1. Drain
+            # 0. Battery / PMIC widget — runs every frame, independent of EEG data
+            with STATE.lock:
+                _pct_now      = STATE.vbat_pct
+                _mv_now       = STATE.vbat_mv
+                _charging_now = STATE.pmic_charging
+                _err_now      = STATE.pmic_error
+            if _mv_now > 0:
+                self._bat_bar.setValue(_pct_now)
+                self._lbl_bat_pct.setText(f"{_pct_now}%")
+                self._lbl_bat_mv.setText(f"{_mv_now/1000:.2f}V")
+            if _err_now:
+                _bc, _sc, _st = "#ef5350", "#ef5350", "FAULT"
+            elif _charging_now:
+                _bc, _sc, _st = "#4fc3f7", "#4fc3f7", "CHG"
+            elif _mv_now >= 4100:
+                _bc, _sc, _st = "#4caf50", "#4caf50", "FULL"
+            elif _pct_now < 20 and _mv_now > 0:
+                _bc, _sc, _st = "#ef5350", "#ef5350", "LOW"
+            elif _pct_now < 40 and _mv_now > 0:
+                _bc, _sc, _st = "#ffa726", "#ffa726", "OK"
+            elif _mv_now > 0:
+                _bc, _sc, _st = "#4caf50", "#4caf50", "OK"
+            else:
+                _bc, _sc, _st = "#444444", "#555555", "—"
+            if _mv_now > 0:
+                self._bat_bar.setStyleSheet(f"""
+                    QProgressBar {{
+                        background: #2a2a2a; border: none; border-radius: 3px;
+                    }}
+                    QProgressBar::chunk {{
+                        background: {_bc}; border-radius: 3px;
+                    }}
+                """)
+                self._lbl_bat_pct.setStyleSheet(
+                    f"color:{_bc};font-size:8pt;font-family:monospace;font-weight:bold;")
+            self._lbl_bat_status.setText(_st)
+            self._lbl_bat_status.setStyleSheet(
+                f"color:{_sc};font-size:7pt;font-family:monospace;")
+
+            # 1. Drain — pending holds (8,8) arrays (one per BLE packet)
             with STATE.lock:
                 if not STATE.pending:
                     return
-                batch = list(STATE.pending)
+                batches = list(STATE.pending)
                 STATE.pending.clear()
             _t1 = time.perf_counter()
 
+            batch_np = np.vstack(batches)   # (N,8) — faster than np.array on list of rows
             if _pt["n"] < 3:
-                print(f"[DBG] _update draining {len(batch)} samples")
-
-            batch_np = np.array(batch, dtype=np.float64)
-            if _pt["n"] < 3:
-                print(f"[DBG] batch_np shape={batch_np.shape}")
+                print(f"[DBG] _update draining {batch_np.shape[0]} samples "
+                      f"({len(batches)} pkts)  shape={batch_np.shape}")
 
             # 2. Derive + filter (skip filter in HW test mode — keep square edges sharp)
-            derived_raw  = derive_signals(batch_np)
-            derived_filt = derived_raw if STATE.hw_test_mode else proc.process(derived_raw)
+            derived_raw = derive_signals(batch_np)
+            if STATE.hw_test_mode:
+                derived_filt = derived_raw.copy()
+                # EMG (CH2−CH3) and EEG occipital (CH4−CH6) are bipolar channels.
+                # In test mode all channels get the same square wave, so the bipolar
+                # difference cancels to noise.  Substitute single channels so the
+                # waveform is visible.
+                derived_filt[:, DERIVED_LABELS.index("EMG")]          = batch_np[:, 1]
+                derived_filt[:, DERIVED_LABELS.index("EEG occipital")] = batch_np[:, 3]
+            else:
+                derived_filt = proc.process(derived_raw)
             bias_new = batch_np[:, 7]   # CH8 = BIASOUT_DRN
             with STATE.lock:
                 STATE.filt_buf.push(derived_filt)
@@ -610,7 +745,7 @@ class EEGWindow(QtWidgets.QMainWindow):
             if n_disp == 0:
                 return
 
-            step = max(1, n_disp // 1200)
+            step = max(1, n_disp // 2500)   # 2500 pts — higher resolution than 1200
             t_ax      = np.linspace(0, ws / FS, n_disp)[::step]
             filt_disp = filt_disp[::step]
             raw_disp  = raw_disp[::step]
@@ -619,36 +754,51 @@ class EEGWindow(QtWidgets.QMainWindow):
             # 4. Update signal curves + railing flash
             # cur_rails[0..5] maps to CH1..CH6; derived rows map CH→rail index
             # EOG=CH1(0), ECG=CH2(1), EMG=CH2-CH3(1 or 2), EEG rows=CH4-6(3-5)
-            _row_rail_ch = {
-                "EOG": [0], "ECG": [1], "EMG": [1, 2],
-                "EEG occipital": [3, 5], "EEG central": [4], "EEG frontal": [5],
-            }
+            show_raw = STATE.show_raw   # local copy — avoids repeated attr lookup
             for row_i, row in enumerate(DISPLAY_ROWS):
                 y_off  = float(N_ROWS - 1 - row_i)
                 scale  = max(STATE.row_scales.get(row, 100.0), 1.0)
                 if row == "BIAS":
                     self._curves_bias.setData(t_ax, bias_disp / scale + y_off)
                 else:
-                    ch = DERIVED_LABELS.index(row)
-                    # railing: flash trace red if any contributing channel rails
-                    rail_chs = _row_rail_ch.get(row, [ch])
+                    ch = _ROW_TO_CH[row]
+                    rail_chs = _ROW_RAIL_CH.get(row, [ch])
                     railing  = any(cur_rails[c] for c in rail_chs if c < 8)
                     base_col = ROW_COLORS[row]
                     pen_col  = "#ef5350" if railing else base_col
-                    if STATE.show_raw:
-                        # raw-only: show unfiltered at full opacity, hide filtered
-                        self._curves_filt[row].setVisible(False)
-                        self._curves_raw[row].setPen(pg.mkPen(pen_col, width=1))
-                        self._curves_raw[row].setData(
-                            t_ax, raw_disp[:, ch] / scale + y_off)
-                        self._curves_raw[row].setVisible(True)
+                    cr = self._curves_raw[row]
+                    cf = self._curves_filt[row]
+                    cr_id = id(cr)
+                    cf_id = id(cf)
+                    if show_raw:
+                        # ghost overlay: raw at ~35 % opacity behind filtered
+                        ghost_col = _hex_alpha(pen_col, 0.35)
+                        if _last_pen_col.get(cr_id) != ghost_col:
+                            cr.setPen(pg.mkPen(ghost_col, width=1))
+                            _last_pen_col[cr_id] = ghost_col
+                        cr.setData(t_ax, raw_disp[:, ch] / scale + y_off)
+                        if not _last_vis.get(cr_id, False):
+                            cr.setVisible(True)
+                            _last_vis[cr_id] = True
+                        if not _last_vis.get(cf_id, False):
+                            cf.setVisible(True)
+                            _last_vis[cf_id] = True
+                        if _last_pen_col.get(cf_id) != pen_col:
+                            cf.setPen(pg.mkPen(pen_col, width=1))
+                            _last_pen_col[cf_id] = pen_col
+                        cf.setData(t_ax, filt_disp[:, ch] / scale + y_off)
                     else:
-                        # normal: show filtered, hide raw
-                        self._curves_raw[row].setVisible(False)
-                        self._curves_filt[row].setVisible(True)
-                        self._curves_filt[row].setPen(pg.mkPen(pen_col, width=1))
-                        self._curves_filt[row].setData(
-                            t_ax, filt_disp[:, ch] / scale + y_off)
+                        # normal: filtered only, hide raw ghost
+                        if _last_vis.get(cr_id, False):
+                            cr.setVisible(False)
+                            _last_vis[cr_id] = False
+                        if not _last_vis.get(cf_id, False):
+                            cf.setVisible(True)
+                            _last_vis[cf_id] = True
+                        if _last_pen_col.get(cf_id) != pen_col:
+                            cf.setPen(pg.mkPen(pen_col, width=1))
+                            _last_pen_col[cf_id] = pen_col
+                        cf.setData(t_ax, filt_disp[:, ch] / scale + y_off)
             _t4 = time.perf_counter()
 
             # 5. BIAS status (RMS of last 50 samples — large RMS = bias amp working hard)
@@ -793,6 +943,7 @@ class EEGWindow(QtWidgets.QMainWindow):
         self._plot_sig = _SigPlotWidget(
             self,
             background="#111111",
+            axisItems={'left': _ColoredAxisItem(orientation='left')},
         )
         pi = self._plot_sig.plotItem
         pi.setMouseEnabled(x=False, y=False)
@@ -962,6 +1113,53 @@ class EEGWindow(QtWidgets.QMainWindow):
         st_vl.addWidget(self._lbl_drl)
         st_vl.addWidget(self._lbl_conn)
         bot.addWidget(st_box)
+
+        bot.addSpacing(8)
+
+        # Battery / PMIC status box
+        bat_box = QtWidgets.QWidget()
+        bat_box.setStyleSheet("background-color: #111111; border-radius: 3px;")
+        bat_vl = QtWidgets.QVBoxLayout(bat_box)
+        bat_vl.setSpacing(1)
+        bat_vl.setContentsMargins(6, 3, 6, 3)
+
+        bat_top = QtWidgets.QHBoxLayout()
+        bat_top.setSpacing(4)
+        bat_top.addWidget(QtWidgets.QLabel(
+            "BATT", styleSheet="color:#555555;font-size:6pt;font-family:monospace;"))
+        self._bat_bar = QtWidgets.QProgressBar()
+        self._bat_bar.setRange(0, 100)
+        self._bat_bar.setValue(0)
+        self._bat_bar.setTextVisible(False)
+        self._bat_bar.setFixedWidth(60)
+        self._bat_bar.setFixedHeight(8)
+        self._bat_bar.setStyleSheet("""
+            QProgressBar {
+                background: #2a2a2a; border: none; border-radius: 3px;
+            }
+            QProgressBar::chunk {
+                background: #4caf50; border-radius: 3px;
+            }
+        """)
+        bat_top.addWidget(self._bat_bar)
+        self._lbl_bat_pct = QtWidgets.QLabel("—%")
+        self._lbl_bat_pct.setStyleSheet(
+            "color:#4caf50;font-size:8pt;font-family:monospace;font-weight:bold;")
+        bat_top.addWidget(self._lbl_bat_pct)
+        bat_vl.addLayout(bat_top)
+
+        bat_bot = QtWidgets.QHBoxLayout()
+        bat_bot.setSpacing(6)
+        self._lbl_bat_mv = QtWidgets.QLabel("—.—V")
+        self._lbl_bat_mv.setStyleSheet(
+            "color:#888888;font-size:7pt;font-family:monospace;")
+        bat_bot.addWidget(self._lbl_bat_mv)
+        self._lbl_bat_status = QtWidgets.QLabel("—")
+        self._lbl_bat_status.setStyleSheet(
+            "color:#555555;font-size:7pt;font-family:monospace;")
+        bat_bot.addWidget(self._lbl_bat_status)
+        bat_vl.addLayout(bat_bot)
+        bot.addWidget(bat_box)
 
         bot.addSpacing(8)
 
@@ -1135,8 +1333,7 @@ class EEGWindow(QtWidgets.QMainWindow):
         for i, row in enumerate(DISPLAY_ROWS):
             y = float(N_ROWS - 1 - i)
             sc = STATE.row_scales.get(row, 100.0)
-            sc_str = f"{sc:.0f}" if sc >= 10 else f"{sc:.1f}"
-            ticks.append((y, f"{row}  ±{sc_str}µV"))
+            ticks.append((y, f"{row}  ±{_fmt_scale(sc)}"))
         self._plot_sig.plotItem.getAxis("left").setTicks([ticks])
 
     # ── Keyboard ──────────────────────────────────────────────────────────────

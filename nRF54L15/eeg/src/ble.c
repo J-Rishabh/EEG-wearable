@@ -19,6 +19,7 @@ LOG_MODULE_REGISTER(ble, LOG_LEVEL_INF);
 /* EEG Data Char:    12340002-1234-1234-1234-123456789abc */
 /* IMU Data Char:    12340003-1234-1234-1234-123456789abc */
 /* Gain Control:     12340004-1234-1234-1234-123456789abc */
+/* Device Status:    12340005-1234-1234-1234-123456789abc */
 
 #define BT_UUID_EEG_SVC_VAL \
     BT_UUID_128_ENCODE(0x12340001, 0x1234, 0x1234, 0x1234, 0x123456789abcULL)
@@ -28,17 +29,21 @@ LOG_MODULE_REGISTER(ble, LOG_LEVEL_INF);
     BT_UUID_128_ENCODE(0x12340003, 0x1234, 0x1234, 0x1234, 0x123456789abcULL)
 #define BT_UUID_CTRL_VAL \
     BT_UUID_128_ENCODE(0x12340004, 0x1234, 0x1234, 0x1234, 0x123456789abcULL)
+#define BT_UUID_STATUS_VAL \
+    BT_UUID_128_ENCODE(0x12340005, 0x1234, 0x1234, 0x1234, 0x123456789abcULL)
 
-static struct bt_uuid_128 eeg_svc_uuid  = BT_UUID_INIT_128(BT_UUID_EEG_SVC_VAL);
-static struct bt_uuid_128 eeg_data_uuid = BT_UUID_INIT_128(BT_UUID_EEG_DATA_VAL);
-static struct bt_uuid_128 imu_data_uuid = BT_UUID_INIT_128(BT_UUID_IMU_DATA_VAL);
-static struct bt_uuid_128 ctrl_uuid     = BT_UUID_INIT_128(BT_UUID_CTRL_VAL);
+static struct bt_uuid_128 eeg_svc_uuid    = BT_UUID_INIT_128(BT_UUID_EEG_SVC_VAL);
+static struct bt_uuid_128 eeg_data_uuid   = BT_UUID_INIT_128(BT_UUID_EEG_DATA_VAL);
+static struct bt_uuid_128 imu_data_uuid   = BT_UUID_INIT_128(BT_UUID_IMU_DATA_VAL);
+static struct bt_uuid_128 ctrl_uuid       = BT_UUID_INIT_128(BT_UUID_CTRL_VAL);
+static struct bt_uuid_128 status_uuid     = BT_UUID_INIT_128(BT_UUID_STATUS_VAL);
 
 /* ---------- State ---------- */
 
 static struct bt_conn *current_conn;
 static bool eeg_subscribed;
 static bool imu_subscribed;
+static bool status_subscribed;
 
 /* ---------- GATT service ---------- */
 
@@ -52,6 +57,12 @@ static void imu_ccc_changed(const struct bt_gatt_attr *attr, uint16_t value)
 {
     imu_subscribed = (value & BT_GATT_CCC_NOTIFY) != 0;
     LOG_INF("IMU notify %s", imu_subscribed ? "enabled" : "disabled");
+}
+
+static void status_ccc_changed(const struct bt_gatt_attr *attr, uint16_t value)
+{
+    status_subscribed = (value & BT_GATT_CCC_NOTIFY) != 0;
+    LOG_INF("Status notify %s", status_subscribed ? "enabled" : "disabled");
 }
 
 /* ---------- Gain control write ----------
@@ -150,15 +161,18 @@ static ssize_t ctrl_write(struct bt_conn *conn, const struct bt_gatt_attr *attr,
 
 /*
  * attrs layout:
- *   [0] primary service declaration
- *   [1] EEG characteristic declaration
- *   [2] EEG characteristic value  ← bt_gatt_notify() target for EEG
- *   [3] EEG CCC descriptor
- *   [4] IMU characteristic declaration
- *   [5] IMU characteristic value  ← bt_gatt_notify() target for IMU
- *   [6] IMU CCC descriptor
- *   [7] Gain Control characteristic declaration
- *   [8] Gain Control characteristic value  ← write target (1 byte gain)
+ *   [0]  primary service declaration
+ *   [1]  EEG characteristic declaration
+ *   [2]  EEG characteristic value  ← bt_gatt_notify() target for EEG
+ *   [3]  EEG CCC descriptor
+ *   [4]  IMU characteristic declaration
+ *   [5]  IMU characteristic value  ← bt_gatt_notify() target for IMU
+ *   [6]  IMU CCC descriptor
+ *   [7]  Gain Control characteristic declaration
+ *   [8]  Gain Control characteristic value  ← write target
+ *   [9]  Device Status characteristic declaration
+ *   [10] Device Status characteristic value  ← bt_gatt_notify() target for status
+ *   [11] Device Status CCC descriptor
  */
 BT_GATT_SERVICE_DEFINE(eeg_svc,
     BT_GATT_PRIMARY_SERVICE(&eeg_svc_uuid),
@@ -176,6 +190,11 @@ BT_GATT_SERVICE_DEFINE(eeg_svc,
                            BT_GATT_CHRC_WRITE | BT_GATT_CHRC_WRITE_WITHOUT_RESP,
                            BT_GATT_PERM_WRITE,
                            NULL, ctrl_write, NULL),
+    BT_GATT_CHARACTERISTIC(&status_uuid.uuid,
+                           BT_GATT_CHRC_NOTIFY,
+                           BT_GATT_PERM_NONE,
+                           NULL, NULL, NULL),
+    BT_GATT_CCC(status_ccc_changed, BT_GATT_PERM_READ | BT_GATT_PERM_WRITE),
 );
 
 /* ---------- Advertising data ---------- */
@@ -276,8 +295,9 @@ static void disconnected(struct bt_conn *conn, uint8_t reason)
         bt_conn_unref(current_conn);
         current_conn = NULL;
     }
-    eeg_subscribed = false;
-    imu_subscribed = false;
+    eeg_subscribed    = false;
+    imu_subscribed    = false;
+    status_subscribed = false;
 
     /* Defer advertising restart to the system workqueue so it runs after
      * the BLE stack finishes tearing down the connection. */
@@ -356,4 +376,26 @@ int ble_notify_imu(const struct imu_sample *sample)
     sys_put_le16((uint16_t)sample->z_mg,    &buf[4]);
     sys_put_le16((uint16_t)sample->temp_cdeg, &buf[6]);
     return bt_gatt_notify(NULL, &eeg_svc.attrs[5], buf, sizeof(buf));
+}
+
+bool ble_status_subscribed(void)
+{
+    return status_subscribed;
+}
+
+int ble_notify_status(uint16_t vbat_mv, uint8_t pct, bool charging, bool error)
+{
+    if (current_conn == NULL) {
+        return -ENOTCONN;
+    }
+    if (!status_subscribed) {
+        return -EACCES;
+    }
+    /* 4-byte packet: [vbat_lo, vbat_hi, pct, flags]
+     * flags bit 0 = charging,  bit 1 = error */
+    uint8_t buf[4];
+    sys_put_le16(vbat_mv, &buf[0]);
+    buf[2] = pct;
+    buf[3] = (charging ? BIT(0) : 0) | (error ? BIT(1) : 0);
+    return bt_gatt_notify(NULL, &eeg_svc.attrs[10], buf, sizeof(buf));
 }

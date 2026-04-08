@@ -7,6 +7,7 @@
 #include "imu.h"
 #include "vbat.h"
 #include "eeg.h"
+#include "pmic.h"
 
 LOG_MODULE_REGISTER(main, LOG_LEVEL_INF);
 
@@ -39,8 +40,12 @@ static void led_set_error(void)
 #define LED_STACK_SIZE  512
 #define LED_PRIORITY    7
 
-#define BREATH_STEPS    20
-#define BREATH_STEP_MS  75   /* 20 steps × 75 ms × 2 halves ≈ 3 s per cycle */
+/* Breathing: 100 Hz PWM carrier (10 ms period) with 10 brightness levels.
+ * 15 carrier cycles per level × 10 levels × 2 halves × 10 ms = 3000 ms/cycle.
+ * 100 Hz is above the ~60 Hz human flicker-fusion threshold → no visible blink. */
+#define BREATH_PERIOD_MS   10   /* PWM carrier period — must be < 16 ms (>60 Hz) */
+#define BREATH_STEPS       10   /* brightness levels: step 0 (off) … 10 (full on) */
+#define BREATH_HOLD_CYCLES 15   /* carrier cycles to hold each level */
 
 K_THREAD_STACK_DEFINE(led_stack, LED_STACK_SIZE);
 static struct k_thread led_thread_data;
@@ -65,10 +70,12 @@ static void led_thread(void *p1, void *p2, void *p3)
             continue;
         }
 
-        /* --- CONNECTED: solid on --- */
+        /* --- CONNECTED: dim PWM (~30 % duty, 100 Hz) saves current vs solid on --- */
         if (ble_is_connected()) {
             gpio_pin_set_dt(l, 1);
-            k_msleep(50);
+            k_msleep(3);
+            gpio_pin_set_dt(l, 0);
+            k_msleep(7);
             was_connected = true;
             continue;
         }
@@ -93,17 +100,21 @@ static void led_thread(void *p1, void *p2, void *p3)
          */
 
         /* -- BREATHING: triangle-wave software PWM --
-         * step 0 → 0 % duty (off), step BREATH_STEPS → 100 % (full on).  */
-        int on_ms  = (step * BREATH_STEP_MS) / BREATH_STEPS;
-        int off_ms = BREATH_STEP_MS - on_ms;
+         * step 0 → 0 % duty (off), step BREATH_STEPS → 100 % (full on).
+         * Each step holds for BREATH_HOLD_CYCLES × BREATH_PERIOD_MS ms so the
+         * PWM carrier runs at 100 Hz — invisible to the naked eye.  */
+        int on_ms  = (step * BREATH_PERIOD_MS) / BREATH_STEPS;
+        int off_ms = BREATH_PERIOD_MS - on_ms;
 
-        if (on_ms > 0) {
-            gpio_pin_set_dt(l, 1);
-            k_msleep(on_ms);
-        }
-        if (off_ms > 0) {
-            gpio_pin_set_dt(l, 0);
-            k_msleep(off_ms);
+        for (int c = 0; c < BREATH_HOLD_CYCLES; c++) {
+            if (on_ms > 0) {
+                gpio_pin_set_dt(l, 1);
+                k_msleep(on_ms);
+            }
+            if (off_ms > 0) {
+                gpio_pin_set_dt(l, 0);
+                k_msleep(off_ms);
+            }
         }
 
         if (rising) {
@@ -122,6 +133,7 @@ int main(void)
     bool imu_ok  = false;
     bool vbat_ok = false;
     bool eeg_ok  = false;
+    bool pmic_ok = false;
 
     /* ------------------------------------------------------------------ */
     /* Give RTT viewer 3 s to connect before boot logs scroll past.       */
@@ -192,9 +204,18 @@ int main(void)
     ret = vbat_init();
     if (ret == 0) {
         vbat_ok = true;
-        LOG_INF("[VBAT] OK - P1.13/AIN7, 2M+1M divider, LiPo curve");
+        LOG_INF("[VBAT] OK - P1.13/AIN6, 2M+1M divider, LiPo curve");
     } else {
         LOG_WRN("[VBAT] not available (err %d) - continuing", ret);
+    }
+
+    /* --- PMIC status GPIOs --- */
+    ret = pmic_init();
+    if (ret == 0) {
+        pmic_ok = true;
+        LOG_INF("[PMIC] OK - CHG=P0.03  ERR=P0.02  (internal pull-ups, active-low)");
+    } else {
+        LOG_WRN("[PMIC] not available (err %d) - continuing without PMIC status", ret);
     }
 
     /* --- ADS1299 EEG AFE --- */
@@ -206,10 +227,11 @@ int main(void)
         LOG_WRN("[EEG] not available (err %d) - continuing without EEG", ret);
     }
 
-    LOG_INF("Boot complete. IMU=%s  VBAT=%s  EEG=%s",
-            imu_ok ? "yes" : "no",
+    LOG_INF("Boot complete. IMU=%s  VBAT=%s  EEG=%s  PMIC=%s",
+            imu_ok  ? "yes" : "no",
             vbat_ok ? "yes" : "no",
-            eeg_ok  ? "yes" : "no");
+            eeg_ok  ? "yes" : "no",
+            pmic_ok ? "yes" : "no");
     LOG_INF("Waiting for BLE connection...");
 
     /* ------------------------------------------------------------------ */
@@ -275,12 +297,26 @@ int main(void)
             }
 
             /* VBAT - voltage and percentage */
+            uint32_t vbat_mv  = 0;
+            uint8_t  vbat_pct = 0;
             if (vbat_ok) {
-                uint32_t mv;
-                uint8_t  pct;
-                if (vbat_read_mv(&mv) == 0 && vbat_percent(&pct) == 0) {
-                    LOG_INF("[STATUS] VBAT: %u mV  %u %%", mv, pct);
+                if (vbat_read_mv(&vbat_mv) == 0 && vbat_percent(&vbat_pct) == 0) {
+                    LOG_INF("[STATUS] VBAT: %u mV  %u %%", vbat_mv, vbat_pct);
                 }
+            }
+
+            /* PMIC - charging and error flags */
+            bool chg = pmic_ok && pmic_is_charging();
+            bool err = pmic_ok && pmic_is_error();
+            if (pmic_ok) {
+                LOG_INF("[STATUS] PMIC: %s%s",
+                        chg ? "CHARGING " : "",
+                        err ? "ERROR"     : (chg ? "" : "idle"));
+            }
+
+            /* Push to BLE status characteristic if subscribed */
+            if (ble_status_subscribed()) {
+                ble_notify_status((uint16_t)vbat_mv, vbat_pct, chg, err);
             }
 
         }
