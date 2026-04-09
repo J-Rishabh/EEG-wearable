@@ -117,4 +117,15 @@ void eeg_set_test_mode(bool enable);
 /** True if eeg_set_test_mode(true) has been called and not yet reversed. */
 bool eeg_test_mode_active(void);
 
+/**
+ * Enable or disable the DRL (Driven Right Leg) circuit.
+ * enable=true  → BIAS_SENSP/SENSN = 0x3F (CH1–CH6 feed the BIAS amplifier → active DRL)
+ * enable=false → BIAS_SENSP/SENSN = 0x00 (BIAS amplifier still powered but drives nothing)
+ * Must be called from the system workqueue, not a BLE callback.
+ */
+void eeg_set_drl(bool enable);
+
+/** True if DRL is currently active (default: true after eeg_init). */
+bool eeg_drl_active(void);
+
 #endif /* EEG_H */

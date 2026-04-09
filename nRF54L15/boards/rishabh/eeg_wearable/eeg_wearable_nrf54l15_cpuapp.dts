@@ -191,16 +191,19 @@
     clock-frequency = <I2C_BITRATE_STANDARD>;  /* 100 kHz — reduced for diagnostics */
 
     /* LIS2DW12 accelerometer + temperature sensor.
-     * I2C address 0x18 (ADDR pin pulled low per schematic).
-     * irq-gpios left out for now — INT1/INT2 are still accessible as gpio-keys
-     * via the imu_interrupts node above; wire them in here when you want
-     * data-ready or wakeup interrupts driven by the sensor driver. */
+     * I2C address 0x18 (ADDR/SA0 pin pulled low per schematic).
+     * If the chip responds at 0x19 instead, change reg below and LIS2DW12_ADDR in imu.c.
+     *
+     * status = "disabled" suppresses the Zephyr ST sensor driver probe at boot.
+     * imu.c talks to the chip directly via raw I2C (i2c22 controller), which
+     * eliminates driver init assumptions and makes WHO_AM_I failures explicit. */
     lis2dw12: lis2dw12@18 {
         compatible = "st,lis2dw12";
         reg = <0x18>;
         odr = <50>;
         range = <2>;
         power-mode = <0>;
+        status = "disabled";
     };
 };
 

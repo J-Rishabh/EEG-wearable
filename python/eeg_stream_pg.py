@@ -19,7 +19,7 @@ Keyboard shortcuts
 ------------------
   n           toggle 60 Hz notch on / off
   b           cycle band: Full → Delta → Theta → Alpha → Beta → Gamma → …
-  u           toggle raw ghost overlay
+  u           toggle raw signal (raw = unfiltered at full opacity; default = filtered)
   f           toggle live PSD
   w           cycle window: 5 s → 10 s → 30 s → 1 min → …
   r           toggle Record / Stop
@@ -33,10 +33,8 @@ Keyboard shortcuts
 import sys
 import os
 import argparse
-import asyncio
 import threading
 import time
-import struct
 from collections import deque
 from datetime import datetime
 
@@ -49,6 +47,7 @@ from eeg_processing import (
     EEGProcessor, derive_signals,
     DERIVED_LABELS, DEFAULT_SCALE_UV,
 )
+from eeg_ble import BleEEGClient, DEVICE_NAME
 
 # ── pyqtgraph global config ────────────────────────────────────────────────────
 # antialias=False: skip sub-pixel AA on lines (not needed for dense EEG traces)
@@ -59,13 +58,8 @@ pg.setConfigOptions(antialias=False, useOpenGL=True)
 # TOP-LEVEL CONFIGURATION
 # ──────────────────────────────────────────────────────────────────────────────
 
-TEST_MODE   = False
-DEVICE_NAME = "EEG Wearable"
-FS          = 250
-
-EEG_CHAR_UUID    = "12340002-1234-1234-1234-123456789abc"
-CTRL_CHAR_UUID   = "12340004-1234-1234-1234-123456789abc"
-STATUS_CHAR_UUID = "12340005-1234-1234-1234-123456789abc"
+TEST_MODE = False
+FS        = 250
 
 MAX_DEQUE     = 15_000        # 60 s at 250 Hz
 WINDOW_SEC    = [5, 10, 30, 60]
@@ -158,10 +152,8 @@ class SharedState:
         self.recording    = False
         self.rec_buf      = []
         self.rec_start    = None
-        self.connected    = False
-        self.ble_client   = None
-        self.ble_loop     = None
         self.hw_test_mode = False   # True = ADS1299 internal square-wave test
+        self.drl_active   = True    # True = DRL/BIAS circuit active (default)
         # PMIC / battery status (updated every ~5 s from firmware)
         self.vbat_mv      = 0
         self.vbat_pct     = 0
@@ -241,239 +233,43 @@ def test_data_thread(stop_evt: threading.Event):
 
 
 # ──────────────────────────────────────────────────────────────────────────────
-# BLE FUNCTIONS  (identical to eeg_stream.py)
+# BLE CLIENT  (all BLE logic lives in eeg_ble.py)
 # ──────────────────────────────────────────────────────────────────────────────
 
-_RAIL_THRESHOLD = int(0.90 * 8_388_607)
-
-# ch_to_group[ch] = gain group index for channel ch (0-indexed).
-# -1 = use gain=1 (CH7 powered down, CH8 BIAS fixed).
-_CH_TO_GROUP = [0, 1, 1, 2, 3, 2, -1, -1]
-
-def _parse_198(data: bytes):
-    if len(data) < 198: return None
-    idx   = struct.unpack_from("<H", data, 0)[0]
-    gains = [data[2], data[3], data[4], data[5]]   # one per group
-    raw8  = np.frombuffer(data[6:], dtype=np.uint8).reshape(8, 8, 3)
-    vals  = np.zeros((8, 8), dtype=np.int32)
-    for s in range(8):
-        for ch in range(8):
-            b = raw8[s, ch]
-            v = (int(b[0]) << 16) | (int(b[1]) << 8) | int(b[2])
-            if v & 0x800000: v -= 0x1000000
-            vals[s, ch] = v
-    # Per-channel gain: look up group, default to 1 for CH7/CH8
-    ch_gains = np.array([
-        gains[_CH_TO_GROUP[ch]] if _CH_TO_GROUP[ch] >= 0 else 1
-        for ch in range(8)
-    ], dtype=np.float64)
-    uv = vals.astype(np.float64) * (4_500_000.0 / ch_gains / 8_388_608.0)
-    rails = np.any(np.abs(vals) > _RAIL_THRESHOLD, axis=0)
-    return idx, gains, uv, rails
+def _on_ble_sample(uv, gains, rails):
+    """BleEEGClient sample callback — push data into shared state."""
+    with STATE.lock:
+        STATE.pending.append(uv)        # push entire (8,8) batch — one object vs 8
+        STATE.rails |= rails
+        if STATE.recording:
+            STATE.rec_buf.extend(uv)    # uv is (8,8); extend yields rows
 
 
-def _status_notify(sender, data: bytes):
-    """Parse the 4-byte Device Status characteristic packet from firmware."""
-    if len(data) < 4:
-        return
-    vbat_mv  = struct.unpack_from("<H", data, 0)[0]
-    pct      = data[2]
-    flags    = data[3]
+def _on_pmic(vbat_mv, pct, charging, error):
+    """BleEEGClient PMIC callback — update battery status."""
     with STATE.lock:
         STATE.vbat_mv       = vbat_mv
         STATE.vbat_pct      = pct
-        STATE.pmic_charging = bool(flags & 0x01)
-        STATE.pmic_error    = bool(flags & 0x02)
+        STATE.pmic_charging = charging
+        STATE.pmic_error    = error
 
 
-_last_idx          = [-1]
-_pkt_count         = [0]
-_dbg_enabled       = [True]   # set False once data is confirmed flowing
-_first_pkt_flag    = [False]  # set True by first _ble_notify call; reset on reconnect
-_ble_stop          = [False]  # set True by closeEvent to signal BLE thread to exit
-
-def _ble_notify(sender, data: bytes):
-    _first_pkt_flag[0] = True
-    _pkt_count[0] += 1
-    n = _pkt_count[0]
-    # Always print first packet; then every 250 (~8 s at 31 pkt/s) as heartbeat
-    if n == 1 or n % 250 == 0:
-        print(f"[DBG] notify #{n}  len={len(data)}")
-    parsed = _parse_198(data)
-    if parsed is None:
-        print(f"[DBG] _parse_198 returned None — len={len(data)}")
-        return
-    idx, gains, uv, rails = parsed
-    if n == 1:
-        print(f"[DBG] parsed ok  idx={idx}  gains={gains}  "
-              f"uv[0,0..3]={uv[0,:4].round(1)}")
-    # Gap detection — firmware index increments by 8 per packet (8 samples/batch)
-    if _last_idx[0] >= 0:
-        expected = (_last_idx[0] + 8) & 0xFFFF
-        if idx != expected:
-            dropped = (idx - _last_idx[0] - 8) & 0xFFFF
-            print(f"[BLE] Gap: expected idx={expected}, got {idx} "
-                  f"(~{dropped} samples dropped)")
-    _last_idx[0] = idx
-    with STATE.lock:
-        STATE.pending.append(uv)           # push entire (8,8) batch — one object vs 8
-        STATE.rails |= rails
-        if STATE.recording: STATE.rec_buf.extend(uv)  # uv is (8,8); extend yields rows
-
-
-async def _ble_run():
-    from bleak import BleakScanner, BleakClient
-    # Store loop so send_gain() can post coroutines from the Qt thread
-    STATE.ble_loop = asyncio.get_event_loop()
-    print(f"[BLE] Scanning for '{DEVICE_NAME}' …")
-    dev = await BleakScanner.find_device_by_name(DEVICE_NAME, timeout=20.0)
-    if dev is None:
-        print("[BLE] Not found."); return
-    print(f"[BLE] Connecting to {dev.address} …")
-    for conn_attempt in range(20):
-        if _ble_stop[0]:
-            break
-        # Reset data-arrival flag for this connection attempt
-        _first_pkt_flag[0] = False
-
-        try:
-            async with BleakClient(dev, use_cached_services=False) as client:
-                STATE.connected  = True
-                STATE.ble_client = client
-                if conn_attempt == 0:
-                    print("[DBG] Services / characteristics:")
-                    for svc in client.services:
-                        print(f"  SVC {svc.uuid}")
-                        for ch in svc.characteristics:
-                            print(f"    CHAR {ch.uuid}  props={ch.properties}")
-
-                # Wait 1.0 s for LL procedures (DLE, conn param update) to finish.
-                # 0x23 LL_PROC_COLLISION typically occurs within ~0.8 s of connect.
-                await asyncio.sleep(1.0)
-                if not client.is_connected:
-                    print(f"[BLE] conn {conn_attempt + 1}: dropped during settle — retrying")
-                    STATE.connected  = False
-                    STATE.ble_client = None
-                    continue
-
-                # Windows WinRT cancels CCCD write if MTU exchange is still in
-                # progress (WinError -2147023673). Retry a few times within the
-                # same connection — reconnecting each attempt makes things worse.
-                subscribed = False
-                for sub_attempt in range(4):
-                    try:
-                        if sub_attempt > 0:
-                            await asyncio.sleep(0.5)
-                        if not client.is_connected:
-                            break
-                        await client.start_notify(EEG_CHAR_UUID, _ble_notify)
-                        subscribed = True
-                        # Best-effort subscribe to status — firmware may be older
-                        try:
-                            await client.start_notify(STATUS_CHAR_UUID, _status_notify)
-                            print("[BLE] Status characteristic subscribed")
-                        except Exception as se:
-                            print(f"[BLE] Status char not available (old firmware?): {se}")
-                        break
-                    except Exception as e:
-                        print(f"[BLE] start_notify {sub_attempt + 1}/4 failed: {e}")
-
-                if not subscribed:
-                    print(f"[BLE] conn {conn_attempt + 1}: could not subscribe — reconnecting")
-                    STATE.connected  = False
-                    STATE.ble_client = None
-                    continue
-
-                # Verify data actually arrives — Windows sometimes silently drops
-                # the CCCD write so start_notify returns success but firmware never
-                # enables notifications.
-                print("[BLE] Subscribed — waiting for first packet …")
-                for _ in range(100):   # 10 s timeout (100 × 0.1 s) — DLE takes ~3 s after CCCD, firmware streams ~2 s later
-                    await asyncio.sleep(0.1)
-                    if _first_pkt_flag[0]:
-                        break
-                    if not client.is_connected:
-                        break
-                else:
-                    print(f"[BLE] conn {conn_attempt + 1}: no data in 4 s "
-                          f"(CCCD not delivered?) — reconnecting")
-                    STATE.connected  = False
-                    STATE.ble_client = None
-                    continue
-
-                if not _first_pkt_flag[0]:
-                    # Connection dropped before data arrived
-                    print(f"[BLE] conn {conn_attempt + 1}: dropped before data — retrying")
-                    STATE.connected  = False
-                    STATE.ble_client = None
-                    continue
-
-                print("[BLE] Streaming.")
-                while STATE.connected and client.is_connected:
-                    await asyncio.sleep(0.1)
-
-                try:
-                    await client.stop_notify(EEG_CHAR_UUID)
-                except Exception:
-                    pass
-                try:
-                    await client.stop_notify(STATUS_CHAR_UUID)
-                except Exception:
-                    pass
-
-                if not STATE.connected:
-                    break   # window closed — stop
-                # Otherwise: unexpected drop — fall through to reconnect
-                print("[BLE] Connection dropped — reconnecting")
-                STATE.connected  = False
-                STATE.ble_client = None
-
-        except Exception as e:
-            STATE.connected  = False
-            STATE.ble_client = None
-            print(f"[BLE] conn {conn_attempt + 1}/20 exception: {e}")
-        await asyncio.sleep(0.5)
-
-    STATE.connected  = False
-    STATE.ble_client = None
-
-
-def ble_thread():
-    asyncio.run(_ble_run())
-
-
-async def _write_gain(group: int, g: int):
-    if STATE.ble_client and STATE.ble_client.is_connected:
-        await STATE.ble_client.write_gatt_char(
-            CTRL_CHAR_UUID, bytes([group, g]), response=False)
-
-
-async def _write_test_mode(enable: bool):
-    if STATE.ble_client and STATE.ble_client.is_connected:
-        # Byte 0 = 0xFF → test mode command; byte 1 = 1 enable / 0 disable
-        await STATE.ble_client.write_gatt_char(
-            CTRL_CHAR_UUID, bytes([0xFF, 0x01 if enable else 0x00]), response=False)
-
-
-def send_gain(group: int, g: int):
-    if STATE.ble_loop:
-        asyncio.run_coroutine_threadsafe(_write_gain(group, g), STATE.ble_loop)
-
-
-def send_test_mode(enable: bool):
-    if STATE.ble_loop:
-        asyncio.run_coroutine_threadsafe(_write_test_mode(enable), STATE.ble_loop)
+BLE_CLIENT = BleEEGClient()
+BLE_CLIENT.set_sample_callback(_on_ble_sample)
+BLE_CLIENT.set_pmic_callback(_on_pmic)
 
 
 # ──────────────────────────────────────────────────────────────────────────────
 # EDF SAVE  (identical to eeg_stream.py)
 # ──────────────────────────────────────────────────────────────────────────────
 
-def save_edf(buf: list, gain: int):
+def save_edf(buf: list, gain: int, rec_start: float = None):
     rec_dir = os.path.join(os.path.dirname(__file__), "recordings")
     os.makedirs(rec_dir, exist_ok=True)
-    ts  = datetime.now().strftime("%Y%m%d_%H%M%S")
-    arr = np.array(buf, dtype=np.float64)
+    # Use rec_start for the filename so it matches the BCI event logs
+    t0    = rec_start if rec_start else time.time()
+    ts    = datetime.fromtimestamp(t0).strftime("%Y%m%d_%H%M%S")
+    arr   = np.array(buf, dtype=np.float64)
     if arr.ndim != 2 or arr.shape[1] != 8:
         print("[SAVE] Unexpected buffer shape — aborting."); return None
     try:
@@ -482,6 +278,7 @@ def save_edf(buf: list, gain: int):
         labels = ["EOG","EMG_far","EMG_near","EEG_L1","EEG_L2","EEG_L3","SRB1","DRL"]
         f = pyedflib.EdfWriter(fname, 8, file_type=pyedflib.FILETYPE_EDFPLUS)
         try:
+            f.setStartdatetime(datetime.fromtimestamp(t0))
             for i in range(8):
                 ch_max = round(max(float(np.max(np.abs(arr[:, i]))), 1.0), 1)
                 f.setSignalHeader(i, {
@@ -499,7 +296,23 @@ def save_edf(buf: list, gain: int):
         fname = os.path.join(rec_dir, f"eeg_{ts}.npy")
         np.save(fname, arr)
         print("[SAVE] pyedflib not found — saved as .npy")
+
+    # Write sidecar JSON so BCI scripts can auto-sync without a manual keypress.
+    # Fields: rec_start_epoch (float, time.time()), rec_start_iso, n_samples, fs, edf_file.
+    import json
+    meta = {
+        "rec_start_epoch": t0,
+        "rec_start_iso":   datetime.fromtimestamp(t0).isoformat(),
+        "n_samples":       int(arr.shape[0]),
+        "fs":              FS,
+        "edf_file":        os.path.basename(fname),
+    }
+    meta_path = os.path.join(rec_dir, f"eeg_{ts}_meta.json")
+    with open(meta_path, "w") as mf:
+        json.dump(meta, mf, indent=2)
+
     print(f"[SAVE] {arr.shape[0]} samples ({arr.shape[0]/FS:.1f} s) -> {fname}")
+    print(f"[SAVE] meta -> {meta_path}")
     return fname
 
 
@@ -583,6 +396,12 @@ class _SigPlotWidget(pg.PlotWidget):
         STATE.selected_row = ri
         self._win._refresh_yticks()
         ev.accept()
+
+    def leaveEvent(self, ev):
+        # Hide cursor when mouse exits the plot widget entirely
+        self._win._cursor_line.setVisible(False)
+        self._win._cursor_label.setVisible(False)
+        super().leaveEvent(ev)
 
 
 # ──────────────────────────────────────────────────────────────────────────────
@@ -673,9 +492,9 @@ class EEGWindow(QtWidgets.QMainWindow):
             if _err_now:
                 _bc, _sc, _st = "#ef5350", "#ef5350", "FAULT"
             elif _charging_now:
-                _bc, _sc, _st = "#4fc3f7", "#4fc3f7", "CHG"
+                _bc, _sc, _st = "#4caf50", "#4caf50", "CHG"
             elif _mv_now >= 4100:
-                _bc, _sc, _st = "#4caf50", "#4caf50", "FULL"
+                _bc, _sc, _st = "#ffffff", "#ffffff", "FULL"
             elif _pct_now < 20 and _mv_now > 0:
                 _bc, _sc, _st = "#ef5350", "#ef5350", "LOW"
             elif _pct_now < 40 and _mv_now > 0:
@@ -771,24 +590,19 @@ class EEGWindow(QtWidgets.QMainWindow):
                     cr_id = id(cr)
                     cf_id = id(cf)
                     if show_raw:
-                        # ghost overlay: raw at ~35 % opacity behind filtered
-                        ghost_col = _hex_alpha(pen_col, 0.35)
-                        if _last_pen_col.get(cr_id) != ghost_col:
-                            cr.setPen(pg.mkPen(ghost_col, width=1))
-                            _last_pen_col[cr_id] = ghost_col
+                        # raw mode: show unfiltered signal at full opacity, hide filtered
+                        if _last_pen_col.get(cr_id) != pen_col:
+                            cr.setPen(pg.mkPen(pen_col, width=1))
+                            _last_pen_col[cr_id] = pen_col
                         cr.setData(t_ax, raw_disp[:, ch] / scale + y_off)
                         if not _last_vis.get(cr_id, False):
                             cr.setVisible(True)
                             _last_vis[cr_id] = True
-                        if not _last_vis.get(cf_id, False):
-                            cf.setVisible(True)
-                            _last_vis[cf_id] = True
-                        if _last_pen_col.get(cf_id) != pen_col:
-                            cf.setPen(pg.mkPen(pen_col, width=1))
-                            _last_pen_col[cf_id] = pen_col
-                        cf.setData(t_ax, filt_disp[:, ch] / scale + y_off)
+                        if _last_vis.get(cf_id, True):
+                            cf.setVisible(False)
+                            _last_vis[cf_id] = False
                     else:
-                        # normal: filtered only, hide raw ghost
+                        # default: filtered only, hide raw
                         if _last_vis.get(cr_id, False):
                             cr.setVisible(False)
                             _last_vis[cr_id] = False
@@ -819,7 +633,7 @@ class EEGWindow(QtWidgets.QMainWindow):
             # 6. Connection status
             if TEST_MODE:
                 self._lbl_conn.setText("TEST")
-            elif STATE.connected:
+            elif BLE_CLIENT.connected:
                 self._lbl_conn.setText("LIVE")
                 self._lbl_conn.setStyleSheet(
                     _LABEL_STYLE.format(fg="#4caf50"))
@@ -931,8 +745,10 @@ class EEGWindow(QtWidgets.QMainWindow):
         self._btn_fft     = _btn("PSD: off",   fg="#666666")
         self._btn_ascale  = _btn("auto-scale", fg="#ffd54f")
         self._btn_hwtest  = _btn("test: off",  fg="#555555")
+        self._btn_drl     = _btn("DRL: on",    fg="#66bb6a")
         for b in (self._btn_raw, self._btn_notch, self._btn_band,
-                  self._btn_fft, self._btn_ascale, self._btn_hwtest):
+                  self._btn_fft, self._btn_ascale, self._btn_hwtest,
+                  self._btn_drl):
             b.setFixedWidth(80)
             top.addWidget(b)
         top.addStretch()
@@ -968,7 +784,7 @@ class EEGWindow(QtWidgets.QMainWindow):
                 self._plot_sig.addItem(cur)
                 self._curves_bias = cur
             else:
-                # raw trace — full opacity, hidden until raw mode is toggled on
+                # raw trace — shown at full opacity in raw mode, hidden by default
                 cr = pg.PlotCurveItem(pen=pg.mkPen(c, width=1))
                 cr.setVisible(False)
                 self._plot_sig.addItem(cr)
@@ -989,6 +805,20 @@ class EEGWindow(QtWidgets.QMainWindow):
         self._test_overlay.setFont(QtGui.QFont("monospace", 9))
         self._plot_sig.addItem(self._test_overlay)
         self._test_overlay.setVisible(False)
+
+        # Cursor crosshair — vertical dashed line + value label, shown on mouse hover
+        self._cursor_line = pg.InfiniteLine(
+            angle=90, movable=False,
+            pen=pg.mkPen("#888888", width=1, style=QtCore.Qt.DashLine))
+        self._cursor_line.setVisible(False)
+        self._plot_sig.addItem(self._cursor_line)
+
+        self._cursor_label = pg.TextItem(
+            text="", color="#dddddd", anchor=(0.0, 0.5),
+            fill=pg.mkBrush(0, 0, 0, 160))
+        self._cursor_label.setFont(QtGui.QFont("monospace", 8))
+        self._cursor_label.setVisible(False)
+        self._plot_sig.addItem(self._cursor_label)
 
         root.addWidget(self._plot_sig, stretch=65)
 
@@ -1248,7 +1078,7 @@ class EEGWindow(QtWidgets.QMainWindow):
                     STATE.row_scales[row] = DEFAULT_SCALE_UV[row] * (24.0 / g)
                 self._refresh_yticks()
                 self.proc.reset_state()
-                if not TEST_MODE: send_gain(idx, g)
+                if not TEST_MODE: BLE_CLIENT.send_gain(idx, g)
             return cb
         for i, sl in enumerate(self._gain_sliders):
             sl.valueChanged.connect(make_gain_cb(i))
@@ -1282,9 +1112,48 @@ class EEGWindow(QtWidgets.QMainWindow):
                 _BTN_STYLE.format(bg="#1a1a1a", fg="#ffa726" if on else "#555555"))
             self._test_overlay.setVisible(on)
             if not TEST_MODE:
-                send_test_mode(on)
+                BLE_CLIENT.send_test_mode(on)
         self._btn_hwtest.clicked.connect(toggle_hwtest)
         self._toggle_hwtest = toggle_hwtest
+
+        # DRL toggle — enables/disables the Driven Right Leg noise-cancellation circuit
+        #
+        # Without DRL the body common-mode (60 Hz mains) can easily be ±1–10 V, which
+        # saturates the ADC at gain 24 (full-scale = ±187 mV) and shows only flat rails.
+        # To keep the 60 Hz noise *visible* for an SNR comparison, we drop all gains to
+        # 1 when DRL is turned off (full-scale ±4.5 V — well within mains common-mode
+        # range) and restore the user's previous gains when DRL is turned back on.
+        _gains_before_drl_off = [None, None, None, None]   # saved gains per group
+
+        def toggle_drl():
+            STATE.drl_active = not STATE.drl_active
+            on = STATE.drl_active
+            self._btn_drl.setText("DRL: on" if on else "DRL: off")
+            self._btn_drl.setStyleSheet(
+                _BTN_STYLE.format(bg="#1a1a1a", fg="#66bb6a" if on else "#ef5350"))
+
+            if not on:
+                # DRL going off — save current gains, slam everything to ×1 so the
+                # large common-mode doesn't rail the ADC and you can see the 60 Hz noise.
+                for gi in range(4):
+                    _gains_before_drl_off[gi] = STATE.gain[gi]
+                    self._gain_sliders[gi].setValue(GAIN_VALUES.index(1))
+                    # slider valueChanged fires make_gain_cb which updates STATE + firmware
+            else:
+                # DRL coming back on — restore gains if we saved them.
+                if _gains_before_drl_off[0] is not None:
+                    for gi in range(4):
+                        self._gain_sliders[gi].setValue(
+                            GAIN_VALUES.index(_gains_before_drl_off[gi]))
+                    for gi in range(4):
+                        _gains_before_drl_off[gi] = None
+
+            self.proc.reset_state()   # clear filter transients from the gain change
+
+            if not TEST_MODE:
+                BLE_CLIENT.send_drl(on)
+        self._btn_drl.clicked.connect(toggle_drl)
+        self._toggle_drl = toggle_drl
 
         # REC / Save
         def toggle_rec():
@@ -1317,7 +1186,7 @@ class EEGWindow(QtWidgets.QMainWindow):
             buf = list(STATE.rec_buf)
             if not buf:
                 print("[SAVE] Nothing recorded yet."); return
-            fname = save_edf(buf, STATE.gain[0])
+            fname = save_edf(buf, STATE.gain[0], rec_start=STATE.rec_start)
             if fname:
                 self._btn_save.setText("Saved")
                 self._btn_save.setStyleSheet(
@@ -1325,6 +1194,12 @@ class EEGWindow(QtWidgets.QMainWindow):
                 STATE.rec_buf = []
         self._btn_save.clicked.connect(do_save)
         self._do_save = do_save
+
+        # Cursor hover — value readout on mouse move over signal plot
+        self._cursor_proxy = pg.SignalProxy(
+            self._plot_sig.scene().sigMouseMoved,
+            rateLimit=60,
+            slot=lambda ev: self._on_mouse_moved(ev[0]))
 
     # ── Helpers ───────────────────────────────────────────────────────────────
 
@@ -1335,6 +1210,60 @@ class EEGWindow(QtWidgets.QMainWindow):
             sc = STATE.row_scales.get(row, 100.0)
             ticks.append((y, f"{row}  ±{_fmt_scale(sc)}"))
         self._plot_sig.plotItem.getAxis("left").setTicks([ticks])
+
+    def _on_mouse_moved(self, pos):
+        if not self._plot_sig.sceneBoundingRect().contains(pos):
+            self._cursor_line.setVisible(False)
+            self._cursor_label.setVisible(False)
+            return
+
+        mp = self._plot_sig.plotItem.vb.mapSceneToView(pos)
+        x  = mp.x()
+        y  = mp.y()
+
+        ws = WINDOW_SEC[STATE.window_idx]
+        if not (0 <= x <= ws):
+            self._cursor_line.setVisible(False)
+            self._cursor_label.setVisible(False)
+            return
+
+        self._cursor_line.setPos(x)
+        self._cursor_line.setVisible(True)
+
+        # Nearest row to cursor y position
+        row_i = N_ROWS - 1 - int(round(y))
+        row_i = max(0, min(N_ROWS - 1, row_i))
+        row   = DISPLAY_ROWS[row_i]
+
+        # Sample value at cursor x from the active curve for that row
+        if row == "BIAS":
+            curve = self._curves_bias
+        elif STATE.show_raw:
+            curve = self._curves_raw.get(row)
+        else:
+            curve = self._curves_filt.get(row)
+
+        val_str = "—"
+        if curve is not None and curve.isVisible():
+            xd, yd = curve.getData()
+            if xd is not None and len(xd) > 1:
+                idx   = int(np.searchsorted(xd, x))
+                idx   = max(0, min(idx, len(xd) - 1))
+                y_off = float(N_ROWS - 1 - row_i)
+                scale = max(STATE.row_scales.get(row, 100.0), 1.0)
+                uv    = (yd[idx] - y_off) * scale
+                val_str = ("−" if uv < 0 else "+") + _fmt_scale(abs(uv))
+
+        # Position label: flip to left side when cursor is in the right 25% of window
+        self._cursor_label.setText(f"t={x:.3f}s   {row}  {val_str}")
+        y_label = float(N_ROWS - 1 - row_i) + 0.35
+        if x > 0.75 * ws:
+            self._cursor_label.setAnchor((1.0, 0.5))
+            self._cursor_label.setPos(x - 0.01 * ws, y_label)
+        else:
+            self._cursor_label.setAnchor((0.0, 0.5))
+            self._cursor_label.setPos(x + 0.01 * ws, y_label)
+        self._cursor_label.setVisible(True)
 
     # ── Keyboard ──────────────────────────────────────────────────────────────
 
@@ -1376,8 +1305,7 @@ class EEGWindow(QtWidgets.QMainWindow):
 
     def closeEvent(self, ev):
         self._timer.stop()
-        STATE.connected = False
-        _ble_stop[0] = True
+        BLE_CLIENT.stop()
         print("Exited.")
         ev.accept()
 
@@ -1412,8 +1340,7 @@ def main():
         t.start()
         print("[TEST] Synthetic generator started.")
     else:
-        t = threading.Thread(target=ble_thread, daemon=True)
-        t.start()
+        BLE_CLIENT.start()
         print(f"[BLE] Scanning for '{DEVICE_NAME}' …")
 
     app = QtWidgets.QApplication.instance() or QtWidgets.QApplication(sys.argv)
@@ -1424,7 +1351,6 @@ def main():
         sys.exit(app.exec_())
     finally:
         stop_evt.set()
-        STATE.connected = False
 
 
 if __name__ == "__main__":

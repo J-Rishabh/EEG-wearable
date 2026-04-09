@@ -108,6 +108,25 @@ static void test_work_handler(struct k_work *work)
     eeg_set_test_mode(pending_test_mode);
 }
 
+/* ---------- DRL toggle work ----------
+ *
+ * Byte 0 = 0xFE in a ctrl_write toggles the Driven Right Leg circuit.
+ * Byte 1 = 0x01 → enable DRL; 0x00 → disable (BIAS amp input disconnected).
+ * Runs in the system workqueue so SPI is safe to call.
+ */
+static struct k_work drl_work;
+static bool          pending_drl;
+
+static void drl_work_handler(struct k_work *work)
+{
+    ARG_UNUSED(work);
+    if (!eeg_is_ready()) {
+        LOG_WRN("DRL write ignored — EEG not ready");
+        return;
+    }
+    eeg_set_drl(pending_drl);
+}
+
 static ssize_t ctrl_write(struct bt_conn *conn, const struct bt_gatt_attr *attr,
                            const void *buf, uint16_t len,
                            uint16_t offset, uint8_t flags)
@@ -134,6 +153,18 @@ static ssize_t ctrl_write(struct bt_conn *conn, const struct bt_gatt_attr *attr,
         pending_test_mode = (g == 1);
         k_work_submit(&test_work);
         LOG_INF("Test mode request: %s", g ? "enable" : "disable");
+        return (ssize_t)len;
+    }
+
+    /* 0xFE = DRL toggle command; byte 1 = 0 (disable) or 1 (enable). */
+    if (grp == 0xFE) {
+        if (g != 0 && g != 1) {
+            LOG_WRN("DRL toggle rejected: byte 1 must be 0 or 1, got %u", g);
+            return BT_GATT_ERR(BT_ATT_ERR_VALUE_NOT_ALLOWED);
+        }
+        pending_drl = (g == 1);
+        k_work_submit(&drl_work);
+        LOG_INF("DRL request: %s", g ? "enable" : "disable");
         return (ssize_t)len;
     }
 
@@ -322,6 +353,7 @@ int ble_init(void)
     k_work_init(&adv_work,  adv_work_handler);
     k_work_init(&gain_work, gain_work_handler);
     k_work_init(&test_work, test_work_handler);
+    k_work_init(&drl_work,  drl_work_handler);
     k_work_init_delayable(&dle_work, dle_work_handler);
 
     err = bt_le_adv_start(&adv_param, ad, ARRAY_SIZE(ad),

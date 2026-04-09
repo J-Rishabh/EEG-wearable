@@ -100,11 +100,11 @@ async def ble_loop():
         print(f"ERROR: '{DEVICE_NAME}' not found.")
         return
     print(f"Found {device.name} ({device.address}) — connecting ...")
-    async with BleakClient(device) as client:
-        # Short settle delay — Windows WinRT BLE can reject a CCCD write if it
+    async with BleakClient(device, use_cached_services=False) as client:
+        # Settle delay — Windows WinRT BLE can reject a CCCD write if it
         # arrives while MTU negotiation / connection-parameter update is still
-        # in progress (WinError -2147023673).
-        await asyncio.sleep(0.2)
+        # in progress (WinError -2147023673).  1.0 s is enough for DLE + params.
+        await asyncio.sleep(1.0)
         print("Connected. Subscribing to IMU characteristic ...")
         await client.start_notify(IMU_CHAR_UUID, imu_callback)
         print("Streaming — close the plot window to stop.")

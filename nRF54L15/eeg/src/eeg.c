@@ -617,3 +617,30 @@ bool eeg_test_mode_active(void)
 {
     return test_mode_on;
 }
+
+static bool drl_on = true;  /* matches init state — DRL active after eeg_init() */
+
+void eeg_set_drl(bool enable)
+{
+    if (!ads_ready) {
+        LOG_WRN("DRL write ignored — ADS1299 not ready");
+        return;
+    }
+
+    ads_cmd(CMD_SDATAC);
+    /* Setting BIAS_SENSP/SENSN to 0x00 disconnects all channels from the BIAS
+     * amplifier input.  The amplifier itself stays powered (PD_BIAS=1 in CONFIG3)
+     * so re-enabling is instantaneous — no re-settle needed. */
+    ads_wreg(REG_BIAS_SENSP, enable ? BIAS_SENS_CH1_6 : 0x00);
+    ads_wreg(REG_BIAS_SENSN, enable ? BIAS_SENS_CH1_6 : 0x00);
+    ads_cmd(CMD_RDATAC);
+
+    drl_on = enable;
+    LOG_INF("DRL %s", enable ? "enabled (CH1–CH6 driving BIAS amp)"
+                              : "disabled (BIAS amp input disconnected)");
+}
+
+bool eeg_drl_active(void)
+{
+    return drl_on;
+}
