@@ -8,7 +8,7 @@ Data recording
 --------------
 Press R (or use --record) to start/stop recording.
 Saves to ../sessions/session_YYYYMMDD_HHMMSS.csv with columns:
-  time_s, eeg_amplitude_uv, eeg_blink, cv_ear, cv_blink, bird_y,
+  time_s, eeg_amplitude_uv, eeg_blink, eeg_railed, cv_ear, cv_blink, bird_y,
   game_state, score
 
 Then run:
@@ -88,6 +88,8 @@ C_REC       = (220,  40,  40)
 C_SIGNAL_BG = ( 12,  14,  18)
 C_SIGNAL_FG = ( 80, 220,  80)
 C_BLINK_FLG = (255,  80,  80)
+C_RAIL_BG   = ( 55,  28,  14)
+C_RAIL_TXT  = (255, 160,  60)
 
 GROUND_Y    = GAME_H - 56
 
@@ -163,16 +165,22 @@ def draw_bird(surf, x, y, angle):
                         [(x + r - 2, y - 1), (x + r + 10, y + 1), (x + r - 2, y + 5)])
 
 
-def draw_signal_strip(surf, signal, threshold_uv, blink_active, channel, strip_y):
-    bg = (40, 10, 10) if blink_active else C_SIGNAL_BG
+def draw_signal_strip(surf, signal, threshold_uv, blink_active, channel, strip_y,
+                      channel_railed=False):
+    if channel_railed:
+        bg = C_RAIL_BG
+    else:
+        bg = (40, 10, 10) if blink_active else C_SIGNAL_BG
     pygame.draw.rect(surf, bg, (0, strip_y, WIDTH, SIGNAL_STRIP_H))
     pygame.draw.line(surf, (40, 40, 50), (0, strip_y), (WIDTH, strip_y), 1)
 
     font = pygame.font.SysFont("monospace", 11)
+    rail_note = "   SAT/RAIL" if channel_railed else ""
     lbl  = font.render(
         f"CH{channel+1}  thr={threshold_uv:.0f} µV"
-        + ("   *** BLINK ***" if blink_active else ""),
-        True, C_BLINK_FLG if blink_active else C_DIM)
+        + ("   *** BLINK ***" if blink_active else "")
+        + rail_note,
+        True, (C_RAIL_TXT if channel_railed else (C_BLINK_FLG if blink_active else C_DIM)))
     surf.blit(lbl, (6, strip_y + 4))
 
     if len(signal) < 2:
@@ -198,9 +206,9 @@ def draw_signal_strip(surf, signal, threshold_uv, blink_active, channel, strip_y
         py = int(mid_y - np.clip(s * scale, -plot_h // 2, plot_h // 2))
         pts.append((px, py))
     if len(pts) > 1:
-        pygame.draw.lines(surf,
-                          C_BLINK_FLG if blink_active else C_SIGNAL_FG,
-                          False, pts, 1)
+        line_col = C_RAIL_TXT if channel_railed else (
+            C_BLINK_FLG if blink_active else C_SIGNAL_FG)
+        pygame.draw.lines(surf, line_col, False, pts, 1)
 
 
 # ── game ──────────────────────────────────────────────────────────────────────
@@ -228,6 +236,7 @@ class FlappyBlink:
         self._cv_detector    = None
         self._last_signal    = np.zeros(0)
         self._last_amplitude = 0.0
+        self._ble_channel_railed = False  # BLE: selected channel near ADC rail (updated from callback)
 
         # Recording state
         self._recording  = False
@@ -261,7 +270,7 @@ class FlappyBlink:
             return
         ts   = _time.strftime('%Y%m%d_%H%M%S', _time.localtime(self._rec_start))
         path = SESSIONS_DIR / f'session_{ts}.csv'
-        fields = ['time_s', 'eeg_amplitude_uv', 'eeg_blink',
+        fields = ['time_s', 'eeg_amplitude_uv', 'eeg_blink', 'eeg_railed',
                   'cv_ear', 'cv_blink', 'bird_y', 'game_state', 'score']
         with open(path, 'w', newline='') as f:
             w = csv.DictWriter(f, fieldnames=fields)
@@ -325,6 +334,7 @@ class FlappyBlink:
             'time_s':           round(_time.time() - self._rec_start, 4),
             'eeg_amplitude_uv': round(self._last_amplitude, 4),
             'eeg_blink':        int(eeg_blink),
+            'eeg_railed':       int(self._ble_channel_railed),
             'cv_ear':           round(float(cv_ear), 5) if not math.isnan(cv_ear) else '',
             'cv_blink':         int(cv_blink),
             'bird_y':           round(self.bird_y, 2),
@@ -429,7 +439,8 @@ class FlappyBlink:
 
         strip_y = HEIGHT - SIGNAL_STRIP_H
         draw_signal_strip(surf, self._last_signal, self.threshold_uv,
-                          self._blink_flash > 0, self.channel, strip_y)
+                          self._blink_flash > 0, self.channel, strip_y,
+                          channel_railed=self._ble_channel_railed)
 
         # Score
         sc_s  = self.font_sc.render(str(self.score), True, C_WHITE)
@@ -563,8 +574,8 @@ if __name__ == "__main__":
                         help="ADS1299 channel 0-7 (default 0=EOG; try 4=EEG central)")
     parser.add_argument("--threshold", type=float, default=150.0,
                         help="Blink threshold µV (default 150)")
-    parser.add_argument("--ear",       type=float, default=0.22,
-                        help="CV EAR threshold for blink (default 0.22)")
+    parser.add_argument("--ear",       type=float, default=0.205,
+                        help="CV EAR threshold for blink (default 0.205)")
     args = parser.parse_args()
 
     game = FlappyBlink(channel=args.channel, threshold_uv=args.threshold)
@@ -574,9 +585,17 @@ if __name__ == "__main__":
         from python.experiments.bci.eog.eog_processing import BlinkDetector
 
         detector = BlinkDetector(fs=250, threshold_uv=args.threshold, debounce_s=0.5)
+        _was_railed = [False]
 
-        def on_samples(uv, gains):
-            detector.process(uv[:, args.channel])
+        def on_samples(uv, gains, rails):
+            ch = args.channel
+            railed = bool(rails[ch])
+            game._ble_channel_railed = railed
+            # Still run filters so the waveform stays continuous; do not count blinks while railed.
+            detector.process(uv[:, ch], trust=not railed)
+            if railed and not _was_railed[0]:
+                print("[BCI] ADC rail on selected channel — blink events suppressed until signal recovers")
+            _was_railed[0] = railed
 
         def blink_source():
             return detector.pop_blink(), detector.monitor_signal, detector.last_amplitude

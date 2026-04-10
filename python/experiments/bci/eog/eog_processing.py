@@ -178,8 +178,13 @@ class BlinkDetector:
         self._sos_notch = tf2sos(b, a)
         self._zi_notch  = np.zeros((self._sos_notch.shape[0], 2), dtype=np.float64)
 
-    def process(self, samples: np.ndarray):
-        """Feed new samples (µV, 1-D). Call from the BLE thread."""
+    def process(self, samples: np.ndarray, trust: bool = True):
+        """Feed new samples (µV, 1-D). Call from the BLE thread.
+
+        If trust is False (e.g. ADC near saturation / rail), filters still
+        advance and the monitor updates, but threshold crossings do not count
+        as blinks.
+        """
         if len(samples) == 0:
             return
         sig = samples.astype(np.float64)
@@ -188,6 +193,9 @@ class BlinkDetector:
 
         self._monitor.extend(sig.tolist())
         self._last_amp = float(sig[-1])
+
+        if not trust:
+            return
 
         for s in sig:
             if self._cooldown > 0:

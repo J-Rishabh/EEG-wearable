@@ -49,8 +49,9 @@ LOG_MODULE_REGISTER(imu, LOG_LEVEL_INF);
 #define SENS_DEN  1000
 
 /* ── Temperature ─────────────────────────────────────────────────────────────
- * OUT_T_L/H is a 12-bit left-aligned signed value (in LP Mode 1).
- * 1 LSB of the 12-bit value = 1 °C; offset = +25 °C at raw = 0. */
+ * OUT_T_L/H is a 12-bit left-aligned signed value.
+ * 1 LSB of the 12-bit value = 1/16 °C; offset = +25 °C at raw = 0.
+ * (Zephyr driver: LIS2DW12_TEMP_SCALE_FACTOR = 62500 µ°C = 1000000/16) */
 
 static const struct device *i2c_dev;
 static bool ready;
@@ -105,18 +106,22 @@ int imu_init(void)
     /* Continuous probe loop — repeats every 200 ms so a scope can trigger on
      * the I2C activity without needing to catch a one-shot event.
      * Exits as soon as either address ACKs. */
-    LOG_INF("Probing 0x18 / 0x19 every 200 ms — trigger scope now");
-    int who18, who19;
-    while (1) {
+    LOG_INF("Probing 0x18 / 0x19 every 200 ms (max 25 attempts = 5 s)");
+    int who18 = -EIO, who19 = -EIO;
+    for (int attempt = 0; attempt < 25; attempt++) {
         who18 = probe_who_am_i(0x18);
         who19 = probe_who_am_i(0x19);
-        LOG_INF("  0x18: %s  0x19: %s",
+        LOG_INF("  [%2d] 0x18: %s  0x19: %s", attempt,
                 who18 >= 0 ? "ACK" : "nack",
                 who19 >= 0 ? "ACK" : "nack");
         if (who18 >= 0 || who19 >= 0) {
             break;
         }
         k_msleep(200);
+    }
+    if (who18 < 0 && who19 < 0) {
+        LOG_ERR("LIS2DW12 not found at 0x18 or 0x19 after 5 s — IMU unavailable");
+        return -ENODEV;
     }
     if (who18 >= 0) {
         LOG_INF("Found at 0x18  WHO_AM_I=0x%02X", (uint8_t)who18);
@@ -235,12 +240,13 @@ int imu_read(struct imu_sample *out)
     out->z_mg = (int16_t)(((int32_t)(rz >> 4) * SENS_NUM) / SENS_DEN);
 
     /* Temperature — 2 bytes starting at OUT_T_L (0x0D).
-     * 12-bit left-aligned, 1 LSB of 12-bit value = 1 °C, offset +25 °C.
-     * Convert to hundredths of °C. */
+     * 12-bit left-aligned, 1 LSB of 12-bit value = 1/16 °C, offset +25 °C.
+     * (Zephyr ref: LIS2DW12_TEMP_SCALE_FACTOR = 62500 µ°C = 1,000,000/16)
+     * Convert to hundredths of °C: × 100 / 16 = × 25 / 4. */
     uint8_t t_raw[2];
     if (reg_burst_read(REG_OUT_T_L, t_raw, 2) == 0) {
         int16_t rt = (int16_t)((uint16_t)t_raw[0] | ((uint16_t)t_raw[1] << 8));
-        out->temp_cdeg = (int16_t)(2500 + (int32_t)(rt >> 4) * 100);
+        out->temp_cdeg = (int16_t)(2500 + (int32_t)(rt >> 4) * 100 / 16);
     } else {
         out->temp_cdeg = 0;
     }

@@ -58,6 +58,7 @@ import numpy as np
 
 DEVICE_NAME      = "EEG Wearable"
 EEG_CHAR_UUID    = "12340002-1234-1234-1234-123456789abc"
+IMU_CHAR_UUID    = "12340003-1234-1234-1234-123456789abc"
 CTRL_CHAR_UUID   = "12340004-1234-1234-1234-123456789abc"
 STATUS_CHAR_UUID = "12340005-1234-1234-1234-123456789abc"
 
@@ -136,6 +137,7 @@ class BleEEGClient:
         self.sample_callback = None
         self.status_callback = None
         self.pmic_callback   = None
+        self.imu_callback    = None
 
         self._stop           = False      # set True by stop()
         self._loop           = None       # asyncio event loop (BLE thread); used for thread-safe writes
@@ -161,6 +163,10 @@ class BleEEGClient:
     def set_status_callback(self, cb):
         """cb(msg: str)"""
         self.status_callback = cb
+
+    def set_imu_callback(self, cb):
+        """cb(x_mg: int, y_mg: int, z_mg: int, temp_cdeg: int)"""
+        self.imu_callback = cb
 
     def set_pmic_callback(self, cb):
         """cb(vbat_mv: int, pct: int, charging: bool, error: bool)"""
@@ -241,6 +247,13 @@ class BleEEGClient:
 
         if self.sample_callback:
             self.sample_callback(uv, gains, rails)
+
+    def _notify_imu(self, sender, data: bytearray):
+        if len(data) < 8:
+            return
+        x, y, z, t = struct.unpack_from("<4h", data)
+        if self.imu_callback:
+            self.imu_callback(x, y, z, t)
 
     def _notify_status(self, sender, data: bytearray):
         """Parse the 4-byte Device Status characteristic packet from firmware."""
@@ -349,6 +362,12 @@ class BleEEGClient:
                                 self._log("[BLE] Status characteristic subscribed")
                             except Exception as se:
                                 self._log(f"[BLE] Status char not available (old firmware?): {se}")
+                            # Best-effort subscribe to IMU
+                            try:
+                                await client.start_notify(IMU_CHAR_UUID, self._notify_imu)
+                                self._log("[BLE] IMU characteristic subscribed")
+                            except Exception as ie:
+                                self._log(f"[BLE] IMU char not available: {ie}")
                             break
                         except Exception as e:
                             self._log(f"[BLE] start_notify {sub_attempt+1}/4 failed: {e}")
@@ -395,6 +414,10 @@ class BleEEGClient:
                         pass
                     try:
                         await client.stop_notify(STATUS_CHAR_UUID)
+                    except Exception:
+                        pass
+                    try:
+                        await client.stop_notify(IMU_CHAR_UUID)
                     except Exception:
                         pass
 

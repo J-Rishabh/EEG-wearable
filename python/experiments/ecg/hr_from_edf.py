@@ -14,6 +14,8 @@ detected R-peaks, artifact windows, and a per-method summary panel.
 Usage:
     python hr_from_edf.py recordings/eeg_20260408_204723.edf
     python hr_from_edf.py recordings/eeg_20260408_204723.edf --show
+
+    python .\hr_from_edf.py ..\..\recordings\eeg_20260409_225425.edf --show   
 """
 
 import argparse
@@ -24,6 +26,13 @@ import matplotlib.pyplot as plt
 import matplotlib.patches as mpatches
 import numpy as np
 from scipy.signal import butter, filtfilt, iirnotch, find_peaks
+
+import sys as _sys, os as _os
+_sys.path.insert(0, _os.path.join(_os.path.dirname(_os.path.abspath(__file__)), '..', '..'))
+from eeg_motion import (
+    imu_dynamic_accel_mask, detect_eeg_jump_mask,
+    MOTION_THRESHOLD_MG, MOTION_HOLDOFF_S, IMU_GRAVITY_ALPHA, IMU_DYNAMIC_ALPHA,
+)
 
 # ── Plot style (matches the rest of the project) ──────────────────────────────
 plt.rcParams.update({
@@ -125,7 +134,7 @@ def detect_peaks_pt(env: np.ndarray, fs: float) -> np.ndarray:
     return np.array(accepted, dtype=int)
 
 
-def rr_to_bpm(peaks: np.ndarray, fs: float) -> tuple[np.ndarray, np.ndarray]:
+def rr_to_bpm(peaks: np.ndarray, fs: float) -> tuple:
     """
     Convert peak sample indices → (rr_ms, bpm) arrays.
     Returns NaN for intervals that are physiologically implausible (< 30 or > 220 BPM).
@@ -170,26 +179,6 @@ def detect_blink_mask(eog: np.ndarray, fs: float,
     mask = np.abs(eog) > threshold_uv
     pad  = int(pad_ms * fs / 1000)
     # Dilate: pad each True run
-    dilated = np.copy(mask)
-    for i in np.where(mask)[0]:
-        lo = max(0, i - pad)
-        hi = min(len(mask), i + pad)
-        dilated[lo:hi] = True
-    return dilated
-
-
-def detect_motion_mask(all_ch: np.ndarray, fs: float,
-                       jump_uv: float = 5000.0, pad_ms: float = 200.0) -> np.ndarray:
-    """
-    Boolean mask: True where a motion artifact is present.
-    Motion artifacts cause simultaneous large jumps across multiple channels.
-    Detected as: the max absolute sample-to-sample delta across all 8 channels
-    exceeds jump_uv at the same sample.
-    """
-    diffs  = np.abs(np.diff(all_ch, axis=0))     # (N-1, 8)
-    metric = diffs.max(axis=1)                    # (N-1,) — worst channel at each step
-    mask   = np.concatenate([[False], metric > jump_uv])
-    pad    = int(pad_ms * fs / 1000)
     dilated = np.copy(mask)
     for i in np.where(mask)[0]:
         lo = max(0, i - pad)
@@ -251,6 +240,9 @@ def make_figure(
     pt_env: np.ndarray,
     eog_hp: np.ndarray,
     motion_metric: np.ndarray,
+    t_motion: np.ndarray,
+    motion_threshold: float,
+    motion_unit: str,
     blink_mask: np.ndarray,
     motion_mask: np.ndarray,
     art_mask: np.ndarray,
@@ -309,12 +301,12 @@ def make_figure(
 
     # ── Panel 3: Motion metric ────────────────────────────────────────────────
     ax = axes[3]
-    t_motion = t[1:]   # diff has N-1 samples
-    ax.plot(t_motion, motion_metric, color=C_MOTION, lw=0.8, label="max |Δ| across channels")
-    ax.axhline(5000, color=C_ART, lw=1.0, ls="--", label="threshold (5000 µV/sample)")
+    ax.plot(t_motion, motion_metric, color=C_MOTION, lw=0.8, label=f"smoothed dynamic accel ({motion_unit})")
+    ax.axhline(motion_threshold, color=C_ART, lw=1.0, ls="--",
+               label=f"threshold ({motion_threshold:.0f} {motion_unit})")
     shade_artifacts(ax, motion_mask, t)
-    _ax(ax, title="Motion artifact metric (max sample-to-sample jump across all 8 channels)",
-        xlabel="Time (s)", ylabel="µV/sample")
+    _ax(ax, title="IMU motion artifact metric — dynamic accel (raw − gravity estimate, low-pass smoothed)",
+        xlabel="Time (s)", ylabel=motion_unit)
     ax.legend(fontsize=8)
     ax.set_yscale("log")
 
@@ -367,10 +359,37 @@ def main():
         sys.exit("[ERROR] pyedflib not installed — run: pip install pyedflib")
 
     f = pyedflib.EdfReader(args.edf)
-    labels = f.getSignalLabels()
-    n      = f.getNSamples()[0]
-    fs     = float(f.getSampleFrequency(0))
-    sigs   = np.array([f.readSignal(i) for i in range(f.signals_in_file)])  # (8, N)
+    all_labels = list(f.getSignalLabels())
+    # Split channels by sample rate: EEG at 250 Hz, IMU at 25 Hz
+    eeg_fs   = float(f.getSampleFrequency(0))
+    eeg_idxs = [i for i in range(f.signals_in_file)
+                if f.getSampleFrequency(i) == eeg_fs]
+    imu_idxs = [i for i in range(f.signals_in_file)
+                if f.getSampleFrequency(i) != eeg_fs]
+    n      = f.getNSamples()[eeg_idxs[0]]
+    fs     = eeg_fs
+    sigs   = np.array([f.readSignal(i) for i in eeg_idxs])   # (8, N)
+    labels = [all_labels[i] for i in eeg_idxs]
+
+    # Load IMU channels (ACCEL_X, ACCEL_Y, ACCEL_Z) if present
+    imu_data     = None
+    imu_fs_actual = None
+    if imu_idxs:
+        imu_labels_in = [all_labels[i] for i in imu_idxs]
+        imu_fs_actual = float(f.getSampleFrequency(imu_idxs[0]))
+        imu_sigs = {all_labels[i]: f.readSignal(i) for i in imu_idxs}
+        # Need ACCEL_X/Y/Z for the physics-based motion detection
+        if all(k in imu_sigs for k in ("ACCEL_X", "ACCEL_Y", "ACCEL_Z")):
+            imu_data = np.column_stack([
+                imu_sigs["ACCEL_X"],
+                imu_sigs["ACCEL_Y"],
+                imu_sigs["ACCEL_Z"],
+            ])   # (N_imu, 3)  in mg
+            print(f"  IMU channels loaded: {imu_labels_in} @ {imu_fs_actual:.0f} Hz  "
+                  f"({len(imu_data)} samples)")
+        else:
+            print(f"  IMU channels present ({imu_labels_in}) but ACCEL_X/Y/Z missing — "
+                  f"falling back to EEG-channel jump detection")
     f._close()
 
     print(f"\nLoaded: {os.path.basename(args.edf)}")
@@ -405,8 +424,39 @@ def main():
     # ── Artifact detection ────────────────────────────────────────────────────
     print("\n[2] Detecting artifacts...")
     blink_mask  = detect_blink_mask(eog_hp, fs, threshold_uv=300.0, pad_ms=150.0)
-    motion_mask = detect_motion_mask(sigs.T, fs, jump_uv=5000.0, pad_ms=200.0)
-    art_mask    = blink_mask | motion_mask
+
+    # Motion: IMU dynamic-accel pipeline (same as live code) supplemented by EEG
+    # channel jump detection (catches electrode pop that the IMU can't see).
+    # Falls back to EEG-channel jumps alone for older recordings without IMU data.
+    if imu_data is not None:
+        imu_mask, motion_metric, t_motion = imu_dynamic_accel_mask(
+            imu_data,
+            imu_fs=imu_fs_actual,
+            eeg_n=n,
+            eeg_fs=fs,
+            threshold_mg=MOTION_THRESHOLD_MG,
+            holdoff_s=MOTION_HOLDOFF_S,
+            gravity_alpha=IMU_GRAVITY_ALPHA,
+            dynamic_alpha=IMU_DYNAMIC_ALPHA,
+        )
+        # Supplement: EEG-channel electrode-pop detection (OR with IMU mask)
+        eeg_jump_mask = detect_eeg_jump_mask(sigs.T, fs, jump_uv=500.0, pad_ms=200.0)
+        motion_mask   = imu_mask | eeg_jump_mask
+        motion_threshold = MOTION_THRESHOLD_MG
+        motion_unit      = "mg"
+        print(f"  Motion detection: IMU dynamic-accel + EEG electrode-pop  "
+              f"(IMU threshold={MOTION_THRESHOLD_MG:.0f} mg, "
+              f"holdoff={MOTION_HOLDOFF_S*1000:.0f} ms, EEG jump=500 µV/sample)")
+    else:
+        # Fallback: EEG-channel jumps only (no IMU channels in this EDF)
+        motion_mask   = detect_eeg_jump_mask(sigs.T, fs, jump_uv=5000.0, pad_ms=200.0)
+        motion_metric = np.abs(np.diff(sigs, axis=1)).max(axis=0)   # (N-1,)
+        t_motion      = t[1:]
+        motion_threshold = 5000.0
+        motion_unit      = "µV/sample"
+        print(f"  Motion detection: EEG-channel jump fallback (no IMU channels in EDF)")
+
+    art_mask = blink_mask | motion_mask
 
     n_blink  = int(blink_mask.sum())
     n_motion = int(motion_mask.sum())
@@ -414,9 +464,6 @@ def main():
     print(f"  Blink  mask: {n_blink} samples ({100*n_blink/n:.1f}%)")
     print(f"  Motion mask: {n_motion} samples ({100*n_motion/n:.1f}%)")
     print(f"  Combined:    {n_art} samples ({100*n_art/n:.1f}%) gated out")
-
-    # For the motion metric plot
-    motion_metric = np.abs(np.diff(sigs, axis=1)).max(axis=0)   # (N-1,)
 
     # ── Method A: simple peak detection (current live-viewer approach) ────────
     print("\n[3] Method A — simple threshold peak detection...")
@@ -446,6 +493,9 @@ def main():
         pt_env=pt_env,
         eog_hp=eog_hp,
         motion_metric=motion_metric,
+        t_motion=t_motion,
+        motion_threshold=motion_threshold,
+        motion_unit=motion_unit,
         blink_mask=blink_mask,
         motion_mask=motion_mask,
         art_mask=art_mask,

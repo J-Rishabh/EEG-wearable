@@ -35,6 +35,8 @@ import os
 import argparse
 import threading
 import time
+import math
+import struct
 from collections import deque
 from datetime import datetime
 
@@ -60,6 +62,14 @@ pg.setConfigOptions(antialias=False, useOpenGL=True)
 
 TEST_MODE = False
 FS        = 250
+IMU_FS    = 25
+
+# Motion artifact detection — see eeg_motion.py for full pipeline.
+# Tune thresholds with imu_motion_tuner.py, then update MOTION_THRESHOLD_MG in eeg_motion.py.
+from eeg_motion import (
+    ImuMotionDetector,
+    MOTION_THRESHOLD_MG, MOTION_HOLDOFF_S, IMU_GRAVITY_ALPHA, IMU_DYNAMIC_ALPHA,
+)
 
 MAX_DEQUE     = 15_000        # 60 s at 250 Hz
 WINDOW_SEC    = [5, 10, 30, 60]
@@ -151,8 +161,15 @@ class SharedState:
         self.gain         = [24, 24, 24, 24]
         self.recording    = False
         self.rec_buf      = []
+        self.imu_rec_buf  = []      # list of (x_mg, y_mg, z_mg, motion) at IMU_FS Hz
         self.rec_start    = None
         self.hw_test_mode = False   # True = ADS1299 internal square-wave test
+        # Motion state — updated by _on_imu_sample from the BLE thread
+        self.motion_active        = False
+        self.motion_holdoff_until = 0.0
+        self.imu_x = 0
+        self.imu_y = 0
+        self.imu_z = 0
         self.drl_active   = True    # True = DRL/BIAS circuit active (default)
         # PMIC / battery status (updated every ~5 s from firmware)
         self.vbat_mv      = 0
@@ -254,16 +271,40 @@ def _on_pmic(vbat_mv, pct, charging, error):
         STATE.pmic_error    = error
 
 
+# Stateful IMU motion detector — one instance for the lifetime of the process
+_imu_detector = ImuMotionDetector(
+    threshold_mg=MOTION_THRESHOLD_MG,
+    holdoff_s=MOTION_HOLDOFF_S,
+    gravity_alpha=IMU_GRAVITY_ALPHA,
+    dynamic_alpha=IMU_DYNAMIC_ALPHA,
+)
+
+
+def _on_imu_sample(x_mg, y_mg, z_mg, temp_cdeg):
+    """BleEEGClient IMU callback — compute motion flag and buffer for EDF."""
+    _dyn_raw, _dyn_smooth, motion_active = _imu_detector.process_sample(x_mg, y_mg, z_mg)
+    with STATE.lock:
+        STATE.motion_active = motion_active
+        STATE.imu_x = x_mg
+        STATE.imu_y = y_mg
+        STATE.imu_z = z_mg
+        if STATE.recording:
+            STATE.imu_rec_buf.append(
+                (x_mg, y_mg, z_mg, 1 if motion_active else 0)
+            )
+
+
 BLE_CLIENT = BleEEGClient()
 BLE_CLIENT.set_sample_callback(_on_ble_sample)
 BLE_CLIENT.set_pmic_callback(_on_pmic)
+BLE_CLIENT.set_imu_callback(_on_imu_sample)
 
 
 # ──────────────────────────────────────────────────────────────────────────────
 # EDF SAVE  (identical to eeg_stream.py)
 # ──────────────────────────────────────────────────────────────────────────────
 
-def save_edf(buf: list, gain: int, rec_start: float = None):
+def save_edf(buf: list, gain: int, rec_start: float = None, imu_buf: list = None):
     rec_dir = os.path.join(os.path.dirname(__file__), "recordings")
     os.makedirs(rec_dir, exist_ok=True)
     # Use rec_start for the filename so it matches the BCI event logs
@@ -272,30 +313,64 @@ def save_edf(buf: list, gain: int, rec_start: float = None):
     arr   = np.array(buf, dtype=np.float64)
     if arr.ndim != 2 or arr.shape[1] != 8:
         print("[SAVE] Unexpected buffer shape — aborting."); return None
+
+    # IMU data — (N_imu, 4): x_mg, y_mg, z_mg, motion flag
+    has_imu = bool(imu_buf)
+    if has_imu:
+        imu_arr = np.array(imu_buf, dtype=np.float64)
+        # Trim both streams to whole seconds so EDF records align cleanly.
+        # EEG: 250 Hz  |  IMU: 25 Hz  → 10:1 ratio, 1-second records work for both.
+        n_secs  = min(len(arr) // FS, len(imu_arr) // IMU_FS)
+        arr     = arr    [:n_secs * FS]
+        imu_arr = imu_arr[:n_secs * IMU_FS]
+        print(f"[SAVE] IMU: {len(imu_arr)} samples ({n_secs} s) at {IMU_FS} Hz")
+    else:
+        n_secs = len(arr) // FS
+        arr    = arr[:n_secs * FS]
+
     try:
         import pyedflib
         fname = os.path.join(rec_dir, f"eeg_{ts}.edf")
-        labels = ["EOG","EMG_far","EMG_near","EEG_L1","EEG_L2","EEG_L3","SRB1","DRL"]
-        f = pyedflib.EdfWriter(fname, 8, file_type=pyedflib.FILETYPE_EDFPLUS)
+
+        eeg_labels = ["EOG","EMG_far","EMG_near","EEG_L1","EEG_L2","EEG_L3","SRB1","DRL"]
+        imu_labels = ["ACCEL_X","ACCEL_Y","ACCEL_Z","MOTION"]
+        n_ch = 12 if has_imu else 8
+        f = pyedflib.EdfWriter(fname, n_ch, file_type=pyedflib.FILETYPE_EDFPLUS)
         try:
             f.setStartdatetime(datetime.fromtimestamp(t0))
             for i in range(8):
                 ch_max = round(max(float(np.max(np.abs(arr[:, i]))), 1.0), 1)
                 f.setSignalHeader(i, {
-                    "label": labels[i], "dimension": "uV",
+                    "label": eeg_labels[i], "dimension": "uV",
                     "sample_frequency": FS,
                     "physical_max":  ch_max, "physical_min": -ch_max,
                     "digital_max": 32767,    "digital_min": -32768,
                     "prefilter": "HP:0.5Hz LP:40Hz N:60Hz",
                     "transducer": "ADS1299",
                 })
-            f.writeSamples([np.ascontiguousarray(arr[:, i]) for i in range(8)])
+            if has_imu:
+                imu_ranges = [2000.0, 2000.0, 2000.0, 1.0]   # mg, mg, mg, flag
+                imu_dims   = ["mg",   "mg",   "mg",   "bool"]
+                for j in range(4):
+                    f.setSignalHeader(8 + j, {
+                        "label": imu_labels[j], "dimension": imu_dims[j],
+                        "sample_frequency": IMU_FS,
+                        "physical_max":  imu_ranges[j], "physical_min": -imu_ranges[j],
+                        "digital_max": 32767,            "digital_min": -32768,
+                        "prefilter": "",
+                        "transducer": "LIS2DW12",
+                    })
+            signals = [np.ascontiguousarray(arr[:, i]) for i in range(8)]
+            if has_imu:
+                for j in range(4):
+                    signals.append(np.ascontiguousarray(imu_arr[:, j]))
+            f.writeSamples(signals)
         finally:
             f.close()
     except ImportError:
         fname = os.path.join(rec_dir, f"eeg_{ts}.npy")
         np.save(fname, arr)
-        print("[SAVE] pyedflib not found — saved as .npy")
+        print("[SAVE] pyedflib not found — saved EEG as .npy (IMU not saved)")
 
     # Write sidecar JSON so BCI scripts can auto-sync without a manual keypress.
     # Fields: rec_start_epoch (float, time.time()), rec_start_iso, n_samples, fs, edf_file.
@@ -306,6 +381,8 @@ def save_edf(buf: list, gain: int, rec_start: float = None):
         "n_samples":       int(arr.shape[0]),
         "fs":              FS,
         "edf_file":        os.path.basename(fname),
+        "imu_fs":          IMU_FS if has_imu else None,
+        "imu_channels":    ["ACCEL_X","ACCEL_Y","ACCEL_Z","MOTION"] if has_imu else [],
     }
     meta_path = os.path.join(rec_dir, f"eeg_{ts}_meta.json")
     with open(meta_path, "w") as mf:
@@ -473,7 +550,19 @@ class EEGWindow(QtWidgets.QMainWindow):
         _last_bias_col  = [None]
         _last_bat_state = [None]  # last (bar_color, status_text) tuple
 
+        # Track BLE connection state so we can reset filter on each new connection.
+        # Stale IIR state after a gap causes a large initial transient that can
+        # produce NaN/Inf and crash the OpenGL renderer.
+        _was_streaming = [False]
+
         def _update():
+            try:
+                _update_inner()
+            except Exception:
+                import traceback
+                traceback.print_exc()
+
+        def _update_inner():
             _t0 = time.perf_counter()
             if _last_t[0]:
                 _pt["interval"] += _t0 - _last_t[0]
@@ -498,9 +587,9 @@ class EEGWindow(QtWidgets.QMainWindow):
             elif _pct_now < 20 and _mv_now > 0:
                 _bc, _sc, _st = "#ef5350", "#ef5350", "LOW"
             elif _pct_now < 40 and _mv_now > 0:
-                _bc, _sc, _st = "#ffa726", "#ffa726", "OK"
+                _bc, _sc, _st = "#ffffff", "#ffffff", "OK"
             elif _mv_now > 0:
-                _bc, _sc, _st = "#4caf50", "#4caf50", "OK"
+                _bc, _sc, _st = "#ffffff", "#ffffff", "OK"
             else:
                 _bc, _sc, _st = "#444444", "#555555", "—"
             if _mv_now > 0:
@@ -517,6 +606,17 @@ class EEGWindow(QtWidgets.QMainWindow):
             self._lbl_bat_status.setText(_st)
             self._lbl_bat_status.setStyleSheet(
                 f"color:{_sc};font-size:7pt;font-family:monospace;")
+
+            # 0b. IMU overlay — update every frame (25 Hz data, cheap labels)
+            with STATE.lock:
+                _imu_x      = STATE.imu_x
+                _imu_y      = STATE.imu_y
+                _imu_z      = STATE.imu_z
+                _mot_active = STATE.motion_active
+            self._lbl_imu_x.setText(f"X: {_imu_x:+5d} mg")
+            self._lbl_imu_y.setText(f"Y: {_imu_y:+5d} mg")
+            self._lbl_imu_z.setText(f"Z: {_imu_z:+5d} mg")
+            self._lbl_motion.setVisible(_mot_active)
 
             # 1. Drain — pending holds (8,8) arrays (one per BLE packet)
             with STATE.lock:
@@ -630,10 +730,18 @@ class EEGWindow(QtWidgets.QMainWindow):
                 self._lbl_drl.setStyleSheet(
                     _LABEL_STYLE.format(fg=bc))
 
-            # 6. Connection status
+            # 6. Connection status + reconnect detection
+            is_streaming = BLE_CLIENT.connected
+            if is_streaming and not _was_streaming[0]:
+                # First frame after BLE connects — flush stale IIR state so that
+                # the large DC offset on the electrodes doesn't produce NaN/Inf.
+                proc.reset_state()
+                print("[BLE] New connection detected — filter state reset.")
+            _was_streaming[0] = is_streaming
+
             if TEST_MODE:
                 self._lbl_conn.setText("TEST")
-            elif BLE_CLIENT.connected:
+            elif is_streaming:
                 self._lbl_conn.setText("LIVE")
                 self._lbl_conn.setStyleSheet(
                     _LABEL_STYLE.format(fg="#4caf50"))
@@ -946,6 +1054,31 @@ class EEGWindow(QtWidgets.QMainWindow):
 
         bot.addSpacing(8)
 
+        # IMU / motion box
+        imu_box = QtWidgets.QWidget()
+        imu_box.setStyleSheet("background-color: #111111; border-radius: 3px;")
+        imu_vl = QtWidgets.QVBoxLayout(imu_box)
+        imu_vl.setSpacing(0)
+        imu_vl.setContentsMargins(6, 3, 6, 3)
+        imu_vl.addWidget(QtWidgets.QLabel(
+            "IMU", styleSheet="color:#555555;font-size:6pt;font-family:monospace;"))
+        self._lbl_imu_x = QtWidgets.QLabel("X: — mg")
+        self._lbl_imu_y = QtWidgets.QLabel("Y: — mg")
+        self._lbl_imu_z = QtWidgets.QLabel("Z: — mg")
+        for lbl in (self._lbl_imu_x, self._lbl_imu_y, self._lbl_imu_z):
+            lbl.setStyleSheet("color:#aaaaaa;font-size:7pt;font-family:monospace;")
+        self._lbl_motion = QtWidgets.QLabel("MOTION DETECTED")
+        self._lbl_motion.setStyleSheet(
+            "color:#ef5350;font-size:7pt;font-family:monospace;font-weight:bold;")
+        self._lbl_motion.setVisible(False)
+        imu_vl.addWidget(self._lbl_imu_x)
+        imu_vl.addWidget(self._lbl_imu_y)
+        imu_vl.addWidget(self._lbl_imu_z)
+        imu_vl.addWidget(self._lbl_motion)
+        bot.addWidget(imu_box)
+
+        bot.addSpacing(8)
+
         # Battery / PMIC status box
         bat_box = QtWidgets.QWidget()
         bat_box.setStyleSheet("background-color: #111111; border-radius: 3px;")
@@ -1158,9 +1291,10 @@ class EEGWindow(QtWidgets.QMainWindow):
         # REC / Save
         def toggle_rec():
             if not STATE.recording:
-                STATE.recording = True
-                STATE.rec_start = time.time()
-                STATE.rec_buf   = []
+                STATE.recording   = True
+                STATE.rec_start   = time.time()
+                STATE.rec_buf     = []
+                STATE.imu_rec_buf = []
                 self._btn_rec.setText("STOP")
                 self._btn_rec.setStyleSheet(
                     _BTN_STYLE.format(bg="#1a1a1a", fg="#ffa726"))
@@ -1183,10 +1317,12 @@ class EEGWindow(QtWidgets.QMainWindow):
                 self._btn_rec.setText("REC")
                 self._btn_rec.setStyleSheet(
                     _BTN_STYLE.format(bg="#1a1a1a", fg="#ef5350"))
-            buf = list(STATE.rec_buf)
+            buf     = list(STATE.rec_buf)
+            imu_buf = list(STATE.imu_rec_buf)
             if not buf:
                 print("[SAVE] Nothing recorded yet."); return
-            fname = save_edf(buf, STATE.gain[0], rec_start=STATE.rec_start)
+            fname = save_edf(buf, STATE.gain[0], rec_start=STATE.rec_start,
+                             imu_buf=imu_buf)
             if fname:
                 self._btn_save.setText("Saved")
                 self._btn_save.setStyleSheet(

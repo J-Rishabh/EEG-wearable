@@ -347,7 +347,7 @@ if __name__ == "__main__":
             detector = EOGSaccadeDetector(fs=250, threshold_uv=args.threshold)
             print(f"[EOG] Saccade mode — threshold={args.threshold} µV")
 
-        def on_samples(uv, gains):
+        def on_samples(uv, gains, _rails):
             """uv shape (8, 8) µV [sample, channel]; CH1 (idx 0) = EOG."""
             detector.process(uv[:, 0])
 
