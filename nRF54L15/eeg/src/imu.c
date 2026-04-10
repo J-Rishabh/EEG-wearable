@@ -102,20 +102,26 @@ int imu_init(void)
     int rc = i2c_recover_bus(i2c_dev);
     LOG_INF("i2c_recover_bus: %d (%s)", rc, rc == 0 ? "OK" : "failed");
 
-    /* Quick probe of both possible I2C addresses — helps diagnose whether
-     * the chip is present but on the wrong address (e.g. SA0 pin floating high).
-     * WHO_AM_I = 0x44 expected at whichever address the chip responds to. */
-    int who18 = probe_who_am_i(0x18);
-    int who19 = probe_who_am_i(0x19);
-    LOG_INF("  0x18: %s  (WHO_AM_I=0x%02X)",
-            who18 >= 0 ? "ACK" : "NACK/err", who18 >= 0 ? (uint8_t)who18 : 0);
-    LOG_INF("  0x19: %s  (WHO_AM_I=0x%02X)",
-            who19 >= 0 ? "ACK" : "NACK/err", who19 >= 0 ? (uint8_t)who19 : 0);
-    if (who18 < 0 && who19 < 0) {
-        LOG_ERR("No ACK at 0x18 or 0x19 — cold joint, wrong VDD, or bus fault");
-        LOG_ERR("  raw errs: 0x18=%d  0x19=%d", who18, who19);
-    } else if (who18 < 0 && who19 >= 0) {
-        LOG_WRN("Device ACKs at 0x19 (SA0 pulled high) — change LIS2DW12_ADDR to 0x19");
+    /* Continuous probe loop — repeats every 200 ms so a scope can trigger on
+     * the I2C activity without needing to catch a one-shot event.
+     * Exits as soon as either address ACKs. */
+    LOG_INF("Probing 0x18 / 0x19 every 200 ms — trigger scope now");
+    int who18, who19;
+    while (1) {
+        who18 = probe_who_am_i(0x18);
+        who19 = probe_who_am_i(0x19);
+        LOG_INF("  0x18: %s  0x19: %s",
+                who18 >= 0 ? "ACK" : "nack",
+                who19 >= 0 ? "ACK" : "nack");
+        if (who18 >= 0 || who19 >= 0) {
+            break;
+        }
+        k_msleep(200);
+    }
+    if (who18 >= 0) {
+        LOG_INF("Found at 0x18  WHO_AM_I=0x%02X", (uint8_t)who18);
+    } else if (who19 >= 0) {
+        LOG_WRN("Found at 0x19 (SA0 high) — change LIS2DW12_ADDR to 0x19");
     }
 
     /* WHO_AM_I — confirms the chip is wired and responding.
