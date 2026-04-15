@@ -1,0 +1,31 @@
+Removed Pin From Net: NetName=GND Pin=J1-1
+Removed Pin From Net: NetName=Pad7 Pin=J1-3
+Removed Pin From Net: NetName=Pad6 Pin=J1-4
+Removed Pin From Net: NetName=Pad5 Pin=J1-5
+Removed Pin From Net: NetName=Pad4 Pin=J1-6
+Removed Pin From Net: NetName=Pad3 Pin=J1-7
+Removed Pin From Net: NetName=Pad2 Pin=J1-8
+Removed Pin From Net: NetName=Pad1 Pin=J1-9
+Removed Pin From Net: NetName=+5V Pin=J1-10
+Added Pin To Net: NetName=Pad7 Pin=J1-1
+Added Pin To Net: NetName=Pad6 Pin=J1-3
+Added Pin To Net: NetName=Pad5 Pin=J1-4
+Added Pin To Net: NetName=Pad4 Pin=J1-5
+Added Pin To Net: NetName=Pad3 Pin=J1-6
+Added Pin To Net: NetName=Pad2 Pin=J1-7
+Added Pin To Net: NetName=Pad1 Pin=J1-8
+Added Pin To Net: NetName=+5V Pin=J1-9
+Added Pin To Net: NetName=GND Pin=J1-10
+Added Member To Class: ClassName=EEG_Thesis Member=Component C22 GRM035R61C225ME01D
+Added Member To Class: ClassName=EEG_Thesis Member=Component C24 GJM0335C1E2R0WB01
+Added Member To Class: ClassName=EEG_Thesis Member=Component R16 ERA1AEB103C
+Added Member To Class: ClassName=EEG_Thesis Member=Component TP14 TP
+Added Member To Class: ClassName=EEG_Thesis Member=Component TP18 TP
+Added Member To Class: ClassName=EEG_Thesis Member=Component TP20 TP
+Added Member To Class: ClassName=EEG_Thesis Member=Component TP23 TP
+Added Member To Class: ClassName=EEG_Thesis Member=Component TP24 TP
+Added Member To Class: ClassName=EEG_Thesis Member=Component TP27 TP
+Added Member To Class: ClassName=EEG_Thesis Member=Component TP28 TP
+Added Member To Class: ClassName=EEG_Thesis Member=Component TP30 TP
+Added Member To Class: ClassName=EEG_Thesis Member=Component TP31 TP
+Added Member To Class: ClassName=RF Member=Wire NetC23_2

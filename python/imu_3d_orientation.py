@@ -189,7 +189,7 @@ ax.set_zlim(-1, 1)
 ax.set_xlabel("X", color="#cccccc")
 ax.set_ylabel("Y", color="#cccccc")
 ax.set_zlabel("Z", color="#cccccc")
-ax.set_title("LIS2DW12 — 3D Orientation (roll & pitch)", color="#ffffff", fontsize=12)
+ax.set_title("LIS2DW12 - 3D Orientation", color="#ffffff", fontsize=12)
 ax.tick_params(colors="#cccccc")
 ax.legend(loc="upper left", facecolor="#1a1a2e", edgecolor="#444466",
           labelcolor="#ffffff")

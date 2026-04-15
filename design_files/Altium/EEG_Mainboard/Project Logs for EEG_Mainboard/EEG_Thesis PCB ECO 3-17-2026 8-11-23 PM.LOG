@@ -1,0 +1,13 @@
+Removed Pin From Net: NetName=GND Pin=C25-1
+Removed Pin From Net: NetName=RF Pin=L6-1
+Removed Pin From Net: NetName=NetANT1_1 Pin=L7-2
+Change Component Comment : Designator=L6 Old Comment=L-07C2N7SV6T New Comment=L-07C3N3SV6T
+Change Component Comment : Designator=L7 Old Comment=L-07C3N3SV6T New Comment=L-07C2N7SV6T
+Change Component Designator: OldDesignator=J? NewDesignator=J3
+Added Pin To Net: NetName=RF Pin=C25-2
+Added Pin To Net: NetName=NetANT1_1 Pin=L6-2
+Added Pin To Net: NetName=GND Pin=L7-1
+Added Pin To Net: NetName=NetC25_1 Pin=C25-1
+Added Pin To Net: NetName=NetC25_1 Pin=L6-1
+Added Pin To Net: NetName=NetC25_1 Pin=L7-2
+Added Net: Name=NetC25_1

@@ -1,0 +1,38 @@
+Change Component Designator: OldDesignator=S? NewDesignator=S1
+Change Component Designator: OldDesignator=TP? NewDesignator=TP18
+Change Component Designator: OldDesignator=TP? NewDesignator=TP19
+Change Component Designator: OldDesignator=TP? NewDesignator=TP20
+Change Component Designator: OldDesignator=TP? NewDesignator=TP21
+Change Component Designator: OldDesignator=TP? NewDesignator=TP22
+Change Component Designator: OldDesignator=TP? NewDesignator=TP23
+Change Component Designator: OldDesignator=TP? NewDesignator=TP24
+Add Pin To Net: Unknown Pin: Pin TP1-1
+Add Pin To Net: Unknown Pin: Pin TP2-1
+Add Pin To Net: Unknown Pin: Pin TP3-1
+Add Pin To Net: Unknown Pin: Pin TP4-1
+Add Pin To Net: Unknown Pin: Pin TP5-1
+Add Pin To Net: Unknown Pin: Pin TP6-1
+Add Pin To Net: Unknown Pin: Pin TP7-1
+Add Pin To Net: Unknown Pin: Pin TP8-1
+Add Pin To Net: Unknown Pin: Pin TP9-1
+Add Pin To Net: Unknown Pin: Pin TP10-1
+Add Pin To Net: Unknown Pin: Pin TP11-1
+Add Pin To Net: Unknown Pin: Pin TP12-1
+Add Pin To Net: Unknown Pin: Pin TP13-1
+Add Pin To Net: Unknown Pin: Pin TP14-1
+Add Pin To Net: Unknown Pin: Pin TP15-1
+Add Pin To Net: Unknown Pin: Pin TP16-1
+Add Pin To Net: Unknown Pin: Pin TP17-1
+Add Pin To Net: Unknown Pin: Pin TP18-1
+Add Pin To Net: Unknown Pin: Pin TP19-1
+Add Pin To Net: Unknown Pin: Pin TP20-1
+Add Pin To Net: Unknown Pin: Pin TP21-1
+Add Pin To Net: Unknown Pin: Pin TP22-1
+Add Pin To Net: Unknown Pin: Pin TP23-1
+Add Pin To Net: Unknown Pin: Pin TP24-1
+Added Member To Class: ClassName=EEG_Thesis Member=Component TP18 TP
+Added Member To Class: ClassName=EEG_Thesis Member=Component TP19 TP
+Added Member To Class: ClassName=EEG_Thesis Member=Component TP20 TP
+Added Member To Class: ClassName=EEG_Thesis Member=Component TP21 TP
+Added Member To Class: ClassName=EEG_Thesis Member=Component TP23 TP
+Added Member To Class: ClassName=EEG_Thesis Member=Component TP24 TP

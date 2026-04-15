@@ -1,0 +1,2 @@
+Removed Pin From Net: NetName=VBUS Pin=TP17-1
+Added Pin To Net: NetName=VBUS_PRE Pin=TP17-1

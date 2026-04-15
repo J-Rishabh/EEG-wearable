@@ -1,0 +1,24 @@
+Added Component: Designator=J1(PCBComponent_1)
+Added Component: Designator=J2(PCBComponent_1)
+Added Pin To Net: NetName=Pad1 Pin=J1-1
+Added Pin To Net: NetName=Pad2 Pin=J1-2
+Added Pin To Net: NetName=Pad3 Pin=J1-3
+Added Pin To Net: NetName=Pad4 Pin=J1-4
+Added Pin To Net: NetName=Pad5 Pin=J1-5
+Added Pin To Net: NetName=Pad6 Pin=J1-6
+Added Pin To Net: NetName=Pad7 Pin=J1-7
+Added Pin To Net: NetName=Pad8 Pin=J1-8
+Added Pin To Net: NetName=VCC Pin=J1-9
+Added Pin To Net: NetName=GND Pin=J1-10
+Added Pin To Net: NetName=Pad1 Pin=J2-1
+Added Pin To Net: NetName=Pad2 Pin=J2-2
+Added Pin To Net: NetName=Pad3 Pin=J2-3
+Added Pin To Net: NetName=Pad4 Pin=J2-4
+Added Pin To Net: NetName=Pad5 Pin=J2-5
+Added Pin To Net: NetName=Pad6 Pin=J2-6
+Added Pin To Net: NetName=Pad7 Pin=J2-7
+Added Pin To Net: NetName=Pad8 Pin=J2-8
+Added Pin To Net: NetName=VCC Pin=J2-9
+Added Pin To Net: NetName=GND Pin=J2-10
+Added Member To Class: ClassName=Sheet1 Member=Component J1 10FHH-SM1-GAN-TF FPC
+Added Member To Class: ClassName=Sheet1 Member=Component J2 10FHH-SM1-GAN-TF FPC

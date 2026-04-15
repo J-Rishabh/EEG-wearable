@@ -1,0 +1,48 @@
+Removed Pin From Net: NetName=VCC Pin=C1A-1
+Removed Pin From Net: NetName=GND Pin=C1A-2
+Removed Pin From Net: NetName=VCC Pin=C1B-1
+Removed Pin From Net: NetName=GND Pin=C1B-2
+Removed Pin From Net: NetName=VCC Pin=C1C-1
+Removed Pin From Net: NetName=GND Pin=C1C-2
+Removed Pin From Net: NetName=VCC Pin=C1D-1
+Removed Pin From Net: NetName=GND Pin=C1D-2
+Removed Pin From Net: NetName=VCC Pin=C1E-1
+Removed Pin From Net: NetName=GND Pin=C1E-2
+Removed Pin From Net: NetName=VCC Pin=C1F-1
+Removed Pin From Net: NetName=GND Pin=C1F-2
+Removed Pin From Net: NetName=VCC Pin=C1G-1
+Removed Pin From Net: NetName=GND Pin=C1G-2
+Removed Pin From Net: NetName=GND Pin=IC1A-4
+Removed Pin From Net: NetName=VCC Pin=IC1A-8
+Removed Pin From Net: NetName=GND Pin=IC1B-4
+Removed Pin From Net: NetName=VCC Pin=IC1B-8
+Removed Pin From Net: NetName=GND Pin=IC1C-4
+Removed Pin From Net: NetName=VCC Pin=IC1C-8
+Removed Pin From Net: NetName=GND Pin=IC1D-4
+Removed Pin From Net: NetName=VCC Pin=IC1D-8
+Removed Pin From Net: NetName=GND Pin=IC1E-4
+Removed Pin From Net: NetName=VCC Pin=IC1E-8
+Removed Pin From Net: NetName=GND Pin=IC1F-4
+Removed Pin From Net: NetName=VCC Pin=IC1F-8
+Removed Pin From Net: NetName=GND Pin=IC1G-4
+Removed Pin From Net: NetName=VCC Pin=IC1G-8
+Removed Member From Class: ClassName=EEG_Electrodes Member=E2
+Removed Member From Class: ClassName=EEG_Electrodes Member=E3
+Removed Member From Class: ClassName=EEG_Electrodes Member=E4
+Removed Member From Class: ClassName=EEG_Electrodes Member=E5
+Removed Member From Class: ClassName=EEG_Electrodes Member=E6
+Removed Member From Class: ClassName=EEG_Electrodes Member=E7
+Removed Member From Class: ClassName=EEG_Electrodes Member=E8
+Change Component Designator: OldDesignator=C1H NewDesignator=C1
+Change Component Designator: OldDesignator=IC1H NewDesignator=IC1
+Change Component Designator: OldDesignator=R1H NewDesignator=R1
+Change Component Designator: OldDesignator=R2H NewDesignator=R2
+Change Component Designator: OldDesignator=R3H NewDesignator=R3
+Change Component Designator: OldDesignator=R4H NewDesignator=R4
+Change Net Name : Old Net Name=GUARD_RING1H New Net Name=GUARD_RING1
+Change Net Name : Old Net Name=INT1H New Net Name=INT1
+Change Net Name : Old Net Name=NetIC1H_3 New Net Name=NetIC1_3
+Change Net Name : Old Net Name=NetIC1H_6 New Net Name=NetIC1_6
+Change Class Name : Old Net Name=Designator8 New Net Name=Designator
+Change Room Name: Old Name=Designator6 New Name=Designator
+Change Room Scope: Old Scope=InComponentClass('Designator6') New Scope=InComponentClass('Designator')

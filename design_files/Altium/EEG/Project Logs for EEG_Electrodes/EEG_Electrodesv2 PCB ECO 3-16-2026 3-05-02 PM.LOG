@@ -1,0 +1,33 @@
+Removed Pin From Net: NetName=OUTG Pin=J1-1
+Removed Pin From Net: NetName=OUTF Pin=J1-2
+Removed Pin From Net: NetName=OUTE Pin=J1-3
+Removed Pin From Net: NetName=OUTD Pin=J1-4
+Removed Pin From Net: NetName=OUTC Pin=J1-5
+Removed Pin From Net: NetName=OUTB Pin=J1-6
+Removed Pin From Net: NetName=OUTA Pin=J1-7
+Removed Pin From Net: NetName=Pad8 Pin=J1-8
+Added Component: Designator=C2(CAPC0603X33N)
+Add component (AddParameter): Name = "Arrow Part Number"; Value = "GRM033R6YA104KE14D"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Arrow Price/Stock"; Value = "https://www.arrow.com/en/products/grm033r6ya104ke14d/murata-manufacturing?utm_currency=USD&region=europe"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Datasheet Link"; Value = "https://search.murata.co.jp/Ceramy/image/img/A01X/G101/ENG/GRM033R6YA104KE14-01A.pdf"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Height"; Value = "0.33mm"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Manufacturer_Name"; Value = "Murata Electronics"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Manufacturer_Part_Number"; Value = "GRM033R6YA104KE14D"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Mouser Part Number"; Value = "81-GRM33R6YA104KE14D"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Mouser Price/Stock"; Value = "https://www.mouser.co.uk/ProductDetail/Murata-Electronics/GRM033R6YA104KE14D?qs=P%2FC4Eoq9CDwTt3wOuyKhXw%3D%3D"; VariantName = "[No Variations]"
+Added Component: Designator=C3(GRM033D70J224ME01D)
+Add component (AddParameter): Name = "Arrow Part Number"; Value = ""; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Arrow Price/Stock"; Value = ""; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Datasheet Link"; Value = "https://search.murata.co.jp/Ceramy/image/img/A01X/G101/ENG/GRM035R61C225ME01-01A.pdf"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Height"; Value = "0.33mm"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Manufacturer_Name"; Value = "Murata Electronics"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Manufacturer_Part_Number"; Value = "GRM035R61C225ME01D"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Mouser Part Number"; Value = "81-GRM035R61C225ME1D"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Mouser Price/Stock"; Value = "https://www.mouser.co.uk/ProductDetail/Murata-Electronics/GRM035R61C225ME01D?qs=DPoM0jnrROXTliYh3Jmu1A%3D%3D"; VariantName = "[No Variations]"
+Added Pin To Net: NetName=GND Pin=C2-1
+Added Pin To Net: NetName=VCC Pin=C2-2
+Added Pin To Net: NetName=VCC Pin=C3-1
+Added Pin To Net: NetName=GND Pin=C3-2
+Added Pin To Net: NetName=OUTA Pin=J1-1
+Added Member To Class: ClassName=EEG_Electrodes Member=Component C2 GRM033R6YA104KE14D
+Added Member To Class: ClassName=EEG_Electrodes Member=Component C3 GRM035R61C225ME01D

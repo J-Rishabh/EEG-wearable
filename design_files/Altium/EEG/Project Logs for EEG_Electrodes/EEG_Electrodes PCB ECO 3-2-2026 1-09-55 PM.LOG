@@ -1,0 +1,64 @@
+Change Component Designator: OldDesignator=C?A NewDesignator=C1A
+Change Component Designator: OldDesignator=C?B NewDesignator=C1B
+Change Component Designator: OldDesignator=C?C NewDesignator=C1C
+Change Component Designator: OldDesignator=C?D NewDesignator=C1D
+Change Component Designator: OldDesignator=C?E NewDesignator=C1E
+Change Component Designator: OldDesignator=C?F NewDesignator=C1F
+Change Component Designator: OldDesignator=C?G NewDesignator=C1G
+Change Component Designator: OldDesignator=C?H NewDesignator=C1H
+Change Component Designator: OldDesignator=R?A NewDesignator=R1A
+Change Component Designator: OldDesignator=R?A NewDesignator=R2A
+Change Component Designator: OldDesignator=R?A NewDesignator=R3A
+Change Component Designator: OldDesignator=R?A NewDesignator=R4A
+Change Component Designator: OldDesignator=R?B NewDesignator=R1B
+Change Component Designator: OldDesignator=R?B NewDesignator=R2B
+Change Component Designator: OldDesignator=R?B NewDesignator=R3B
+Change Component Designator: OldDesignator=R?B NewDesignator=R4B
+Change Component Designator: OldDesignator=R?C NewDesignator=R1C
+Change Component Designator: OldDesignator=R?C NewDesignator=R2C
+Change Component Designator: OldDesignator=R?C NewDesignator=R3C
+Change Component Designator: OldDesignator=R?C NewDesignator=R4C
+Change Component Designator: OldDesignator=R?D NewDesignator=R1D
+Change Component Designator: OldDesignator=R?D NewDesignator=R2D
+Change Component Designator: OldDesignator=R?D NewDesignator=R3D
+Change Component Designator: OldDesignator=R?D NewDesignator=R4D
+Change Component Designator: OldDesignator=R?E NewDesignator=R1E
+Change Component Designator: OldDesignator=R?E NewDesignator=R2E
+Change Component Designator: OldDesignator=R?E NewDesignator=R3E
+Change Component Designator: OldDesignator=R?E NewDesignator=R4E
+Change Component Designator: OldDesignator=R?F NewDesignator=R1F
+Change Component Designator: OldDesignator=R?F NewDesignator=R2F
+Change Component Designator: OldDesignator=R?F NewDesignator=R3F
+Change Component Designator: OldDesignator=R?F NewDesignator=R4F
+Change Component Designator: OldDesignator=R?G NewDesignator=R1G
+Change Component Designator: OldDesignator=R?G NewDesignator=R2G
+Change Component Designator: OldDesignator=R?G NewDesignator=R3G
+Change Component Designator: OldDesignator=R?G NewDesignator=R4G
+Change Component Designator: OldDesignator=R?H NewDesignator=R1H
+Change Component Designator: OldDesignator=R?H NewDesignator=R2H
+Change Component Designator: OldDesignator=R?H NewDesignator=R3H
+Change Component Designator: OldDesignator=R?H NewDesignator=R4H
+Added Member To Class: ClassName=Designator1 Member=Component R1A (R1) ERA-1AEB101C
+Added Member To Class: ClassName=Designator2 Member=Component R1B (R1) ERA-1AEB101C
+Added Member To Class: ClassName=Designator3 Member=Component R1C (R1) ERA-1AEB101C
+Added Member To Class: ClassName=Designator4 Member=Component R1D (R1) ERA-1AEB101C
+Added Member To Class: ClassName=Designator5 Member=Component R1E (R1) ERA-1AEB101C
+Added Member To Class: ClassName=Designator6 Member=Component R1F (R1) ERA-1AEB101C
+Added Member To Class: ClassName=Designator8 Member=Component R1H (R1) ERA-1AEB101C
+Added Member To Class: ClassName=Designator1 Member=Component R2A (R2) ERA-1AEB101C
+Added Member To Class: ClassName=Designator3 Member=Component R2C (R2) ERA-1AEB101C
+Added Member To Class: ClassName=Designator5 Member=Component R2E (R2) ERA-1AEB101C
+Added Member To Class: ClassName=Designator6 Member=Component R2F (R2) ERA-1AEB101C
+Added Member To Class: ClassName=Designator7 Member=Component R2G (R2) ERA-1AEB101C
+Added Member To Class: ClassName=Designator8 Member=Component R2H (R2) ERA-1AEB101C
+Added Member To Class: ClassName=Designator2 Member=Component R3B (R3) AF0201JR-0768KL
+Added Member To Class: ClassName=Designator3 Member=Component R3C (R3) AF0201JR-0768KL
+Added Member To Class: ClassName=Designator4 Member=Component R3D (R3) AF0201JR-0768KL
+Added Member To Class: ClassName=Designator6 Member=Component R3F (R3) AF0201JR-0768KL
+Added Member To Class: ClassName=Designator7 Member=Component R3G (R3) AF0201JR-0768KL
+Added Member To Class: ClassName=Designator8 Member=Component R3H (R3) AF0201JR-0768KL
+Added Member To Class: ClassName=Designator1 Member=Component R4A (R4) AF0201JR-071ML
+Added Member To Class: ClassName=Designator2 Member=Component R4B (R4) AF0201JR-071ML
+Added Member To Class: ClassName=Designator4 Member=Component R4D (R4) AF0201JR-071ML
+Added Member To Class: ClassName=Designator5 Member=Component R4E (R4) AF0201JR-071ML
+Added Member To Class: ClassName=Designator7 Member=Component R4G (R4) AF0201JR-071ML

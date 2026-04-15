@@ -1,0 +1,15 @@
+{
+  "rec_start_epoch": 1775977169.9436333,
+  "rec_start_iso": "2026-04-12T02:59:29.943633",
+  "n_samples": 5500,
+  "fs": 250,
+  "edf_file": "eeg_20260412_025929.edf",
+  "imu_fs": 25,
+  "imu_channels": [
+    "ACCEL_X",
+    "ACCEL_Y",
+    "ACCEL_Z",
+    "MOTION",
+    "IMU_TEMP"
+  ]
+}

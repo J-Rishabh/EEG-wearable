@@ -1,0 +1,334 @@
+Added Component: Designator=C1A(0402_CAP)
+Added Component: Designator=C1B(0402_CAP)
+Added Component: Designator=C1C(0402_CAP)
+Added Component: Designator=C1D(0402_CAP)
+Added Component: Designator=C1E(0402_CAP)
+Added Component: Designator=C1F(0402_CAP)
+Added Component: Designator=C1G(0402_CAP)
+Added Component: Designator=C1H(0402_CAP)
+Added Component: Designator=E1(EEG_Electrode)
+Added Component: Designator=E2(EEG_Electrode)
+Added Component: Designator=E3(EEG_Electrode)
+Added Component: Designator=E4(EEG_Electrode)
+Added Component: Designator=E5(EEG_Electrode)
+Added Component: Designator=E6(EEG_Electrode)
+Added Component: Designator=E7(EEG_Electrode)
+Added Component: Designator=E8(EEG_Electrode)
+Added Component: Designator=IC1A(SOP65P490X110-8N)
+Add component (AddParameter): Name = "Arrow Part Number"; Value = "LTC6078ACMS8#TRPBF"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Arrow Price/Stock"; Value = "https://www.arrow.com/en/products/ltc6078acms8trpbf/analog-devices?region=nac"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Datasheet Link"; Value = "https://datasheet.datasheetarchive.com/originals/distributors/Datasheets_SAMA/f60955edb7006695a84935bb44c6cde2.pdf"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Height"; Value = "1.1mm"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Manufacturer_Name"; Value = "Analog Devices"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Manufacturer_Part_Number"; Value = "LTC6078ACMS8#TRPBF"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Mouser Part Number"; Value = "584-C6078ACMS8TRPBF"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Mouser Price/Stock"; Value = "https://www.mouser.com/Search/Refine.aspx?Keyword=584-C6078ACMS8TRPBF"; VariantName = "[No Variations]"
+Added Component: Designator=IC1B(SOP65P490X110-8N)
+Add component (AddParameter): Name = "Arrow Part Number"; Value = "LTC6078ACMS8#TRPBF"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Arrow Price/Stock"; Value = "https://www.arrow.com/en/products/ltc6078acms8trpbf/analog-devices?region=nac"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Datasheet Link"; Value = "https://datasheet.datasheetarchive.com/originals/distributors/Datasheets_SAMA/f60955edb7006695a84935bb44c6cde2.pdf"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Height"; Value = "1.1mm"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Manufacturer_Name"; Value = "Analog Devices"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Manufacturer_Part_Number"; Value = "LTC6078ACMS8#TRPBF"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Mouser Part Number"; Value = "584-C6078ACMS8TRPBF"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Mouser Price/Stock"; Value = "https://www.mouser.com/Search/Refine.aspx?Keyword=584-C6078ACMS8TRPBF"; VariantName = "[No Variations]"
+Added Component: Designator=IC1C(SOP65P490X110-8N)
+Add component (AddParameter): Name = "Arrow Part Number"; Value = "LTC6078ACMS8#TRPBF"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Arrow Price/Stock"; Value = "https://www.arrow.com/en/products/ltc6078acms8trpbf/analog-devices?region=nac"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Datasheet Link"; Value = "https://datasheet.datasheetarchive.com/originals/distributors/Datasheets_SAMA/f60955edb7006695a84935bb44c6cde2.pdf"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Height"; Value = "1.1mm"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Manufacturer_Name"; Value = "Analog Devices"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Manufacturer_Part_Number"; Value = "LTC6078ACMS8#TRPBF"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Mouser Part Number"; Value = "584-C6078ACMS8TRPBF"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Mouser Price/Stock"; Value = "https://www.mouser.com/Search/Refine.aspx?Keyword=584-C6078ACMS8TRPBF"; VariantName = "[No Variations]"
+Added Component: Designator=IC1D(SOP65P490X110-8N)
+Add component (AddParameter): Name = "Arrow Part Number"; Value = "LTC6078ACMS8#TRPBF"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Arrow Price/Stock"; Value = "https://www.arrow.com/en/products/ltc6078acms8trpbf/analog-devices?region=nac"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Datasheet Link"; Value = "https://datasheet.datasheetarchive.com/originals/distributors/Datasheets_SAMA/f60955edb7006695a84935bb44c6cde2.pdf"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Height"; Value = "1.1mm"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Manufacturer_Name"; Value = "Analog Devices"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Manufacturer_Part_Number"; Value = "LTC6078ACMS8#TRPBF"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Mouser Part Number"; Value = "584-C6078ACMS8TRPBF"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Mouser Price/Stock"; Value = "https://www.mouser.com/Search/Refine.aspx?Keyword=584-C6078ACMS8TRPBF"; VariantName = "[No Variations]"
+Added Component: Designator=IC1E(SOP65P490X110-8N)
+Add component (AddParameter): Name = "Arrow Part Number"; Value = "LTC6078ACMS8#TRPBF"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Arrow Price/Stock"; Value = "https://www.arrow.com/en/products/ltc6078acms8trpbf/analog-devices?region=nac"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Datasheet Link"; Value = "https://datasheet.datasheetarchive.com/originals/distributors/Datasheets_SAMA/f60955edb7006695a84935bb44c6cde2.pdf"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Height"; Value = "1.1mm"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Manufacturer_Name"; Value = "Analog Devices"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Manufacturer_Part_Number"; Value = "LTC6078ACMS8#TRPBF"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Mouser Part Number"; Value = "584-C6078ACMS8TRPBF"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Mouser Price/Stock"; Value = "https://www.mouser.com/Search/Refine.aspx?Keyword=584-C6078ACMS8TRPBF"; VariantName = "[No Variations]"
+Added Component: Designator=IC1F(SOP65P490X110-8N)
+Add component (AddParameter): Name = "Arrow Part Number"; Value = "LTC6078ACMS8#TRPBF"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Arrow Price/Stock"; Value = "https://www.arrow.com/en/products/ltc6078acms8trpbf/analog-devices?region=nac"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Datasheet Link"; Value = "https://datasheet.datasheetarchive.com/originals/distributors/Datasheets_SAMA/f60955edb7006695a84935bb44c6cde2.pdf"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Height"; Value = "1.1mm"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Manufacturer_Name"; Value = "Analog Devices"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Manufacturer_Part_Number"; Value = "LTC6078ACMS8#TRPBF"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Mouser Part Number"; Value = "584-C6078ACMS8TRPBF"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Mouser Price/Stock"; Value = "https://www.mouser.com/Search/Refine.aspx?Keyword=584-C6078ACMS8TRPBF"; VariantName = "[No Variations]"
+Added Component: Designator=IC1G(SOP65P490X110-8N)
+Add component (AddParameter): Name = "Arrow Part Number"; Value = "LTC6078ACMS8#TRPBF"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Arrow Price/Stock"; Value = "https://www.arrow.com/en/products/ltc6078acms8trpbf/analog-devices?region=nac"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Datasheet Link"; Value = "https://datasheet.datasheetarchive.com/originals/distributors/Datasheets_SAMA/f60955edb7006695a84935bb44c6cde2.pdf"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Height"; Value = "1.1mm"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Manufacturer_Name"; Value = "Analog Devices"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Manufacturer_Part_Number"; Value = "LTC6078ACMS8#TRPBF"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Mouser Part Number"; Value = "584-C6078ACMS8TRPBF"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Mouser Price/Stock"; Value = "https://www.mouser.com/Search/Refine.aspx?Keyword=584-C6078ACMS8TRPBF"; VariantName = "[No Variations]"
+Added Component: Designator=IC1H(SOP65P490X110-8N)
+Add component (AddParameter): Name = "Arrow Part Number"; Value = "LTC6078ACMS8#TRPBF"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Arrow Price/Stock"; Value = "https://www.arrow.com/en/products/ltc6078acms8trpbf/analog-devices?region=nac"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Datasheet Link"; Value = "https://datasheet.datasheetarchive.com/originals/distributors/Datasheets_SAMA/f60955edb7006695a84935bb44c6cde2.pdf"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Height"; Value = "1.1mm"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Manufacturer_Name"; Value = "Analog Devices"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Manufacturer_Part_Number"; Value = "LTC6078ACMS8#TRPBF"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Mouser Part Number"; Value = "584-C6078ACMS8TRPBF"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Mouser Price/Stock"; Value = "https://www.mouser.com/Search/Refine.aspx?Keyword=584-C6078ACMS8TRPBF"; VariantName = "[No Variations]"
+Added Component: Designator=R1A(0402_RES)
+Added Component: Designator=R1B(0402_RES)
+Added Component: Designator=R1C(0402_RES)
+Added Component: Designator=R1D(0402_RES)
+Added Component: Designator=R1E(0402_RES)
+Added Component: Designator=R1F(0402_RES)
+Added Component: Designator=R1G(0402_RES)
+Added Component: Designator=R1H(0402_RES)
+Added Component: Designator=R2A(0402_RES)
+Added Component: Designator=R2B(0402_RES)
+Added Component: Designator=R2C(0402_RES)
+Added Component: Designator=R2D(0402_RES)
+Added Component: Designator=R2E(0402_RES)
+Added Component: Designator=R2F(0402_RES)
+Added Component: Designator=R2G(0402_RES)
+Added Component: Designator=R2H(0402_RES)
+Added Component: Designator=R3A(0402_RES)
+Added Component: Designator=R3B(0402_RES)
+Added Component: Designator=R3C(0402_RES)
+Added Component: Designator=R3D(0402_RES)
+Added Component: Designator=R3E(0402_RES)
+Added Component: Designator=R3F(0402_RES)
+Added Component: Designator=R3G(0402_RES)
+Added Component: Designator=R3H(0402_RES)
+Added Component: Designator=R4A(0402_RES)
+Added Component: Designator=R4B(0402_RES)
+Added Component: Designator=R4C(0402_RES)
+Added Component: Designator=R4D(0402_RES)
+Added Component: Designator=R4E(0402_RES)
+Added Component: Designator=R4F(0402_RES)
+Added Component: Designator=R4G(0402_RES)
+Added Component: Designator=R4H(0402_RES)
+Added Pin To Net: NetName=GND Pin=C1A-2
+Added Pin To Net: NetName=GND Pin=C1B-2
+Added Pin To Net: NetName=GND Pin=C1C-2
+Added Pin To Net: NetName=GND Pin=C1D-2
+Added Pin To Net: NetName=GND Pin=C1E-2
+Added Pin To Net: NetName=GND Pin=C1F-2
+Added Pin To Net: NetName=GND Pin=C1G-2
+Added Pin To Net: NetName=GND Pin=C1H-2
+Added Pin To Net: NetName=GND Pin=IC1A-4
+Added Pin To Net: NetName=GND Pin=IC1B-4
+Added Pin To Net: NetName=GND Pin=IC1C-4
+Added Pin To Net: NetName=GND Pin=IC1D-4
+Added Pin To Net: NetName=GND Pin=IC1E-4
+Added Pin To Net: NetName=GND Pin=IC1F-4
+Added Pin To Net: NetName=GND Pin=IC1G-4
+Added Pin To Net: NetName=GND Pin=IC1H-4
+Added Pin To Net: NetName=GND Pin=R4A-2
+Added Pin To Net: NetName=GND Pin=R4B-2
+Added Pin To Net: NetName=GND Pin=R4C-2
+Added Pin To Net: NetName=GND Pin=R4D-2
+Added Pin To Net: NetName=GND Pin=R4E-2
+Added Pin To Net: NetName=GND Pin=R4F-2
+Added Pin To Net: NetName=GND Pin=R4G-2
+Added Pin To Net: NetName=GND Pin=R4H-2
+Added Net: Name=GND
+Added Pin To Net: NetName=GUARD_RING1A Pin=R2A-2
+Added Pin To Net: NetName=GUARD_RING1A Pin=R4A-1
+Added Net: Name=GUARD_RING1A
+Added Pin To Net: NetName=GUARD_RING1B Pin=R2B-2
+Added Pin To Net: NetName=GUARD_RING1B Pin=R4B-1
+Added Net: Name=GUARD_RING1B
+Added Pin To Net: NetName=GUARD_RING1C Pin=R2C-2
+Added Pin To Net: NetName=GUARD_RING1C Pin=R4C-1
+Added Net: Name=GUARD_RING1C
+Added Pin To Net: NetName=GUARD_RING1D Pin=R2D-2
+Added Pin To Net: NetName=GUARD_RING1D Pin=R4D-1
+Added Net: Name=GUARD_RING1D
+Added Pin To Net: NetName=GUARD_RING1E Pin=R2E-2
+Added Pin To Net: NetName=GUARD_RING1E Pin=R4E-1
+Added Net: Name=GUARD_RING1E
+Added Pin To Net: NetName=GUARD_RING1F Pin=R2F-2
+Added Pin To Net: NetName=GUARD_RING1F Pin=R4F-1
+Added Net: Name=GUARD_RING1F
+Added Pin To Net: NetName=GUARD_RING1G Pin=R2G-2
+Added Pin To Net: NetName=GUARD_RING1G Pin=R4G-1
+Added Net: Name=GUARD_RING1G
+Added Pin To Net: NetName=GUARD_RING1H Pin=R2H-2
+Added Pin To Net: NetName=GUARD_RING1H Pin=R4H-1
+Added Net: Name=GUARD_RING1H
+Added Pin To Net: NetName=INT1A Pin=IC1A-1
+Added Pin To Net: NetName=INT1A Pin=IC1A-2
+Added Pin To Net: NetName=INT1A Pin=IC1A-5
+Added Pin To Net: NetName=INT1A Pin=R1A-2
+Added Net: Name=INT1A
+Added Pin To Net: NetName=INT1B Pin=IC1B-1
+Added Pin To Net: NetName=INT1B Pin=IC1B-2
+Added Pin To Net: NetName=INT1B Pin=IC1B-5
+Added Pin To Net: NetName=INT1B Pin=R1B-2
+Added Net: Name=INT1B
+Added Pin To Net: NetName=INT1C Pin=IC1C-1
+Added Pin To Net: NetName=INT1C Pin=IC1C-2
+Added Pin To Net: NetName=INT1C Pin=IC1C-5
+Added Pin To Net: NetName=INT1C Pin=R1C-2
+Added Net: Name=INT1C
+Added Pin To Net: NetName=INT1D Pin=IC1D-1
+Added Pin To Net: NetName=INT1D Pin=IC1D-2
+Added Pin To Net: NetName=INT1D Pin=IC1D-5
+Added Pin To Net: NetName=INT1D Pin=R1D-2
+Added Net: Name=INT1D
+Added Pin To Net: NetName=INT1E Pin=IC1E-1
+Added Pin To Net: NetName=INT1E Pin=IC1E-2
+Added Pin To Net: NetName=INT1E Pin=IC1E-5
+Added Pin To Net: NetName=INT1E Pin=R1E-2
+Added Net: Name=INT1E
+Added Pin To Net: NetName=INT1F Pin=IC1F-1
+Added Pin To Net: NetName=INT1F Pin=IC1F-2
+Added Pin To Net: NetName=INT1F Pin=IC1F-5
+Added Pin To Net: NetName=INT1F Pin=R1F-2
+Added Net: Name=INT1F
+Added Pin To Net: NetName=INT1G Pin=IC1G-1
+Added Pin To Net: NetName=INT1G Pin=IC1G-2
+Added Pin To Net: NetName=INT1G Pin=IC1G-5
+Added Pin To Net: NetName=INT1G Pin=R1G-2
+Added Net: Name=INT1G
+Added Pin To Net: NetName=INT1H Pin=IC1H-1
+Added Pin To Net: NetName=INT1H Pin=IC1H-2
+Added Pin To Net: NetName=INT1H Pin=IC1H-5
+Added Pin To Net: NetName=INT1H Pin=R1H-2
+Added Net: Name=INT1H
+Added Pin To Net: NetName=NetE1_1 Pin=E1-1
+Added Pin To Net: NetName=NetE1_1 Pin=R3A-1
+Added Net: Name=NetE1_1
+Added Pin To Net: NetName=NetE2_1 Pin=E2-1
+Added Pin To Net: NetName=NetE2_1 Pin=R3B-1
+Added Net: Name=NetE2_1
+Added Pin To Net: NetName=NetE3_1 Pin=E3-1
+Added Pin To Net: NetName=NetE3_1 Pin=R3C-1
+Added Net: Name=NetE3_1
+Added Pin To Net: NetName=NetE4_1 Pin=E4-1
+Added Pin To Net: NetName=NetE4_1 Pin=R3D-1
+Added Net: Name=NetE4_1
+Added Pin To Net: NetName=NetE5_1 Pin=E5-1
+Added Pin To Net: NetName=NetE5_1 Pin=R3G-1
+Added Net: Name=NetE5_1
+Added Pin To Net: NetName=NetE6_1 Pin=E6-1
+Added Pin To Net: NetName=NetE6_1 Pin=R3H-1
+Added Net: Name=NetE6_1
+Added Pin To Net: NetName=NetE7_1 Pin=E7-1
+Added Pin To Net: NetName=NetE7_1 Pin=R3E-1
+Added Net: Name=NetE7_1
+Added Pin To Net: NetName=NetE8_1 Pin=E8-1
+Added Pin To Net: NetName=NetE8_1 Pin=R3F-1
+Added Net: Name=NetE8_1
+Added Pin To Net: NetName=NetIC1A_3 Pin=IC1A-3
+Added Pin To Net: NetName=NetIC1A_3 Pin=R3A-2
+Added Net: Name=NetIC1A_3
+Added Pin To Net: NetName=NetIC1A_6 Pin=IC1A-6
+Added Pin To Net: NetName=NetIC1A_6 Pin=IC1A-7
+Added Pin To Net: NetName=NetIC1A_6 Pin=R2A-1
+Added Net: Name=NetIC1A_6
+Added Pin To Net: NetName=NetIC1B_3 Pin=IC1B-3
+Added Pin To Net: NetName=NetIC1B_3 Pin=R3B-2
+Added Net: Name=NetIC1B_3
+Added Pin To Net: NetName=NetIC1B_6 Pin=IC1B-6
+Added Pin To Net: NetName=NetIC1B_6 Pin=IC1B-7
+Added Pin To Net: NetName=NetIC1B_6 Pin=R2B-1
+Added Net: Name=NetIC1B_6
+Added Pin To Net: NetName=NetIC1C_3 Pin=IC1C-3
+Added Pin To Net: NetName=NetIC1C_3 Pin=R3C-2
+Added Net: Name=NetIC1C_3
+Added Pin To Net: NetName=NetIC1C_6 Pin=IC1C-6
+Added Pin To Net: NetName=NetIC1C_6 Pin=IC1C-7
+Added Pin To Net: NetName=NetIC1C_6 Pin=R2C-1
+Added Net: Name=NetIC1C_6
+Added Pin To Net: NetName=NetIC1D_3 Pin=IC1D-3
+Added Pin To Net: NetName=NetIC1D_3 Pin=R3D-2
+Added Net: Name=NetIC1D_3
+Added Pin To Net: NetName=NetIC1D_6 Pin=IC1D-6
+Added Pin To Net: NetName=NetIC1D_6 Pin=IC1D-7
+Added Pin To Net: NetName=NetIC1D_6 Pin=R2D-1
+Added Net: Name=NetIC1D_6
+Added Pin To Net: NetName=NetIC1E_3 Pin=IC1E-3
+Added Pin To Net: NetName=NetIC1E_3 Pin=R3E-2
+Added Net: Name=NetIC1E_3
+Added Pin To Net: NetName=NetIC1E_6 Pin=IC1E-6
+Added Pin To Net: NetName=NetIC1E_6 Pin=IC1E-7
+Added Pin To Net: NetName=NetIC1E_6 Pin=R2E-1
+Added Net: Name=NetIC1E_6
+Added Pin To Net: NetName=NetIC1F_3 Pin=IC1F-3
+Added Pin To Net: NetName=NetIC1F_3 Pin=R3F-2
+Added Net: Name=NetIC1F_3
+Added Pin To Net: NetName=NetIC1F_6 Pin=IC1F-6
+Added Pin To Net: NetName=NetIC1F_6 Pin=IC1F-7
+Added Pin To Net: NetName=NetIC1F_6 Pin=R2F-1
+Added Net: Name=NetIC1F_6
+Added Pin To Net: NetName=NetIC1G_3 Pin=IC1G-3
+Added Pin To Net: NetName=NetIC1G_3 Pin=R3G-2
+Added Net: Name=NetIC1G_3
+Added Pin To Net: NetName=NetIC1G_6 Pin=IC1G-6
+Added Pin To Net: NetName=NetIC1G_6 Pin=IC1G-7
+Added Pin To Net: NetName=NetIC1G_6 Pin=R2G-1
+Added Net: Name=NetIC1G_6
+Added Pin To Net: NetName=NetIC1H_3 Pin=IC1H-3
+Added Pin To Net: NetName=NetIC1H_3 Pin=R3H-2
+Added Net: Name=NetIC1H_3
+Added Pin To Net: NetName=NetIC1H_6 Pin=IC1H-6
+Added Pin To Net: NetName=NetIC1H_6 Pin=IC1H-7
+Added Pin To Net: NetName=NetIC1H_6 Pin=R2H-1
+Added Net: Name=NetIC1H_6
+Added Pin To Net: NetName=Pad1 Pin=R1A-1
+Added Net: Name=Pad1
+Added Pin To Net: NetName=Pad2 Pin=R1B-1
+Added Net: Name=Pad2
+Added Pin To Net: NetName=Pad3 Pin=R1C-1
+Added Net: Name=Pad3
+Added Pin To Net: NetName=Pad4 Pin=R1D-1
+Added Net: Name=Pad4
+Added Pin To Net: NetName=Pad5 Pin=R1G-1
+Added Net: Name=Pad5
+Added Pin To Net: NetName=Pad6 Pin=R1H-1
+Added Net: Name=Pad6
+Added Pin To Net: NetName=Pad7 Pin=R1E-1
+Added Net: Name=Pad7
+Added Pin To Net: NetName=Pad8 Pin=R1F-1
+Added Net: Name=Pad8
+Added Pin To Net: NetName=VCC Pin=C1A-1
+Added Pin To Net: NetName=VCC Pin=C1B-1
+Added Pin To Net: NetName=VCC Pin=C1C-1
+Added Pin To Net: NetName=VCC Pin=C1D-1
+Added Pin To Net: NetName=VCC Pin=C1E-1
+Added Pin To Net: NetName=VCC Pin=C1F-1
+Added Pin To Net: NetName=VCC Pin=C1G-1
+Added Pin To Net: NetName=VCC Pin=C1H-1
+Added Pin To Net: NetName=VCC Pin=IC1A-8
+Added Pin To Net: NetName=VCC Pin=IC1B-8
+Added Pin To Net: NetName=VCC Pin=IC1C-8
+Added Pin To Net: NetName=VCC Pin=IC1D-8
+Added Pin To Net: NetName=VCC Pin=IC1E-8
+Added Pin To Net: NetName=VCC Pin=IC1F-8
+Added Pin To Net: NetName=VCC Pin=IC1G-8
+Added Pin To Net: NetName=VCC Pin=IC1H-8
+Added Net: Name=VCC
+Added Class: Name=Designator1
+Added Class: Name=Designator2
+Added Class: Name=Designator3
+Added Class: Name=Designator4
+Added Class: Name=Designator5
+Added Class: Name=Designator6
+Added Class: Name=Designator7
+Added Class: Name=Designator8
+Added Class: Name=EEG_Electrodes
+Added Class: Name=Electrode
+Added Rule: Name=Schematic Supply Nets
+Added Rule: Name=Schematic Supply Nets_1

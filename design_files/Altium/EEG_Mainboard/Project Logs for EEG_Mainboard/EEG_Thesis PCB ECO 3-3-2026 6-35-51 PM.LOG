@@ -1,0 +1,46 @@
+Removed Pin From Net: NetName=D_N Pin=IC1-19
+Removed Pin From Net: NetName=D_P Pin=IC1-20
+Removed Member From Class: ClassName=EEG_Thesis Member=IC1
+Added Component: Designator=IC?(QFN50P400X400X90-25N-D)
+Add component (AddParameter): Name = "Arrow Part Number"; Value = "NPM1100-QDAA-R7"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Arrow Price/Stock"; Value = "https://www.arrow.com/en/products/npm1100-qdaa-r7/nordic-semiconductor?utm_currency=USD&region=nac"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Datasheet Link"; Value = "https://www.digikey.co.za/en/products/detail/nordic-semiconductor-asa/NPM1100-QDAA-R7/18069439?s=N4IgTCBcDaIHIAUCyBGFAGdBaAigEQEECsAlAdhAF0BfIA"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Height"; Value = "0.9mm"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Manufacturer_Name"; Value = "Nordic Semiconductor"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Manufacturer_Part_Number"; Value = "NPM1100-QDAA-R7"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Mouser Part Number"; Value = "949-NPM1100-QDAA-R7"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Mouser Price/Stock"; Value = "https://www.mouser.co.uk/ProductDetail/Nordic-Semiconductor/NPM1100-QDAA-R7?qs=amGC7iS6iy8FBZdylLqz2Q%3D%3D"; VariantName = "[No Variations]"
+Add Component: Footprint Not Found TP_3x1mm_TH
+Added Component: Designator=S?(MK11C04G013)
+Add component (AddParameter): Name = "Arrow Part Number"; Value = ""; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Arrow Price/Stock"; Value = ""; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Datasheet Link"; Value = "https://www.dg-switch.com/uploads/soft/200615/%E5%93%81%E8%B5%9EMK-11C04-G013.pdf?fbclid=IwZXh0bgNhZW0CMTEAAR0AJCzNXSbXm6tv7QD29iqmkU7HUOTzQEjSSoqvyCwOAtUnKQu-KuAmiDE_aem_1ELsU2yAje-H6Aq4_4J2tg"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Height"; Value = "0.9mm"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Manufacturer_Name"; Value = "G-Switch Electronic"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Manufacturer_Part_Number"; Value = "MK-11C04-G013"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Mouser Part Number"; Value = ""; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Mouser Price/Stock"; Value = ""; VariantName = "[No Variations]"
+Added Component: Designator=S?(SSAJ120100)
+Add component (AddParameter): Name = "Arrow Part Number"; Value = ""; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Arrow Price/Stock"; Value = ""; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Datasheet Link"; Value = "https://tech.alpsalpine.com/e/products/detail/SSAJ120100/#ancFig2"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Height"; Value = "0.9mm"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Manufacturer_Name"; Value = "ALPS Electric"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Manufacturer_Part_Number"; Value = "SSAJ120100"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Mouser Part Number"; Value = "688-SSAJ120100"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Mouser Price/Stock"; Value = "https://www.mouser.co.uk/ProductDetail/Alps-Alpine/SSAJ120100?qs=35GPJvxY%252Bl5mRNwFoBrl2g%3D%3D"; VariantName = "[No Variations]"
+Added Pin To Net: NetName=GND Pin=IC?-4
+Added Pin To Net: NetName=GND Pin=IC?-6
+Added Pin To Net: NetName=GND Pin=IC?-11
+Added Pin To Net: NetName=D_N Pin=IC?-19
+Added Pin To Net: NetName=D_P Pin=IC?-20
+Added Pin To Net: NetName=GND Pin=IC?-23
+Added Pin To Net: NetName=GND Pin=IC?-25
+Add Differential Pair: Number of nets in differential pair NetIC5_4 is 1 instead of 2
+Add Differential Pair: Number of nets in differential pair NetIC5_6 is 1 instead of 2
+Added Member To Class: ClassName=EEG_Thesis Member=Component IC? NPM1100-QDAA-R7
+Add Class Member: Failed to add class member : Component J2 Battery pack
+Added Member To Class: ClassName=EEG_Thesis Member=Component J3 TC2030-MCP
+Added Member To Class: ClassName=EEG_Thesis Member=Component R3 RC0201JR-075K1L
+Added Member To Class: ClassName=EEG_Thesis Member=Component S? MK-11C04-G013
+Added Member To Class: ClassName=EEG_Thesis Member=Component S? SSAJ120100

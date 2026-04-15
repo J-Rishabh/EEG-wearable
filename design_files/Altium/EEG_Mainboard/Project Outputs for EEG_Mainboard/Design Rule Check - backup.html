@@ -1,0 +1,504 @@
+<html>
+<head>
+<META http-equiv="Content-Type" content="text/html">
+<style type="text/css">
+		h1, h2, h3, h4, h5, h6 {
+			font-family : segoe ui;
+			color : black;
+			background-color : #EDE7D9;
+			padding: 0.3em;
+		}
+
+		h1 {
+			font-size: 1.2em;
+		}		
+
+		h2 {
+			font-size: 1.2em;
+		}
+
+		body {
+			font-family : segoe ui;
+		}
+
+		td, th {
+			padding: 0.5em;
+			text-align : left;
+			width: 10em;
+		}
+		th {
+			background-color : #EEEEEE;
+
+		}
+		th.column1, td.column1 {
+			text-align: left;
+			width : auto;
+		}
+		table {
+			width : 100%;
+			font-size: 0.9em;
+		}
+
+		.DRC_summary_header {
+			padding-bottom : 0.1em;
+			border : 0px solid black;
+			width: 100%;
+			align: left;
+		}
+
+		.DRC_summary_header_col1,
+		.DRC_summary_header_col2, 
+		.DRC_summary_header_col3 {
+			color : black;
+			font-size:100%;
+			padding : 0em;
+			padding-top : 0.2em;
+			padding-bottom 0.2em;
+			border : 0px solid black;
+			vertical-align: top;
+			text-align: left;
+		}
+
+		.DRC_summary_header_col1 {
+			font-weight: bold;
+			width: 9em;
+		}
+
+		.DRC_summary_header_col2 {
+			width: 0.1em;
+		
+		}
+
+		.DRC_summary_header_col3 {
+			width : auto;
+		}
+
+		.header_holder {
+		    Width = 100%;
+		    border = 0px solid green;
+		    padding = 0;
+		}
+
+
+		.front_matter, .front_matter_column1, .front_matter_column2, .front_matter_column3
+		{
+			left : 0;
+			top : 0;
+			padding: 0em;
+			padding-top : 0.1em;
+			border : 0px solid black;
+			width : 100%;
+			vertical-align: top;
+			text-align: left;
+		}
+
+		.front_matter_column1 {
+			width : 8em;
+			font-weight: bold;
+		}
+
+		.front_matter_column2 {
+			width: 0.1em;
+		}
+
+		.front_matter_column3 {
+			width : auto;
+		}
+
+		.total_column1, .total_column {
+			font-weight : bold;
+		}
+		.total_column1 {
+			text-align : left;
+		}
+		.warning, .error {
+			color : red;
+			font-weight : bold;
+		}
+		tr.onmouseout_odd {
+			background-color : #white;
+		}
+		tr.onmouseout_even { 
+			background-color : #FAFAFA;
+		}
+		tr.onmouseover_odd, tr.onmouseover_even { 
+			background-color : #EEEEEE;
+		} 
+		a:link, a:visited, .q a:link,.q a:active,.q {
+			color: #21489e; 
+		}
+		a:link.callback, a:visited.callback { 
+			color: #21489e;
+		}
+		a:link.customize, a:visited.customize {
+			color: #C0C0C0;
+			position: absolute; 
+			right: 10px;
+		}	
+		p.contents_level1 {
+			font-weight : bold;
+			font-size : 110%;
+			margin : 0.5em;
+		}
+		p.contents_level2 {
+			position : relative;
+			left : 20px;
+			margin : 0.5em;
+		}
+	</style><script type="text/javascript">
+		function coordToMils(coord) {
+			var number = coord / 10000;
+			
+			if (number != number.toFixed(3))
+				number = number.toFixed(3);
+
+			return number + 'mil'
+		}
+
+		function coordToMM(coord) {
+			var number = 0.0254 * coord / 10000;
+			
+			if (number != number.toFixed(4))
+				number = number.toFixed(4);
+			
+			return number + 'mm'
+		}
+	
+		function convertCoord(coordNode, units) {
+			for (var i = 0; i < coordNode.childNodes.length; i++) {
+				coordNode.removeChild(coordNode.childNodes[i]);
+			}
+
+			var coord = coordNode.getAttribute('value');
+			if (coord != null) {
+				if (units == 'mm') {
+					textNode = document.createTextNode(coordToMM(coord));
+					coordNode.appendChild(textNode);
+				} else if (units == 'mil') {
+					textNode = document.createTextNode(coordToMils(coord));		
+					coordNode.appendChild(textNode);	
+				}
+			}
+		}
+	
+		function convertUnits(unitNode, units) {
+			for (var i = 0; i < unitNode.childNodes.length; i++) {
+				unitNode.removeChild(unitNode.childNodes[i]);		
+			}
+		
+			textNode = document.createTextNode(units); 
+			unitNode.appendChild(textNode);
+		}
+	
+		function changeUnits(radio_input, units) {
+			if (radio_input.checked) {
+			
+				var elements = document.getElementsByName('coordinate');
+				if (elements) {
+					for (var i = 0; i < elements.length; i++) {
+						convertCoord(elements[i], units);
+					}
+				}
+	
+				var elements = document.getElementsByName('units');
+				if (elements) {
+					for (var i = 0; i < elements.length; i++) {
+						convertUnits(elements[i], units);
+					}
+				}
+			}
+		}
+	</script><title>Design Rule Verification Report</title>
+</head>
+<body onload=""><img ALT="Altium" src="
+			file://C:\Users\Public\Documents\Altium\AD23\Templates\AD_logo.png
+		"><h1>Design Rule Verification Report</h1>
+<table class="header_holder">
+<td class="column1">
+<table class="front_matter">
+<tr class="front_matter">
+<td class="front_matter_column1">Date:</td>
+<td class="front_matter_column2"></td>
+<td class="front_matter_column3">3/19/2026</td>
+</tr>
+<tr class="front_matter">
+<td class="front_matter_column1">Time:</td>
+<td class="front_matter_column2"></td>
+<td class="front_matter_column3">12:05:06 PM</td>
+</tr>
+<tr class="front_matter">
+<td class="front_matter_column1">Elapsed Time:</td>
+<td class="front_matter_column2"></td>
+<td class="front_matter_column3">00:00:00</td>
+</tr>
+<tr class="front_matter">
+<td class="front_matter_column1">Filename:</td>
+<td class="front_matter_column2"></td>
+<td class="front_matter_column3"><a href="file:///C:\Users\Public\Documents\Altium\EEG_Mainboard\backup.PcbDoc" class="file"><acronym title="C:\Users\Public\Documents\Altium\EEG_Mainboard\backup.PcbDoc">C:\Users\Public\Documents\Altium\EEG_Mainboard\backup.PcbDoc</acronym></a></td>
+</tr>
+</table>
+</td>
+<td class="column2">
+<table class="DRC_summary_header">
+<tr>
+<td class="DRC_summary_header_col1">Warnings:</td>
+<td class="DRC_summary_header_col2"></td>
+<td class="DRC_summary_header_col3">0</td></tr>
+<tr>
+<td class="DRC_summary_header_col1">Rule Violations:</td>
+<td class="DRC_summary_header_col2"></td>
+<td class="DRC_summary_header_col3" style="color : red">48</td></tr>
+</table>
+</td>
+</table><a name="IDWMI2OH0FQLDXPXWQJGNQ3CGQHBI41MVQWE1WONCKLVOODZZGOPKN"><h2>Summary</h2></a><table>
+<tr>
+<th class="column1">Warnings</th>
+<th class="column2">Count</th>
+</tr>
+<tr>
+<td style="font-weight : bold; text-align : right" class="column1">Total</td>
+<td style="font-weight : bold" class="column2">0</td>
+</tr>
+</table><br><table>
+<tr>
+<th class="column1">Rule Violations</th>
+<th class="column2">Count</th>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="#IDIZVWHURN33UAP55YJINSZD0FGQEJRBWENBI0ILVLKJVFEBWR3AK">Clearance Constraint (Gap=5mil) (All),(All)</a></td>
+<td class="column2">15</td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="#IDFQLTVR15ZEELJKYA4QG2OEIIBMWDBZUMQXK433EAA2QBZYXKV5AN">Short-Circuit Constraint (Allowed=No) (All),(All)</a></td>
+<td class="column2">0</td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="#IDK3HJENKMLHSNCHEEGZEOVUNBAGAIGHKPCWR0OPC2JKSSDF50251G">Un-Routed Net Constraint ( (All) )</a></td>
+<td class="column2">0</td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="#ID5H2YYBYFJPTRPW1PVQICHL2Z0IZNXL2DPJKZMJET0ZUPC50DZGQG">Modified Polygon (Allow modified: No), (Allow shelved: No)</a></td>
+<td class="column2">0</td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="#ID5XQZOAV2RBHDICIG5TZE3JD4DJMVEIZHEH1GT4M5XFDO2051HDL">Width Constraint (Min=3.5mil) (Max=100mil) (Preferred=8mil) (All)</a></td>
+<td class="column2">0</td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="#IDJWCWVDHELBS0OZ5BSXHOOQGJZKOZWG1JQCM3URILIEZKJ3EF52IN">Width Constraint (Min=7.116mil) (Max=10.312mil) (Preferred=10.312mil) (InNetClass('RF'))</a></td>
+<td class="column2">0</td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="#ID11F0WLTQPTRHLFA5UQINCUJTWECENS2BIQBXC2DBPGZO1ATZGQXH">Routing Topology Rule(Topology=Shortest) (All)</a></td>
+<td class="column2">0</td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="#IDGOZW3TR4ASXVE4O415BEC1AXKNY5X1YIDU5U2D3DMEU35M3MYAJ">Power Plane Connect Rule(Direct Connect )(Expansion=20mil) (Conductor Width=10mil) (Air Gap=10mil) (Entries=4) (InPadClass('PowerPads'))</a></td>
+<td class="column2">0</td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="#ID3VMHMRVAIFWTMGYHDV1SSCIPNTQRZTLQBXATNFIBPMALMC3VRZB">Power Plane Connect Rule(Relief Connect )(Expansion=11.811mil) (Conductor Width=5mil) (Air Gap=5mil) (Entries=4) (All)</a></td>
+<td class="column2">0</td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="#IDSAS1DDZLF4BIPISBA4MT5BJBGPP3ILGAQED41O0POQPGQSDCNXO">Minimum Annular Ring (Minimum=1.968mil) (All)</a></td>
+<td class="column2">0</td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="#IDA42ZEJUZVOS4H5NYZOREEIV4ZYXXLHZ2UDWQOBFOGJ1UPZXR2DI">Hole Size Constraint (Min=5.906mil) (Max=248.031mil) (All)</a></td>
+<td class="column2">0</td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="#ID0FB12QV22ZLAK12LNUUK3D2OXMPDYQKOMMU0WLLXRVBAMH5UBSOK">Hole To Hole Clearance (Gap=9.842mil) (All),(All)</a></td>
+<td class="column2">0</td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="#IDSRESMBRKXDDFPSCRMZUDQB30FMVE5NHEHRTWELPSIWIBCYSMSEM">Minimum Solder Mask Sliver (Gap=0mil) (All),(All)</a></td>
+<td class="column2">0</td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="#ID4VF1I5WWLPN1KCSJDPDSJUVXHLUDX5OS31LSICNOSI30YTTKLRCB">Silk To Solder Mask (Clearance=5mil) (IsPad),(All)</a></td>
+<td class="column2">19</td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="#IDPV3AKYOSS2WVDU0Y24QZEZQKFFXNOKWVEJUJ5YXDXLLFSSHM0I">Silk to Silk (Clearance=0mil) (All),(All)</a></td>
+<td class="column2">0</td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="#IDOGOQC1VD15ZALVWATROLKVNBBNBRDND5BWIIGGGCGZMS4NCXDQMB">Net Antennae (Tolerance=0mil) (All)</a></td>
+<td class="column2">0</td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="#IDKGGJSSERDIYIOD51SW4F3AYOAMAC2WUUXBQYREBX3IJGC0EXC3LB">Board Clearance Constraint (Gap=0mil) (All)</a></td>
+<td class="column2">14</td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="#IDMJWT5XCN2MXTB2F4WPDXI0C3TPOTNKGNVGZ353OOFRNPI0OB1TZM">Matched Lengths(Tolerance=100mil) (InDifferentialPair ('D'))</a></td>
+<td class="column2">0</td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="#IDDGG2SQPVPCPIBUWF1HWGI5PVRFO2BHTOLWAQJADGIDKXXMTP2SDH">Height Constraint (Min=0mil) (Max=71497.938mil) (Prefered=500mil) (All)</a></td>
+<td class="column2">0</td>
+</tr>
+<tr>
+<td style="font-weight : bold; text-align : right" class="column1">Total</td>
+<td style="font-weight : bold" class="column2">48</td>
+</tr>
+</table><br><a name="IDIZVWHURN33UAP55YJINSZD0FGQEJRBWENBI0ILVLKJVFEBWR3AK"><table>
+<tr>
+<th style="text-align : left" colspan="1" class="rule">Clearance Constraint (Gap=5mil) (All),(All)</th>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\EEG_Mainboard\backup.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=6662.875mil|Location2.X=6669.125mil|Location1.Y=1176.875mil|Location2.Y=1183.125mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\EEG_Mainboard\backup.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=6662.875mil|Location2.X=6669.125mil|Location1.Y=1176.875mil|Location2.Y=1183.125mil|Absolute=True">Clearance Constraint: (2.756mil &lt; 5mil) Between Pad J2-1(6641mil,1180mil) on Multi-Layer And Pad J2-2(6691mil,1180mil) on Multi-Layer </acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\EEG_Mainboard\backup.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=6637.875mil|Location2.X=6644.125mil|Location1.Y=1151.875mil|Location2.Y=1158.125mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\EEG_Mainboard\backup.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=6637.875mil|Location2.X=6644.125mil|Location1.Y=1151.875mil|Location2.Y=1158.125mil|Absolute=True">Clearance Constraint: (2.756mil &lt; 5mil) Between Pad J2-1(6641mil,1180mil) on Multi-Layer And Pad J2-3(6641mil,1130mil) on Multi-Layer </acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\EEG_Mainboard\backup.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=6687.875mil|Location2.X=6694.125mil|Location1.Y=1151.875mil|Location2.Y=1158.125mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\EEG_Mainboard\backup.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=6687.875mil|Location2.X=6694.125mil|Location1.Y=1151.875mil|Location2.Y=1158.125mil|Absolute=True">Clearance Constraint: (2.756mil &lt; 5mil) Between Pad J2-2(6691mil,1180mil) on Multi-Layer And Pad J2-4(6691mil,1130mil) on Multi-Layer </acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\EEG_Mainboard\backup.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=6662.875mil|Location2.X=6669.125mil|Location1.Y=1126.875mil|Location2.Y=1133.125mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\EEG_Mainboard\backup.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=6662.875mil|Location2.X=6669.125mil|Location1.Y=1126.875mil|Location2.Y=1133.125mil|Absolute=True">Clearance Constraint: (2.756mil &lt; 5mil) Between Pad J2-3(6641mil,1130mil) on Multi-Layer And Pad J2-4(6691mil,1130mil) on Multi-Layer </acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\EEG_Mainboard\backup.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=6637.875mil|Location2.X=6644.125mil|Location1.Y=1101.875mil|Location2.Y=1108.125mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\EEG_Mainboard\backup.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=6637.875mil|Location2.X=6644.125mil|Location1.Y=1101.875mil|Location2.Y=1108.125mil|Absolute=True">Clearance Constraint: (2.756mil &lt; 5mil) Between Pad J2-3(6641mil,1130mil) on Multi-Layer And Pad J2-5(6641mil,1080mil) on Multi-Layer </acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\EEG_Mainboard\backup.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=6687.875mil|Location2.X=6694.125mil|Location1.Y=1101.875mil|Location2.Y=1108.125mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\EEG_Mainboard\backup.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=6687.875mil|Location2.X=6694.125mil|Location1.Y=1101.875mil|Location2.Y=1108.125mil|Absolute=True">Clearance Constraint: (2.756mil &lt; 5mil) Between Pad J2-4(6691mil,1130mil) on Multi-Layer And Pad J2-6(6691mil,1080mil) on Multi-Layer </acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\EEG_Mainboard\backup.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=6662.875mil|Location2.X=6669.125mil|Location1.Y=1076.875mil|Location2.Y=1083.125mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\EEG_Mainboard\backup.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=6662.875mil|Location2.X=6669.125mil|Location1.Y=1076.875mil|Location2.Y=1083.125mil|Absolute=True">Clearance Constraint: (2.756mil &lt; 5mil) Between Pad J2-5(6641mil,1080mil) on Multi-Layer And Pad J2-6(6691mil,1080mil) on Multi-Layer </acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\EEG_Mainboard\backup.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=6627.578mil|Location2.X=6643.883mil|Location1.Y=1048.2mil|Location2.Y=1059.292mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\EEG_Mainboard\backup.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=6627.578mil|Location2.X=6643.883mil|Location1.Y=1048.2mil|Location2.Y=1059.292mil|Absolute=True">Clearance Constraint: (7.575mil &lt; 9.842mil) Between Hole of Pad J2-MH3(6626mil,1030mil) on Multi-Layer And Pad J2-5(6641mil,1080mil) on Multi-Layer </acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\EEG_Mainboard\backup.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=6693.33mil|Location2.X=6709.595mil|Location1.Y=1048.2mil|Location2.Y=1059.292mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\EEG_Mainboard\backup.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=6693.33mil|Location2.X=6709.595mil|Location1.Y=1048.2mil|Location2.Y=1059.292mil|Absolute=True">Clearance Constraint: (7.575mil &lt; 9.842mil) Between Hole of Pad J2-MH2(6706mil,1030mil) on Multi-Layer And Pad J2-6(6691mil,1080mil) on Multi-Layer </acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\EEG_Mainboard\backup.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=6734.833mil|Location2.X=6739.167mil|Location1.Y=1424.833mil|Location2.Y=1429.167mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\EEG_Mainboard\backup.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=6734.833mil|Location2.X=6739.167mil|Location1.Y=1424.833mil|Location2.Y=1429.167mil|Absolute=True">Clearance Constraint: (Collision &lt; 5mil) Between Region (0 hole(s)) Inner Layer 1 And Via (6737mil,1427mil) from Top Layer to Bottom Layer </acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\EEG_Mainboard\backup.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=6751.22mil|Location2.X=6755.553mil|Location1.Y=1402.361mil|Location2.Y=1406.694mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\EEG_Mainboard\backup.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=6751.22mil|Location2.X=6755.553mil|Location1.Y=1402.361mil|Location2.Y=1406.694mil|Absolute=True">Clearance Constraint: (Collision &lt; 5mil) Between Region (0 hole(s)) Inner Layer 1 And Via (6753.386mil,1404.527mil) from Top Layer to Bottom Layer </acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\EEG_Mainboard\backup.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=6751.22mil|Location2.X=6755.553mil|Location1.Y=1450.589mil|Location2.Y=1454.922mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\EEG_Mainboard\backup.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=6751.22mil|Location2.X=6755.553mil|Location1.Y=1450.589mil|Location2.Y=1454.922mil|Absolute=True">Clearance Constraint: (Collision &lt; 5mil) Between Region (0 hole(s)) Inner Layer 1 And Via (6753.386mil,1452.756mil) from Top Layer to Bottom Layer </acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\EEG_Mainboard\backup.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=6734.833mil|Location2.X=6739.167mil|Location1.Y=1424.833mil|Location2.Y=1429.167mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\EEG_Mainboard\backup.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=6734.833mil|Location2.X=6739.167mil|Location1.Y=1424.833mil|Location2.Y=1429.167mil|Absolute=True">Clearance Constraint: (Collision &lt; 5mil) Between Region (0 hole(s)) Inner Layer 2 And Via (6737mil,1427mil) from Top Layer to Bottom Layer </acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\EEG_Mainboard\backup.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=6751.22mil|Location2.X=6755.553mil|Location1.Y=1402.361mil|Location2.Y=1406.694mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\EEG_Mainboard\backup.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=6751.22mil|Location2.X=6755.553mil|Location1.Y=1402.361mil|Location2.Y=1406.694mil|Absolute=True">Clearance Constraint: (Collision &lt; 5mil) Between Region (0 hole(s)) Inner Layer 2 And Via (6753.386mil,1404.527mil) from Top Layer to Bottom Layer </acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\EEG_Mainboard\backup.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=6751.22mil|Location2.X=6755.553mil|Location1.Y=1450.589mil|Location2.Y=1454.922mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\EEG_Mainboard\backup.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=6751.22mil|Location2.X=6755.553mil|Location1.Y=1450.589mil|Location2.Y=1454.922mil|Absolute=True">Clearance Constraint: (Collision &lt; 5mil) Between Region (0 hole(s)) Inner Layer 2 And Via (6753.386mil,1452.756mil) from Top Layer to Bottom Layer </acronym></a><br></td>
+</tr>
+</table></a><hr color="#EEEEEE"><a href="#top" style="font-size: 0.9em">Back to top</a><br><br><a name="ID4VF1I5WWLPN1KCSJDPDSJUVXHLUDX5OS31LSICNOSI30YTTKLRCB"><table>
+<tr>
+<th style="text-align : left" colspan="1" class="rule">Silk To Solder Mask (Clearance=5mil) (IsPad),(All)</th>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\EEG_Mainboard\backup.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=6153.41mil|Location2.X=6159.66mil|Location1.Y=1392.875mil|Location2.Y=1399.125mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\EEG_Mainboard\backup.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=6153.41mil|Location2.X=6159.66mil|Location1.Y=1392.875mil|Location2.Y=1399.125mil|Absolute=True">Silk To Solder Mask Clearance Constraint: (3.937mil &lt; 5mil) Between Arc (6150.63mil,1396mil) on Top Overlay And Pad F2-1(6170.315mil,1396mil) on Top Layer [Top Overlay] to [Top Solder] clearance [3.937mil]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\EEG_Mainboard\backup.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=6292.629mil|Location2.X=6296.962mil|Location1.Y=1453.487mil|Location2.Y=1457.82mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\EEG_Mainboard\backup.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=6292.629mil|Location2.X=6296.962mil|Location1.Y=1453.487mil|Location2.Y=1457.82mil|Absolute=True">Silk To Solder Mask Clearance Constraint: (Collision &lt; 5mil) Between Arc (6289.795mil,1455.653mil) on Top Overlay And Pad C45-1(6291.189mil,1462mil) on Top Layer [Top Overlay] to [Top Solder] clearance [0mil]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\EEG_Mainboard\backup.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=6625.34mil|Location2.X=6631.59mil|Location1.Y=1320.875mil|Location2.Y=1327.125mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\EEG_Mainboard\backup.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=6625.34mil|Location2.X=6631.59mil|Location1.Y=1320.875mil|Location2.Y=1327.125mil|Absolute=True">Silk To Solder Mask Clearance Constraint: (3.937mil &lt; 5mil) Between Arc (6634.37mil,1324mil) on Top Overlay And Pad F1-1(6614.685mil,1324mil) on Top Layer [Top Overlay] to [Top Solder] clearance [3.937mil]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\EEG_Mainboard\backup.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=6597.78mil|Location2.X=6604.03mil|Location1.Y=1314.969mil|Location2.Y=1321.219mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\EEG_Mainboard\backup.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=6597.78mil|Location2.X=6604.03mil|Location1.Y=1314.969mil|Location2.Y=1321.219mil|Absolute=True">Silk To Solder Mask Clearance Constraint: (3.937mil &lt; 5mil) Between Pad F1-1(6614.685mil,1324mil) on Top Layer And Track (6595mil,1318.094mil)(6595mil,1329.906mil) on Top Overlay [Top Overlay] to [Top Solder] clearance [3.937mil]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\EEG_Mainboard\backup.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=6585.97mil|Location2.X=6592.22mil|Location1.Y=1314.969mil|Location2.Y=1321.219mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\EEG_Mainboard\backup.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=6585.97mil|Location2.X=6592.22mil|Location1.Y=1314.969mil|Location2.Y=1321.219mil|Absolute=True">Silk To Solder Mask Clearance Constraint: (3.937mil &lt; 5mil) Between Pad F1-2(6575.315mil,1324mil) on Top Layer And Track (6595mil,1318.094mil)(6595mil,1329.906mil) on Top Overlay [Top Overlay] to [Top Solder] clearance [3.937mil]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\EEG_Mainboard\backup.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=6180.97mil|Location2.X=6187.22mil|Location1.Y=1386.969mil|Location2.Y=1393.219mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\EEG_Mainboard\backup.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=6180.97mil|Location2.X=6187.22mil|Location1.Y=1386.969mil|Location2.Y=1393.219mil|Absolute=True">Silk To Solder Mask Clearance Constraint: (3.937mil &lt; 5mil) Between Pad F2-1(6170.315mil,1396mil) on Top Layer And Track (6190mil,1390.094mil)(6190mil,1401.906mil) on Top Overlay [Top Overlay] to [Top Solder] clearance [3.937mil]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\EEG_Mainboard\backup.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=6192.78mil|Location2.X=6199.03mil|Location1.Y=1386.969mil|Location2.Y=1393.219mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\EEG_Mainboard\backup.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=6192.78mil|Location2.X=6199.03mil|Location1.Y=1386.969mil|Location2.Y=1393.219mil|Absolute=True">Silk To Solder Mask Clearance Constraint: (3.937mil &lt; 5mil) Between Pad F2-2(6209.685mil,1396mil) on Top Layer And Track (6190mil,1390.094mil)(6190mil,1401.906mil) on Top Overlay [Top Overlay] to [Top Solder] clearance [3.937mil]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\EEG_Mainboard\backup.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=6977.938mil|Location2.X=6984.188mil|Location1.Y=1642.838mil|Location2.Y=1649.088mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\EEG_Mainboard\backup.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=6977.938mil|Location2.X=6984.188mil|Location1.Y=1642.838mil|Location2.Y=1649.088mil|Absolute=True">Silk To Solder Mask Clearance Constraint: (3.957mil &lt; 5mil) Between Pad FB1-1(6985mil,1653.354mil) on Top Layer And Track (6981.063mil,1643mil)(6988.937mil,1643mil) on Top Overlay [Top Overlay] to [Top Solder] clearance [3.957mil]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\EEG_Mainboard\backup.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=6977.938mil|Location2.X=6984.188mil|Location1.Y=1636.912mil|Location2.Y=1643.162mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\EEG_Mainboard\backup.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=6977.938mil|Location2.X=6984.188mil|Location1.Y=1636.912mil|Location2.Y=1643.162mil|Absolute=True">Silk To Solder Mask Clearance Constraint: (3.957mil &lt; 5mil) Between Pad FB1-2(6985mil,1632.646mil) on Top Layer And Track (6981.063mil,1643mil)(6988.937mil,1643mil) on Top Overlay [Top Overlay] to [Top Solder] clearance [3.957mil]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\EEG_Mainboard\backup.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=6562.82mil|Location2.X=6569.07mil|Location1.Y=1490.969mil|Location2.Y=1497.219mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\EEG_Mainboard\backup.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=6562.82mil|Location2.X=6569.07mil|Location1.Y=1490.969mil|Location2.Y=1497.219mil|Absolute=True">Silk To Solder Mask Clearance Constraint: (3.937mil &lt; 5mil) Between Pad L1-1(6581.693mil,1506.89mil) on Top Layer And Track (6565.945mil,1474.409mil)(6565.945mil,1490.158mil) on Top Overlay [Top Overlay] to [Top Solder] clearance [3.937mil]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\EEG_Mainboard\backup.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=6594.316mil|Location2.X=6600.566mil|Location1.Y=1490.969mil|Location2.Y=1497.219mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\EEG_Mainboard\backup.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=6594.316mil|Location2.X=6600.566mil|Location1.Y=1490.969mil|Location2.Y=1497.219mil|Absolute=True">Silk To Solder Mask Clearance Constraint: (3.937mil &lt; 5mil) Between Pad L1-1(6581.693mil,1506.89mil) on Top Layer And Track (6597.441mil,1474.409mil)(6597.441mil,1490.158mil) on Top Overlay [Top Overlay] to [Top Solder] clearance [3.937mil]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\EEG_Mainboard\backup.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=6562.82mil|Location2.X=6569.07mil|Location1.Y=1467.347mil|Location2.Y=1473.597mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\EEG_Mainboard\backup.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=6562.82mil|Location2.X=6569.07mil|Location1.Y=1467.347mil|Location2.Y=1473.597mil|Absolute=True">Silk To Solder Mask Clearance Constraint: (3.937mil &lt; 5mil) Between Pad L1-2(6581.693mil,1457.677mil) on Top Layer And Track (6565.945mil,1474.409mil)(6565.945mil,1490.158mil) on Top Overlay [Top Overlay] to [Top Solder] clearance [3.937mil]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\EEG_Mainboard\backup.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=6594.316mil|Location2.X=6600.566mil|Location1.Y=1467.347mil|Location2.Y=1473.597mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\EEG_Mainboard\backup.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=6594.316mil|Location2.X=6600.566mil|Location1.Y=1467.347mil|Location2.Y=1473.597mil|Absolute=True">Silk To Solder Mask Clearance Constraint: (3.937mil &lt; 5mil) Between Pad L1-2(6581.693mil,1457.677mil) on Top Layer And Track (6597.441mil,1474.409mil)(6597.441mil,1490.158mil) on Top Overlay [Top Overlay] to [Top Solder] clearance [3.937mil]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\EEG_Mainboard\backup.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=6969.875mil|Location2.X=6976.125mil|Location1.Y=1846.865mil|Location2.Y=1853.115mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\EEG_Mainboard\backup.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=6969.875mil|Location2.X=6976.125mil|Location1.Y=1846.865mil|Location2.Y=1853.115mil|Absolute=True">Silk To Solder Mask Clearance Constraint: (2.006mil &lt; 5mil) Between Pad TP14-1(6973mil,1866mil) on Bottom Layer And Text "1.8" (6891mil,1800mil) on Bottom Overlay [Bottom Overlay] to [Bottom Solder] clearance [2.006mil]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\EEG_Mainboard\backup.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=5905.833mil|Location2.X=5910.167mil|Location1.Y=1827.156mil|Location2.Y=1831.489mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\EEG_Mainboard\backup.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=5905.833mil|Location2.X=5910.167mil|Location1.Y=1827.156mil|Location2.Y=1831.489mil|Absolute=True">Silk To Solder Mask Clearance Constraint: (Collision &lt; 5mil) Between Pad TP15-1(5907mil,1814mil) on Top Layer And Text "GND" (5902mil,1790mil) on Top Overlay [Top Overlay] to [Top Solder] clearance [0mil]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\EEG_Mainboard\backup.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=6491.022mil|Location2.X=6498.6mil|Location1.Y=1119.329mil|Location2.Y=1126.797mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\EEG_Mainboard\backup.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=6491.022mil|Location2.X=6498.6mil|Location1.Y=1119.329mil|Location2.Y=1126.797mil|Absolute=True">Silk To Solder Mask Clearance Constraint: (1.375mil &lt; 5mil) Between Pad TP16-1(6505mil,1135mil) on Bottom Layer And Text "VBAT" (6339mil,1075mil) on Bottom Overlay [Bottom Overlay] to [Bottom Solder] clearance [1.375mil]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\EEG_Mainboard\backup.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=6667.878mil|Location2.X=6674.128mil|Location1.Y=1304.875mil|Location2.Y=1311.125mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\EEG_Mainboard\backup.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=6667.878mil|Location2.X=6674.128mil|Location1.Y=1304.875mil|Location2.Y=1311.125mil|Absolute=True">Silk To Solder Mask Clearance Constraint: (1.993mil &lt; 5mil) Between Pad TP17-1(6655mil,1308mil) on Bottom Layer And Text "VB" (6669mil,1283mil) on Bottom Overlay [Bottom Overlay] to [Bottom Solder] clearance [1.993mil]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\EEG_Mainboard\backup.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=6553.534mil|Location2.X=6557.868mil|Location1.Y=1422.087mil|Location2.Y=1426.421mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\EEG_Mainboard\backup.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=6553.534mil|Location2.X=6557.868mil|Location1.Y=1422.087mil|Location2.Y=1426.421mil|Absolute=True">Silk To Solder Mask Clearance Constraint: (Collision &lt; 5mil) Between Pad TP24-1(6556mil,1418mil) on Bottom Layer And Text "CHG" (6443.069mil,1384.931mil) on Bottom Overlay [Bottom Overlay] to [Bottom Solder] clearance [0mil]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\EEG_Mainboard\backup.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=6282.96mil|Location2.X=6290.737mil|Location1.Y=1126.567mil|Location2.Y=1133.865mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\EEG_Mainboard\backup.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=6282.96mil|Location2.X=6290.737mil|Location1.Y=1126.567mil|Location2.Y=1133.865mil|Absolute=True">Silk To Solder Mask Clearance Constraint: (2.618mil &lt; 5mil) Between Pad TP28-1(6294mil,1145mil) on Bottom Layer And Text "GND" (6178mil,1081mil) on Bottom Overlay [Bottom Overlay] to [Bottom Solder] clearance [2.618mil]</acronym></a><br></td>
+</tr>
+</table></a><hr color="#EEEEEE"><a href="#top" style="font-size: 0.9em">Back to top</a><br><br><a name="IDKGGJSSERDIYIOD51SW4F3AYOAMAC2WUUXBQYREBX3IJGC0EXC3LB"><table>
+<tr>
+<th style="text-align : left" colspan="1" class="rule">Board Clearance Constraint (Gap=0mil) (All)</th>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\EEG_Mainboard\backup.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=6035.438mil|Location2.X=6044.562mil|Location1.Y=2252.773mil|Location2.Y=2261.897mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\EEG_Mainboard\backup.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=6035.438mil|Location2.X=6044.562mil|Location1.Y=2252.773mil|Location2.Y=2261.897mil|Absolute=True">Board Outline Clearance(Outline Edge): (6.985mil &lt; 7.874mil) Between Arc (6040mil,2244mil) on Top Overlay And Board Edge </acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\EEG_Mainboard\backup.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=6993.86mil|Location2.X=7002.984mil|Location1.Y=1847.425mil|Location2.Y=1856.549mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\EEG_Mainboard\backup.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=6993.86mil|Location2.X=7002.984mil|Location1.Y=1847.425mil|Location2.Y=1856.549mil|Absolute=True">Board Outline Clearance(Outline Edge): (4.238mil &lt; 7.874mil) Between Board Edge And Text "1.8" (6891mil,1800mil) on Bottom Overlay </acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\EEG_Mainboard\backup.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=6420.757mil|Location2.X=6427.007mil|Location1.Y=976.48mil|Location2.Y=982.729mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\EEG_Mainboard\backup.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=6420.757mil|Location2.X=6427.007mil|Location1.Y=976.48mil|Location2.Y=982.729mil|Absolute=True">Board Outline Clearance(Outline Edge): (Collision &lt; 7.874mil) Between Board Edge And Track (6423.882mil,963.606mil)(6423.882mil,1014.787mil) on Top Overlay </acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\EEG_Mainboard\backup.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=6444.379mil|Location2.X=6450.628mil|Location1.Y=960.482mil|Location2.Y=966.731mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\EEG_Mainboard\backup.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=6444.379mil|Location2.X=6450.628mil|Location1.Y=960.482mil|Location2.Y=966.731mil|Absolute=True">Board Outline Clearance(Outline Edge): (Collision &lt; 7.874mil) Between Board Edge And Track (6423.882mil,963.606mil)(6471.126mil,963.606mil) on Top Overlay </acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\EEG_Mainboard\backup.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=6468.001mil|Location2.X=6474.251mil|Location1.Y=976.474mil|Location2.Y=982.723mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\EEG_Mainboard\backup.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=6468.001mil|Location2.X=6474.251mil|Location1.Y=976.474mil|Location2.Y=982.723mil|Absolute=True">Board Outline Clearance(Outline Edge): (Collision &lt; 7.874mil) Between Board Edge And Track (6471.126mil,963.606mil)(6471.126mil,1014.787mil) on Top Overlay </acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\EEG_Mainboard\backup.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=6598.875mil|Location2.X=6605.124mil|Location1.Y=995.72mil|Location2.Y=1001.97mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\EEG_Mainboard\backup.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=6598.875mil|Location2.X=6605.124mil|Location1.Y=995.72mil|Location2.Y=1001.97mil|Absolute=True">Board Outline Clearance(Outline Edge): (Collision &lt; 7.874mil) Between Board Edge And Track (6602mil,1000mil)(6602mil,1260mil) on Top Overlay </acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\EEG_Mainboard\backup.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=6663.369mil|Location2.X=6669.618mil|Location1.Y=995.72mil|Location2.Y=1001.97mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\EEG_Mainboard\backup.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=6663.369mil|Location2.X=6669.618mil|Location1.Y=995.72mil|Location2.Y=1001.97mil|Absolute=True">Board Outline Clearance(Outline Edge): (Collision &lt; 7.874mil) Between Board Edge And Track (6602mil,1000mil)(6731mil,1000mil) on Top Overlay </acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\EEG_Mainboard\backup.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=6727.875mil|Location2.X=6734.124mil|Location1.Y=995.705mil|Location2.Y=1001.954mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\EEG_Mainboard\backup.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=6727.875mil|Location2.X=6734.124mil|Location1.Y=995.705mil|Location2.Y=1001.954mil|Absolute=True">Board Outline Clearance(Outline Edge): (Collision &lt; 7.874mil) Between Board Edge And Track (6731mil,1000mil)(6731mil,1260mil) on Top Overlay </acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\EEG_Mainboard\backup.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=6992.362mil|Location2.X=7001.486mil|Location1.Y=1881.265mil|Location2.Y=1890.389mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\EEG_Mainboard\backup.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=6992.362mil|Location2.X=7001.486mil|Location1.Y=1881.265mil|Location2.Y=1890.389mil|Absolute=True">Board Outline Clearance(Outline Edge): (7.234mil &lt; 7.874mil) Between Board Edge And Track (6800.394mil,1885.827mil)(6989.37mil,1885.827mil) on Top Overlay </acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\EEG_Mainboard\backup.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=6992.362mil|Location2.X=7001.486mil|Location1.Y=2219.847mil|Location2.Y=2228.971mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\EEG_Mainboard\backup.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=6992.362mil|Location2.X=7001.486mil|Location1.Y=2219.847mil|Location2.Y=2228.971mil|Absolute=True">Board Outline Clearance(Outline Edge): (7.234mil &lt; 7.874mil) Between Board Edge And Track (6808.268mil,2224.409mil)(6989.37mil,2224.409mil) on Top Overlay </acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\EEG_Mainboard\backup.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=6992.362mil|Location2.X=7001.486mil|Location1.Y=1940.32mil|Location2.Y=1949.444mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\EEG_Mainboard\backup.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=6992.362mil|Location2.X=7001.486mil|Location1.Y=1940.32mil|Location2.Y=1949.444mil|Absolute=True">Board Outline Clearance(Outline Edge): (7.234mil &lt; 7.874mil) Between Board Edge And Track (6950mil,1944.882mil)(6989.37mil,1944.882mil) on Top Overlay </acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\EEG_Mainboard\backup.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=6992.362mil|Location2.X=7001.486mil|Location1.Y=2160.792mil|Location2.Y=2169.916mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\EEG_Mainboard\backup.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=6992.362mil|Location2.X=7001.486mil|Location1.Y=2160.792mil|Location2.Y=2169.916mil|Absolute=True">Board Outline Clearance(Outline Edge): (7.234mil &lt; 7.874mil) Between Board Edge And Track (6950mil,2165.354mil)(6989.37mil,2165.354mil) on Top Overlay </acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\EEG_Mainboard\backup.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=6992.362mil|Location2.X=7001.486mil|Location1.Y=1881.265mil|Location2.Y=1890.389mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\EEG_Mainboard\backup.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=6992.362mil|Location2.X=7001.486mil|Location1.Y=1881.265mil|Location2.Y=1890.389mil|Absolute=True">Board Outline Clearance(Outline Edge): (7.234mil &lt; 7.874mil) Between Board Edge And Track (6989.37mil,1885.827mil)(6989.37mil,1944.882mil) on Top Overlay </acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\EEG_Mainboard\backup.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=6992.362mil|Location2.X=7001.486mil|Location1.Y=2160.792mil|Location2.Y=2169.916mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\EEG_Mainboard\backup.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=6992.362mil|Location2.X=7001.486mil|Location1.Y=2160.792mil|Location2.Y=2169.916mil|Absolute=True">Board Outline Clearance(Outline Edge): (7.234mil &lt; 7.874mil) Between Board Edge And Track (6989.37mil,2165.354mil)(6989.37mil,2224.409mil) on Top Overlay </acronym></a><br></td>
+</tr>
+</table></a><hr color="#EEEEEE"><a href="#top" style="font-size: 0.9em">Back to top</a><br><br></body>
+</html>

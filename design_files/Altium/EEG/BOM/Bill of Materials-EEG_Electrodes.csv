@@ -1,0 +1,11 @@
+Line #,Name,Description,Designator,Quantity,Manufacturer 1,Manufacturer Part Number 1,Manufacturer Lifecycle 1,Supplier 1,Supplier Part Number 1,Supplier Unit Price 1,Supplier Subtotal 1
+
+"","GRM033R6YA104KE14D","Capacitor 0.1uF 0201","C1A, C1B, C1C, C1D, C1E, C1F, C1G, C2","8","","","","","","",""
+"","GRM035R61C225ME01D","Capacitor 2.2uF 0201","C3","1","","","","","","",""
+"","ESD108B1CSP0201XTSA1","TVS Diode (Bi-directional)","D1, D2A, D2B, D2C, D2D, D2E, D2F, D2G","8","","","","","","",""
+"","EEG_Electrode","EEG_Electrode","E1A, E1B, E1C, E1D, E1E, E1F, E1G, E8","8","","","","","","",""
+"","LTC6078ACMS8#TRPBF","Integrated Circuit","IC1A, IC1B, IC1C, IC1D, IC1E, IC1F, IC1G","7","","","","","","",""
+"","10FHH-SM1-GAN-TF FPC","","J1","1","","","","","","",""
+"","ERA-1AEB101C","Resistor 100 ohms","R1A, R1B, R1C, R1D, R1E, R1F, R1G, R2A, R2B, R2C, R2D, R2E, R2F, R2G","14","","","","","","",""
+"","ERA1AEB103C","Resistor 10k","R3, R5A, R5B, R5C, R5D, R5E, R5F, R5G","8","","","","","","",""
+"","AF0201JR-071ML","Resistor 1M","R4A, R4B, R4C, R4D, R4E, R4F, R4G","7","","","","","","",""

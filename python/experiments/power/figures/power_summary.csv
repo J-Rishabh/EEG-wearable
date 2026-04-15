@@ -1,0 +1,5 @@
+Mode,Avg Current (mA),Peak Current (mA),Std Dev (mA),Avg Power (mW),Est. Battery Life (h)
+"BLE Advertising (ADS on, LED on)",12.3133,15.0297,1.1288,45.5593,16.24
+"BLE Advertising (ADS off, LED on)",2.689,4.6748,0.7074,9.9493,74.38
+"BLE Advertising (ADS off, LED off)",1.4748,2.3041,0.1418,5.4566,135.61
+BLE Connected and streaming samples,11.8036,12.6685,0.2037,43.6733,16.94

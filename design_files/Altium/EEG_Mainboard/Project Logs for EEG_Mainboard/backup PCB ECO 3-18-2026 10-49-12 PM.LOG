@@ -1,0 +1,48 @@
+Removed Pin From Net: NetName=Pad8 Pin=TP23-1
+Removed Pin From Net: NetName=NRF_ADS_DRDY Pin=U1-37
+Removed Pin From Net: NetName=NRF_LED_PWM Pin=U1-42
+Added Component: Designator=TP25(TP)
+Added Component: Designator=TP26(TP)
+Added Component: Designator=TP27(TP)
+Added Component: Designator=TP28(TP)
+Added Component: Designator=TP29(TP)
+Added Component: Designator=TP30(TP)
+Added Component: Designator=TP31(TP)
+Added Component: Designator=TP32(TP)
+Added Pin To Net: NetName=Pad2 Pin=TP23-1
+Added Pin To Net: NetName=Pad1 Pin=TP25-1
+Added Pin To Net: NetName=Pad5 Pin=TP26-1
+Added Pin To Net: NetName=Pad6 Pin=TP27-1
+Added Pin To Net: NetName=Pad3 Pin=TP28-1
+Added Pin To Net: NetName=Pad7 Pin=TP29-1
+Added Pin To Net: NetName=Pad4 Pin=TP30-1
+Added Pin To Net: NetName=Pad8 Pin=TP31-1
+Added Pin To Net: NetName=GND Pin=TP32-1
+Added Pin To Net: NetName=NRF_LED_PWM Pin=U1-37
+Added Pin To Net: NetName=NRF_ADS_DRDY Pin=U1-40
+Added Member To Class: ClassName=EEG_Thesis Member=Component TP1 TP
+Added Member To Class: ClassName=EEG_Thesis Member=Component TP3 TP
+Added Member To Class: ClassName=EEG_Thesis Member=Component TP5 TP
+Added Member To Class: ClassName=EEG_Thesis Member=Component TP6 TP
+Added Member To Class: ClassName=EEG_Thesis Member=Component TP9 TP
+Added Member To Class: ClassName=EEG_Thesis Member=Component TP10 TP
+Added Member To Class: ClassName=EEG_Thesis Member=Component TP11 TP
+Added Member To Class: ClassName=EEG_Thesis Member=Component TP12 TP
+Added Member To Class: ClassName=EEG_Thesis Member=Component TP14 TP
+Added Member To Class: ClassName=EEG_Thesis Member=Component TP15 TP
+Added Member To Class: ClassName=EEG_Thesis Member=Component TP16 TP
+Added Member To Class: ClassName=EEG_Thesis Member=Component TP17 TP
+Added Member To Class: ClassName=EEG_Thesis Member=Component TP18 TP
+Added Member To Class: ClassName=EEG_Thesis Member=Component TP19 TP
+Added Member To Class: ClassName=EEG_Thesis Member=Component TP20 TP
+Added Member To Class: ClassName=EEG_Thesis Member=Component TP21 TP
+Added Member To Class: ClassName=EEG_Thesis Member=Component TP22 TP
+Added Member To Class: ClassName=EEG_Thesis Member=Component TP23 TP
+Added Member To Class: ClassName=EEG_Thesis Member=Component TP25 TP
+Added Member To Class: ClassName=EEG_Thesis Member=Component TP26 TP
+Added Member To Class: ClassName=EEG_Thesis Member=Component TP27 TP
+Added Member To Class: ClassName=EEG_Thesis Member=Component TP28 TP
+Added Member To Class: ClassName=EEG_Thesis Member=Component TP29 TP
+Added Member To Class: ClassName=EEG_Thesis Member=Component TP30 TP
+Added Member To Class: ClassName=EEG_Thesis Member=Component TP31 TP
+Added Member To Class: ClassName=EEG_Thesis Member=Component TP32 TP

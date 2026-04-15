@@ -43,10 +43,10 @@ from datetime import datetime
 import numpy as np
 import pyqtgraph as pg
 from PyQt5 import QtWidgets, QtCore, QtGui
-from scipy.signal import welch, find_peaks
+from scipy.signal import welch
 
 from eeg_processing import (
-    EEGProcessor, derive_signals,
+    EEGProcessor, derive_signals, estimate_hr_live,
     DERIVED_LABELS, DEFAULT_SCALE_UV,
 )
 from eeg_ble import BleEEGClient, DEVICE_NAME
@@ -63,6 +63,8 @@ pg.setConfigOptions(antialias=False, useOpenGL=True)
 TEST_MODE = False
 FS        = 250
 IMU_FS    = 25
+
+EDF_FLUSH_INTERVAL_S = 60   # write accumulated data to disk every N seconds
 
 # Motion artifact detection — see eeg_motion.py for full pipeline.
 # Tune thresholds with imu_motion_tuner.py, then update MOTION_THRESHOLD_MG in eeg_motion.py.
@@ -161,21 +163,30 @@ class SharedState:
         self.gain         = [24, 24, 24, 24]
         self.recording    = False
         self.rec_buf      = []
-        self.imu_rec_buf  = []      # list of (x_mg, y_mg, z_mg, motion) at IMU_FS Hz
+        self.imu_rec_buf  = []      # list of (x_mg, y_mg, z_mg, motion, temp_cdeg) at IMU_FS Hz
+        self.pkt_times_buf = []     # wall-clock arrival time of each EEG BLE packet during recording
         self.rec_start    = None
         self.hw_test_mode = False   # True = ADS1299 internal square-wave test
         # Motion state — updated by _on_imu_sample from the BLE thread
         self.motion_active        = False
         self.motion_holdoff_until = 0.0
-        self.imu_x = 0
-        self.imu_y = 0
-        self.imu_z = 0
+        self.imu_x    = 0
+        self.imu_y    = 0
+        self.imu_z    = 0
+        self.imu_temp = 0    # raw centidegrees (divide by 100 for °C)
+        self.imu_roll  = 0.0  # degrees, derived from gravity estimate
+        self.imu_pitch = 0.0  # degrees, derived from gravity estimate
         self.drl_active   = True    # True = DRL/BIAS circuit active (default)
+        self.ble_gap_start = None   # time.time() when BLE dropped during recording; None otherwise
+        self.edf_writer   = None    # open pyedflib.EdfWriter during recording; None otherwise
+        self.edf_path     = None    # path to the open EDF file
+        self.edf_ts       = None    # timestamp string used in the filename
         # PMIC / battery status (updated every ~5 s from firmware)
         self.vbat_mv      = 0
         self.vbat_pct     = 0
         self.pmic_charging = False
         self.pmic_error    = False
+        self.rssi         = 127   # dBm; 127 = unavailable sentinel
 
     @property
     def window_samples(self) -> int:
@@ -253,22 +264,25 @@ def test_data_thread(stop_evt: threading.Event):
 # BLE CLIENT  (all BLE logic lives in eeg_ble.py)
 # ──────────────────────────────────────────────────────────────────────────────
 
-def _on_ble_sample(uv, gains, rails):
+def _on_ble_sample(uv, gains, rails, t_pkt=None):
     """BleEEGClient sample callback — push data into shared state."""
     with STATE.lock:
         STATE.pending.append(uv)        # push entire (8,8) batch — one object vs 8
         STATE.rails |= rails
         if STATE.recording:
             STATE.rec_buf.extend(uv)    # uv is (8,8); extend yields rows
+            if t_pkt is not None:
+                STATE.pkt_times_buf.append(t_pkt)
 
 
-def _on_pmic(vbat_mv, pct, charging, error):
-    """BleEEGClient PMIC callback — update battery status."""
+def _on_pmic(vbat_mv, pct, charging, error, rssi=127):
+    """BleEEGClient PMIC callback — update battery + RSSI status."""
     with STATE.lock:
         STATE.vbat_mv       = vbat_mv
         STATE.vbat_pct      = pct
         STATE.pmic_charging = charging
         STATE.pmic_error    = error
+        STATE.rssi          = rssi
 
 
 # Stateful IMU motion detector — one instance for the lifetime of the process
@@ -283,14 +297,26 @@ _imu_detector = ImuMotionDetector(
 def _on_imu_sample(x_mg, y_mg, z_mg, temp_cdeg):
     """BleEEGClient IMU callback — compute motion flag and buffer for EDF."""
     _dyn_raw, _dyn_smooth, motion_active = _imu_detector.process_sample(x_mg, y_mg, z_mg)
+    # Roll/pitch from the gravity estimate (low-pass of raw accel, strips dynamics)
+    fx, fy, fz = _imu_detector.gx, _imu_detector.gy, _imu_detector.gz
+    _norm = math.sqrt(fx*fx + fy*fy + fz*fz)
+    if _norm > 1e-3:
+        fx, fy, fz = fx/_norm, fy/_norm, fz/_norm
+        _roll_deg  = math.degrees(math.atan2(fy, fz))
+        _pitch_deg = math.degrees(math.atan2(-fx, math.sqrt(fy*fy + fz*fz)))
+    else:
+        _roll_deg = _pitch_deg = 0.0
     with STATE.lock:
         STATE.motion_active = motion_active
-        STATE.imu_x = x_mg
-        STATE.imu_y = y_mg
-        STATE.imu_z = z_mg
+        STATE.imu_x    = x_mg
+        STATE.imu_y    = y_mg
+        STATE.imu_z    = z_mg
+        STATE.imu_temp = temp_cdeg
+        STATE.imu_roll  = _roll_deg
+        STATE.imu_pitch = _pitch_deg
         if STATE.recording:
             STATE.imu_rec_buf.append(
-                (x_mg, y_mg, z_mg, 1 if motion_active else 0)
+                (x_mg, y_mg, z_mg, 1 if motion_active else 0, temp_cdeg)
             )
 
 
@@ -314,7 +340,7 @@ def save_edf(buf: list, gain: int, rec_start: float = None, imu_buf: list = None
     if arr.ndim != 2 or arr.shape[1] != 8:
         print("[SAVE] Unexpected buffer shape — aborting."); return None
 
-    # IMU data — (N_imu, 4): x_mg, y_mg, z_mg, motion flag
+    # IMU data — (N_imu, 5): x_mg, y_mg, z_mg, motion flag, temp_cdeg
     has_imu = bool(imu_buf)
     if has_imu:
         imu_arr = np.array(imu_buf, dtype=np.float64)
@@ -333,13 +359,13 @@ def save_edf(buf: list, gain: int, rec_start: float = None, imu_buf: list = None
         fname = os.path.join(rec_dir, f"eeg_{ts}.edf")
 
         eeg_labels = ["EOG","EMG_far","EMG_near","EEG_L1","EEG_L2","EEG_L3","SRB1","DRL"]
-        imu_labels = ["ACCEL_X","ACCEL_Y","ACCEL_Z","MOTION"]
-        n_ch = 12 if has_imu else 8
+        imu_labels = ["ACCEL_X","ACCEL_Y","ACCEL_Z","MOTION","IMU_TEMP"]
+        n_ch = 13 if has_imu else 8
         f = pyedflib.EdfWriter(fname, n_ch, file_type=pyedflib.FILETYPE_EDFPLUS)
         try:
             f.setStartdatetime(datetime.fromtimestamp(t0))
             for i in range(8):
-                ch_max = round(max(float(np.max(np.abs(arr[:, i]))), 1.0), 1)
+                ch_max = int(round(max(float(np.max(np.abs(arr[:, i]))), 1.0)))
                 f.setSignalHeader(i, {
                     "label": eeg_labels[i], "dimension": "uV",
                     "sample_frequency": FS,
@@ -349,9 +375,9 @@ def save_edf(buf: list, gain: int, rec_start: float = None, imu_buf: list = None
                     "transducer": "ADS1299",
                 })
             if has_imu:
-                imu_ranges = [2000.0, 2000.0, 2000.0, 1.0]   # mg, mg, mg, flag
-                imu_dims   = ["mg",   "mg",   "mg",   "bool"]
-                for j in range(4):
+                imu_ranges = [2000.0, 2000.0, 2000.0, 1.0, 8500.0]   # mg, mg, mg, flag, cdeg
+                imu_dims   = ["mg",   "mg",   "mg",   "bool", "cdeg"]
+                for j in range(5):
                     f.setSignalHeader(8 + j, {
                         "label": imu_labels[j], "dimension": imu_dims[j],
                         "sample_frequency": IMU_FS,
@@ -362,7 +388,7 @@ def save_edf(buf: list, gain: int, rec_start: float = None, imu_buf: list = None
                     })
             signals = [np.ascontiguousarray(arr[:, i]) for i in range(8)]
             if has_imu:
-                for j in range(4):
+                for j in range(5):
                     signals.append(np.ascontiguousarray(imu_arr[:, j]))
             f.writeSamples(signals)
         finally:
@@ -382,7 +408,7 @@ def save_edf(buf: list, gain: int, rec_start: float = None, imu_buf: list = None
         "fs":              FS,
         "edf_file":        os.path.basename(fname),
         "imu_fs":          IMU_FS if has_imu else None,
-        "imu_channels":    ["ACCEL_X","ACCEL_Y","ACCEL_Z","MOTION"] if has_imu else [],
+        "imu_channels":    ["ACCEL_X","ACCEL_Y","ACCEL_Z","MOTION","IMU_TEMP"] if has_imu else [],
     }
     meta_path = os.path.join(rec_dir, f"eeg_{ts}_meta.json")
     with open(meta_path, "w") as mf:
@@ -391,6 +417,180 @@ def save_edf(buf: list, gain: int, rec_start: float = None, imu_buf: list = None
     print(f"[SAVE] {arr.shape[0]} samples ({arr.shape[0]/FS:.1f} s) -> {fname}")
     print(f"[SAVE] meta -> {meta_path}")
     return fname
+
+
+# ──────────────────────────────────────────────────────────────────────────────
+# INCREMENTAL EDF  (opened at REC start, flushed every EDF_FLUSH_INTERVAL_S)
+# ──────────────────────────────────────────────────────────────────────────────
+
+def _edf_open(rec_start: float, gain: list):
+    """Open a new EDF+ file for incremental writing. Returns (writer, path, ts).
+    Physical ranges are set from gain at open time so headers are fully written
+    before the first writeSamples() call."""
+    try:
+        import pyedflib
+    except ImportError:
+        print("[EDF] pyedflib not found — incremental save unavailable")
+        return None, None, None
+
+    rec_dir = os.path.join(os.path.dirname(__file__), "recordings")
+    os.makedirs(rec_dir, exist_ok=True)
+    ts    = datetime.fromtimestamp(rec_start).strftime("%Y%m%d_%H%M%S")
+    fname = os.path.join(rec_dir, f"eeg_{ts}.edf")
+
+    # Physical max per channel: VREF / PGA_gain gives the ADC full-scale in µV.
+    # Channel-to-gain-group mapping: CH1→g0, CH2/3→g1, CH4/6→g2, CH5→g3,
+    # CH7 powered-down (gain irrelevant, use 24), CH8 BIAS_MEAS at gain=1.
+    ch_gain = [gain[0], gain[1], gain[1], gain[2], gain[3], gain[2], 24, 1]
+    eeg_ranges = [int(4_500_000 / g) for g in ch_gain]
+    eeg_labels = ["EOG","EMG_far","EMG_near","EEG_L1","EEG_L2","EEG_L3","SRB1","DRL"]
+    imu_labels = ["ACCEL_X","ACCEL_Y","ACCEL_Z","MOTION","IMU_TEMP"]
+    imu_ranges = [2000.0, 2000.0, 2000.0, 1.0, 8500.0]
+    imu_dims   = ["mg",   "mg",   "mg",   "bool", "cdeg"]
+
+    try:
+        import pyedflib
+        f = pyedflib.EdfWriter(fname, 13, file_type=pyedflib.FILETYPE_EDFPLUS)
+        f.setStartdatetime(datetime.fromtimestamp(rec_start))
+        for i in range(8):
+            f.setSignalHeader(i, {
+                "label": eeg_labels[i], "dimension": "uV",
+                "sample_frequency": FS,
+                "physical_max":  eeg_ranges[i], "physical_min": -eeg_ranges[i],
+                "digital_max": 32767,    "digital_min": -32768,
+                "prefilter": "HP:0.5Hz LP:40Hz N:60Hz",
+                "transducer": "ADS1299",
+            })
+        for j in range(5):
+            f.setSignalHeader(8 + j, {
+                "label": imu_labels[j], "dimension": imu_dims[j],
+                "sample_frequency": IMU_FS,
+                "physical_max":  imu_ranges[j], "physical_min": -imu_ranges[j],
+                "digital_max": 32767,            "digital_min": -32768,
+                "prefilter": "", "transducer": "LIS2DW12",
+            })
+        print(f"[EDF] Opened for incremental write: {fname}")
+        return f, fname, ts
+    except Exception as e:
+        print(f"[EDF] Failed to open writer: {e}")
+        return None, None, None
+
+
+def _edf_flush_to_disk(writer, n_eeg_to_write: int, n_imu_to_write: int):
+    """Write n_eeg_to_write EEG samples and n_imu_to_write IMU samples from
+    STATE.rec_buf / STATE.imu_rec_buf to the open EDF writer.
+    Caller must ensure these counts are whole-second multiples.
+    Called with STATE.lock NOT held."""
+    # Take a snapshot of the data we will write (without clearing yet).
+    with STATE.lock:
+        eeg_snap = STATE.rec_buf[:n_eeg_to_write]
+        imu_snap = STATE.imu_rec_buf[:n_imu_to_write]
+
+    if not eeg_snap:
+        return
+
+    arr = np.array(eeg_snap, dtype=np.float64)
+    if arr.ndim != 2 or arr.shape[1] != 8:
+        return
+
+    has_imu = bool(imu_snap)
+    signals = [np.ascontiguousarray(arr[:, i]) for i in range(8)]
+    if has_imu:
+        imu_arr = np.array(imu_snap, dtype=np.float64)
+        for j in range(5):
+            signals.append(np.ascontiguousarray(imu_arr[:, j]))
+    else:
+        # IMU not available — zero-pad so EDF signal headers stay valid
+        for _ in range(5):
+            signals.append(np.zeros(n_imu_to_write))
+
+    try:
+        writer.writeSamples(signals)
+    except Exception as e:
+        print(f"[EDF] writeSamples failed: {e}"); return
+
+    # Remove only the flushed entries; new data may have arrived after our snapshot.
+    with STATE.lock:
+        del STATE.rec_buf[:n_eeg_to_write]
+        del STATE.imu_rec_buf[:n_imu_to_write]
+
+    n_secs = n_eeg_to_write // FS
+    print(f"[EDF] Flushed {n_secs} s ({n_eeg_to_write} EEG + {n_imu_to_write} IMU samples) to disk")
+
+
+def _edf_close(writer, path: str, ts: str, rec_start: float):
+    """Flush any remaining whole-second data, close the EDF writer, write JSON sidecar."""
+    if writer is None:
+        return
+
+    # Final flush — grab everything left in the buffer
+    with STATE.lock:
+        buf     = list(STATE.rec_buf)
+        imu_buf = list(STATE.imu_rec_buf)
+
+    arr = np.array(buf, dtype=np.float64) if buf else np.empty((0, 8))
+    has_imu = bool(imu_buf)
+    if has_imu:
+        imu_arr = np.array(imu_buf, dtype=np.float64)
+        n_secs  = min(len(arr) // FS, len(imu_arr) // IMU_FS)
+    else:
+        n_secs  = len(arr) // FS
+
+    if n_secs > 0:
+        n_eeg = n_secs * FS
+        n_imu = n_secs * IMU_FS
+        signals = [np.ascontiguousarray(arr[:n_eeg, i]) for i in range(8)]
+        if has_imu:
+            imu_arr_w = np.array(imu_buf, dtype=np.float64)
+            for j in range(5):
+                signals.append(np.ascontiguousarray(imu_arr_w[:n_imu, j]))
+        else:
+            for _ in range(5):
+                signals.append(np.zeros(n_imu))
+        try:
+            writer.writeSamples(signals)
+        except Exception as e:
+            print(f"[EDF] Final flush failed: {e}")
+
+    try:
+        writer.close()
+    except Exception as e:
+        print(f"[EDF] Writer close failed: {e}")
+
+    # Query total samples from file (what was actually written)
+    total_eeg = n_secs * FS  # approximate — good enough for JSON
+    import json
+    meta = {
+        "rec_start_epoch": rec_start,
+        "rec_start_iso":   datetime.fromtimestamp(rec_start).isoformat(),
+        "n_samples":       total_eeg,
+        "fs":              FS,
+        "edf_file":        os.path.basename(path),
+        "imu_fs":          IMU_FS,
+        "imu_channels":    ["ACCEL_X","ACCEL_Y","ACCEL_Z","MOTION","IMU_TEMP"],
+    }
+
+    # Save per-packet BLE arrival timestamps for ERP timing correction.
+    # Fitting a line through these gives a per-sample wall-clock mapping that
+    # removes BLE delivery jitter (otherwise smears ERPs by up to ~128ms).
+    with STATE.lock:
+        pkt_times = list(STATE.pkt_times_buf)
+        STATE.pkt_times_buf = []
+    if pkt_times:
+        pkt_arr = np.array(pkt_times, dtype=np.float64)
+        rec_dir  = os.path.dirname(path)
+        pkt_path = os.path.join(rec_dir, f"eeg_{ts}_pkttimes.npy")
+        np.save(pkt_path, pkt_arr)
+        meta["packet_times_file"] = os.path.basename(pkt_path)
+        print(f"[EDF] packet times -> {pkt_path}  ({len(pkt_arr)} packets)")
+
+    rec_dir  = os.path.dirname(path)
+    meta_path = os.path.join(rec_dir, f"eeg_{ts}_meta.json")
+    with open(meta_path, "w") as mf:
+        json.dump(meta, mf, indent=2)
+
+    print(f"[EDF] Closed: {path}")
+    print(f"[EDF] meta -> {meta_path}")
 
 
 # ──────────────────────────────────────────────────────────────────────────────
@@ -607,16 +807,39 @@ class EEGWindow(QtWidgets.QMainWindow):
             self._lbl_bat_status.setStyleSheet(
                 f"color:{_sc};font-size:7pt;font-family:monospace;")
 
+            with STATE.lock:
+                _rssi_now = STATE.rssi
+            if _rssi_now == 127:
+                self._lbl_rssi.setText("RSSI —")
+                self._lbl_rssi.setStyleSheet(
+                    "color:#555555;font-size:7pt;font-family:monospace;")
+            else:
+                if _rssi_now >= -65:
+                    _rc = "#4caf50"   # green — strong
+                elif _rssi_now >= -80:
+                    _rc = "#ffa726"   # orange — ok
+                else:
+                    _rc = "#ef5350"   # red — weak
+                self._lbl_rssi.setText(f"RSSI {_rssi_now} dBm")
+                self._lbl_rssi.setStyleSheet(
+                    f"color:{_rc};font-size:7pt;font-family:monospace;")
+
             # 0b. IMU overlay — update every frame (25 Hz data, cheap labels)
             with STATE.lock:
                 _imu_x      = STATE.imu_x
                 _imu_y      = STATE.imu_y
                 _imu_z      = STATE.imu_z
                 _mot_active = STATE.motion_active
+                _imu_temp   = STATE.imu_temp
+                _roll       = STATE.imu_roll
+                _pitch      = STATE.imu_pitch
             self._lbl_imu_x.setText(f"X: {_imu_x:+5d} mg")
             self._lbl_imu_y.setText(f"Y: {_imu_y:+5d} mg")
             self._lbl_imu_z.setText(f"Z: {_imu_z:+5d} mg")
-            self._lbl_motion.setVisible(_mot_active)
+            self._lbl_imu_temp.setText(f"T: {_imu_temp/100:.1f} °C")
+            self._lbl_imu_roll.setText(f"roll:  {_roll:+6.1f}°")
+            self._lbl_imu_pitch.setText(f"pitch: {_pitch:+6.1f}°")
+            self._lbl_motion.setText("● MOTION" if _mot_active else "")
 
             # 1. Drain — pending holds (8,8) arrays (one per BLE packet)
             with STATE.lock:
@@ -669,6 +892,10 @@ class EEGWindow(QtWidgets.QMainWindow):
             filt_disp = filt_disp[::step]
             raw_disp  = raw_disp[::step]
             bias_disp = bias_disp[::step]
+            # Remove per-channel DC offset from raw display so electrode contact
+            # potentials (10–50k µV) don't push traces off-screen. Filtering
+            # handles this in filtered mode; for raw we just subtract the window mean.
+            raw_disp  = raw_disp - raw_disp.mean(axis=0)
 
             # 4. Update signal curves + railing flash
             # cur_rails[0..5] maps to CH1..CH6; derived rows map CH→rail index
@@ -737,6 +964,34 @@ class EEGWindow(QtWidgets.QMainWindow):
                 # the large DC offset on the electrodes doesn't produce NaN/Inf.
                 proc.reset_state()
                 print("[BLE] New connection detected — filter state reset.")
+
+                # Gap-fill: if we were recording when BLE dropped, zero-pad the
+                # gap so the EDF remains contiguous and timestamps stay aligned.
+                with STATE.lock:
+                    gap_start = STATE.ble_gap_start
+                    recording = STATE.recording
+                    STATE.ble_gap_start = None
+                if gap_start is not None and recording:
+                    gap_s = time.time() - gap_start
+                    n_eeg = int(gap_s * FS)
+                    n_imu = int(gap_s * IMU_FS)
+                    zero_row = np.zeros(8, dtype=np.float64)
+                    with STATE.lock:
+                        for _ in range(n_eeg):
+                            STATE.rec_buf.append(zero_row)
+                        for _ in range(n_imu):
+                            STATE.imu_rec_buf.append((0, 0, 0, 0, 0))
+                    print(f"[REC] BLE gap {gap_s:.1f} s — zero-filled "
+                          f"{n_eeg} EEG samples + {n_imu} IMU samples")
+
+            elif not is_streaming and _was_streaming[0]:
+                # BLE just dropped — if recording, note the time so reconnect
+                # can zero-fill the gap.
+                with STATE.lock:
+                    if STATE.recording:
+                        STATE.ble_gap_start = time.time()
+                        print("[REC] BLE disconnected during recording — gap timer started")
+
             _was_streaming[0] = is_streaming
 
             if TEST_MODE:
@@ -750,25 +1005,17 @@ class EEGWindow(QtWidgets.QMainWindow):
                 self._lbl_conn.setStyleSheet(
                     _LABEL_STYLE.format(fg="#ffa726"))
 
-            # 7. Heart rate (throttled)
+            # 7. Heart rate (throttled) — autocorr + Welch PSD consensus (no peak detection)
             _hr_counter[0] += 1
             if _hr_counter[0] >= HR_EVERY:
                 _hr_counter[0] = 0
                 n_ecg = min(int(FS * 10), len(STATE.filt_buf))
-                if n_ecg >= FS * 2:
+                if n_ecg >= int(FS * 2):
                     with STATE.lock:
                         ecg_sig = STATE.filt_buf.last(n_ecg)[:, 1]
-                    peaks, _ = find_peaks(
-                        ecg_sig,
-                        distance=int(FS * 0.30),
-                        height=np.percentile(ecg_sig, 60),
-                    )
-                    if len(peaks) >= 2:
-                        rr = np.diff(peaks) / FS
-                        rr = rr[(rr > 0.3) & (rr < 2.0)]
-                        if len(rr) >= 1:
-                            bpm = 60.0 / np.mean(rr)
-                            self._lbl_bpm.setText(f"{bpm:.0f}")
+                    bpm = estimate_hr_live(ecg_sig, FS)
+                    if bpm is not None:
+                        self._lbl_bpm.setText(f"{bpm:.0f}")
 
             # 8. FFT (throttled, only when live PSD on)
             if STATE.fft_live:
@@ -823,6 +1070,13 @@ class EEGWindow(QtWidgets.QMainWindow):
         self._timer.setInterval(16)   # ~60 fps target
         self._timer.timeout.connect(_update)
         self._timer.start()
+
+        # Periodic EDF flush — writes accumulated data to disk every N seconds
+        # so at most N seconds of data is ever lost if the process crashes.
+        self._flush_timer = QtCore.QTimer()
+        self._flush_timer.setInterval(EDF_FLUSH_INTERVAL_S * 1000)
+        self._flush_timer.timeout.connect(self._periodic_edf_flush)
+        self._flush_timer.start()
 
     # ── UI construction ───────────────────────────────────────────────────────
 
@@ -1060,21 +1314,31 @@ class EEGWindow(QtWidgets.QMainWindow):
         imu_vl = QtWidgets.QVBoxLayout(imu_box)
         imu_vl.setSpacing(0)
         imu_vl.setContentsMargins(6, 3, 6, 3)
-        imu_vl.addWidget(QtWidgets.QLabel(
+        imu_hdr = QtWidgets.QHBoxLayout()
+        imu_hdr.setSpacing(4)
+        imu_hdr.addWidget(QtWidgets.QLabel(
             "IMU", styleSheet="color:#555555;font-size:6pt;font-family:monospace;"))
+        self._lbl_motion = QtWidgets.QLabel("")
+        self._lbl_motion.setStyleSheet(
+            "color:#ef5350;font-size:6pt;font-family:monospace;font-weight:bold;")
+        imu_hdr.addWidget(self._lbl_motion)
+        imu_hdr.addStretch()
+        imu_vl.addLayout(imu_hdr)
         self._lbl_imu_x = QtWidgets.QLabel("X: — mg")
         self._lbl_imu_y = QtWidgets.QLabel("Y: — mg")
         self._lbl_imu_z = QtWidgets.QLabel("Z: — mg")
-        for lbl in (self._lbl_imu_x, self._lbl_imu_y, self._lbl_imu_z):
+        self._lbl_imu_temp  = QtWidgets.QLabel("T: —.— °C")
+        self._lbl_imu_roll  = QtWidgets.QLabel("roll:  —.—°")
+        self._lbl_imu_pitch = QtWidgets.QLabel("pitch: —.—°")
+        for lbl in (self._lbl_imu_x, self._lbl_imu_y, self._lbl_imu_z,
+                    self._lbl_imu_temp, self._lbl_imu_roll, self._lbl_imu_pitch):
             lbl.setStyleSheet("color:#aaaaaa;font-size:7pt;font-family:monospace;")
-        self._lbl_motion = QtWidgets.QLabel("MOTION DETECTED")
-        self._lbl_motion.setStyleSheet(
-            "color:#ef5350;font-size:7pt;font-family:monospace;font-weight:bold;")
-        self._lbl_motion.setVisible(False)
         imu_vl.addWidget(self._lbl_imu_x)
         imu_vl.addWidget(self._lbl_imu_y)
         imu_vl.addWidget(self._lbl_imu_z)
-        imu_vl.addWidget(self._lbl_motion)
+        imu_vl.addWidget(self._lbl_imu_temp)
+        imu_vl.addWidget(self._lbl_imu_roll)
+        imu_vl.addWidget(self._lbl_imu_pitch)
         bot.addWidget(imu_box)
 
         bot.addSpacing(8)
@@ -1122,6 +1386,12 @@ class EEGWindow(QtWidgets.QMainWindow):
             "color:#555555;font-size:7pt;font-family:monospace;")
         bat_bot.addWidget(self._lbl_bat_status)
         bat_vl.addLayout(bat_bot)
+
+        self._lbl_rssi = QtWidgets.QLabel("RSSI —")
+        self._lbl_rssi.setStyleSheet(
+            "color:#555555;font-size:7pt;font-family:monospace;")
+        bat_vl.addWidget(self._lbl_rssi)
+
         bot.addWidget(bat_box)
 
         bot.addSpacing(8)
@@ -1161,6 +1431,8 @@ class EEGWindow(QtWidgets.QMainWindow):
             col = "#4fc3f7" if STATE.show_raw else "#666666"
             self._btn_raw.setText(lbl)
             self._btn_raw.setStyleSheet(_BTN_STYLE.format(bg="#1a1a1a", fg=col))
+            # Re-scale to match the new mode — raw signals are much larger than filtered
+            self._do_autoscale()
         self._btn_raw.clicked.connect(toggle_raw)
         self._toggle_raw = toggle_raw
 
@@ -1219,17 +1491,21 @@ class EEGWindow(QtWidgets.QMainWindow):
         # Auto-scale — fit each row's ±scale to 95th percentile of current window
         def do_autoscale():
             with STATE.lock:
-                n = min(STATE.window_samples, len(STATE.filt_buf))
+                use_raw = STATE.show_raw
+                buf = STATE.raw_d_buf if use_raw else STATE.filt_buf
+                n = min(STATE.window_samples, len(buf))
                 if n < 8:
                     return
-                filt  = STATE.filt_buf.last(n)   # (N, 6)
-                bias  = STATE.bias_buf.last(n)    # (N,)
+                disp = buf.last(n)   # (N, 6)
+                if use_raw:
+                    disp = disp - disp.mean(axis=0)   # match DC removal in display
+                bias  = STATE.bias_buf.last(n)
             for row_i, row in enumerate(DISPLAY_ROWS):
                 if row == "BIAS":
                     sig = bias
                 else:
                     ci  = DERIVED_LABELS.index(row)
-                    sig = filt[:, ci]
+                    sig = disp[:, ci]
                 p95 = float(np.percentile(np.abs(sig), 95))
                 STATE.row_scales[row] = max(p95 * 1.2, 1.0)  # 20 % headroom
             self._refresh_yticks()
@@ -1291,10 +1567,21 @@ class EEGWindow(QtWidgets.QMainWindow):
         # REC / Save
         def toggle_rec():
             if not STATE.recording:
-                STATE.recording   = True
-                STATE.rec_start   = time.time()
-                STATE.rec_buf     = []
-                STATE.imu_rec_buf = []
+                STATE.recording    = True
+                STATE.rec_start    = time.time()
+                STATE.rec_buf      = []
+                STATE.imu_rec_buf  = []
+                STATE.pkt_times_buf = []
+                # Open EDF immediately so data is written to disk as we go.
+                # If a writer was somehow left open (e.g. no Save after last STOP),
+                # close it first so we don't leak a file handle.
+                if STATE.edf_writer is not None:
+                    try: STATE.edf_writer.close()
+                    except Exception: pass
+                writer, path, ts = _edf_open(STATE.rec_start, list(STATE.gain))
+                STATE.edf_writer = writer
+                STATE.edf_path   = path
+                STATE.edf_ts     = ts
                 self._btn_rec.setText("STOP")
                 self._btn_rec.setStyleSheet(
                     _BTN_STYLE.format(bg="#1a1a1a", fg="#ffa726"))
@@ -1317,17 +1604,33 @@ class EEGWindow(QtWidgets.QMainWindow):
                 self._btn_rec.setText("REC")
                 self._btn_rec.setStyleSheet(
                     _BTN_STYLE.format(bg="#1a1a1a", fg="#ef5350"))
-            buf     = list(STATE.rec_buf)
-            imu_buf = list(STATE.imu_rec_buf)
-            if not buf:
+            writer   = STATE.edf_writer
+            path     = STATE.edf_path
+            ts       = STATE.edf_ts
+            rec_start = STATE.rec_start
+            STATE.edf_writer = None
+            STATE.edf_path   = None
+            STATE.edf_ts     = None
+            if writer is None and not STATE.rec_buf:
                 print("[SAVE] Nothing recorded yet."); return
-            fname = save_edf(buf, STATE.gain[0], rec_start=STATE.rec_start,
-                             imu_buf=imu_buf)
-            if fname:
+            if writer is not None:
+                # Incremental path: flush remaining data and close the open writer.
+                _edf_close(writer, path, ts, rec_start)
+                STATE.rec_buf     = []
+                STATE.imu_rec_buf = []
                 self._btn_save.setText("Saved")
                 self._btn_save.setStyleSheet(
                     _BTN_STYLE.format(bg="#1a1a1a", fg="#333333"))
-                STATE.rec_buf = []
+            else:
+                # Fallback: writer never opened (pyedflib missing?), use old path.
+                buf     = list(STATE.rec_buf)
+                imu_buf = list(STATE.imu_rec_buf)
+                fname = save_edf(buf, STATE.gain[0], rec_start=rec_start, imu_buf=imu_buf)
+                if fname:
+                    self._btn_save.setText("Saved")
+                    self._btn_save.setStyleSheet(
+                        _BTN_STYLE.format(bg="#1a1a1a", fg="#333333"))
+                    STATE.rec_buf = []
         self._btn_save.clicked.connect(do_save)
         self._do_save = do_save
 
@@ -1338,6 +1641,22 @@ class EEGWindow(QtWidgets.QMainWindow):
             slot=lambda ev: self._on_mouse_moved(ev[0]))
 
     # ── Helpers ───────────────────────────────────────────────────────────────
+
+    def _periodic_edf_flush(self):
+        """QTimer slot: write accumulated whole-second blocks to the open EDF file."""
+        with STATE.lock:
+            writer = STATE.edf_writer
+            if writer is None or not STATE.recording:
+                return
+            n_eeg = len(STATE.rec_buf)
+            n_imu = len(STATE.imu_rec_buf)
+
+        # Compute how many complete seconds we can flush
+        n_secs = min(n_eeg // FS, n_imu // IMU_FS) if n_imu > 0 else n_eeg // FS
+        if n_secs == 0:
+            return
+
+        _edf_flush_to_disk(writer, n_secs * FS, n_secs * IMU_FS)
 
     def _refresh_yticks(self):
         ticks = []
@@ -1441,6 +1760,15 @@ class EEGWindow(QtWidgets.QMainWindow):
 
     def closeEvent(self, ev):
         self._timer.stop()
+        self._flush_timer.stop()
+        # If a recording is still open, close the EDF writer so the file is
+        # not left corrupt. Data flushed every EDF_FLUSH_INTERVAL_S is preserved;
+        # the last partial minute is lost (same as a crash).
+        writer = STATE.edf_writer
+        if writer is not None:
+            STATE.edf_writer = None
+            print("[EDF] App closing with open recording — flushing and closing EDF…")
+            _edf_close(writer, STATE.edf_path, STATE.edf_ts, STATE.rec_start)
         BLE_CLIENT.stop()
         print("Exited.")
         ev.accept()

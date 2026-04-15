@@ -1,0 +1,76 @@
+Removed Pin From Net: NetName=NRF_IMU_SDA Pin=U4-3
+Removed Pin From Net: NetName=NRF_IMU_SCL Pin=U4-4
+Removed Pin From Net: NetName=NRF_UART_TX Pin=U4-6
+Removed Pin From Net: NetName=NRF_UART_RX Pin=U4-7
+Removed Pin From Net: NetName=NRF_ADS_SCLK Pin=U4-12
+Removed Pin From Net: NetName=NRF_ADS_DIN Pin=U4-13
+Removed Pin From Net: NetName=NRF_ADS_DOUT Pin=U4-15
+Removed Pin From Net: NetName=NRF_ADS_CS Pin=U4-16
+Removed Pin From Net: NetName=NRF_VBAT Pin=U4-39
+Change Component Designator: OldDesignator=R? NewDesignator=R26
+Change Component Designator: OldDesignator=R? NewDesignator=R27
+Change Component Designator: OldDesignator=R? NewDesignator=R28
+Change Component Designator: OldDesignator=TP*? NewDesignator=TP*1
+Change Component Designator: OldDesignator=TP*? NewDesignator=TP*2
+Change Component Designator: OldDesignator=TP*? NewDesignator=TP*3
+Change Component Designator: OldDesignator=TP*? NewDesignator=TP*4
+Change Component Designator: OldDesignator=TP*? NewDesignator=TP*5
+Change Component Designator: OldDesignator=TP*? NewDesignator=TP*6
+Change Component Designator: OldDesignator=TP*? NewDesignator=TP*7
+Change Component Designator: OldDesignator=TP*? NewDesignator=TP*8
+Change Component Designator: OldDesignator=TP*? NewDesignator=TP*9
+Change Component Designator: OldDesignator=TP*? NewDesignator=TP*10
+Change Component Designator: OldDesignator=TP*? NewDesignator=TP*11
+Change Component Designator: OldDesignator=TP*? NewDesignator=TP*12
+Change Component Designator: OldDesignator=TP*? NewDesignator=TP*13
+Change Component Designator: OldDesignator=TP*? NewDesignator=TP*14
+Change Component Designator: OldDesignator=TP*? NewDesignator=TP*15
+Change Component Designator: OldDesignator=TP*? NewDesignator=TP*16
+Change Component Designator: OldDesignator=TP*? NewDesignator=TP*17
+Add Component: Footprint Not Found QFN40P600X600X90-48N
+Add Pin To Net: Unknown Pin: Pin TP*1-1
+Add Pin To Net: Unknown Pin: Pin TP*2-1
+Add Pin To Net: Unknown Pin: Pin TP*3-1
+Add Pin To Net: Unknown Pin: Pin TP*4-1
+Add Pin To Net: Unknown Pin: Pin TP*5-1
+Add Pin To Net: Unknown Pin: Pin TP*6-1
+Add Pin To Net: Unknown Pin: Pin TP*7-1
+Add Pin To Net: Unknown Pin: Pin TP*8-1
+Add Pin To Net: Unknown Pin: Pin TP*9-1
+Add Pin To Net: Unknown Pin: Pin TP*10-1
+Add Pin To Net: Unknown Pin: Pin TP*11-1
+Add Pin To Net: Unknown Pin: Pin TP*12-1
+Add Pin To Net: Unknown Pin: Pin TP*13-1
+Add Pin To Net: Unknown Pin: Pin TP*14-1
+Add Pin To Net: Unknown Pin: Pin TP*15-1
+Add Pin To Net: Unknown Pin: Pin TP*16-1
+Add Pin To Net: Unknown Pin: Pin TP*17-1
+Added Pin To Net: NetName=NRF_IMU_SDA Pin=U4-3
+Added Pin To Net: NetName=NRF_IMU_SCL Pin=U4-4
+Added Pin To Net: NetName=NRF_UART_TX Pin=U4-6
+Added Pin To Net: NetName=NRF_UART_RX Pin=U4-7
+Added Pin To Net: NetName=NRF_ADS_SCLK Pin=U4-12
+Added Pin To Net: NetName=NRF_ADS_DIN Pin=U4-13
+Added Pin To Net: NetName=NRF_ADS_DOUT Pin=U4-15
+Added Pin To Net: NetName=NRF_ADS_CS Pin=U4-16
+Added Pin To Net: NetName=NRF_VBAT Pin=U4-39
+Change Net Name : Old Net Name=NetR?_1 New Net Name=NetR26_1
+Added Member To Class: ClassName=EEG_Thesis Member=Component R27 AF0201JR-071ML
+Added Member To Class: ClassName=EEG_Thesis Member=Component R28 AF0201JR-071ML
+Added Member To Class: ClassName=EEG_Thesis Member=Component TP*1 TP
+Added Member To Class: ClassName=EEG_Thesis Member=Component TP*2 TP
+Added Member To Class: ClassName=EEG_Thesis Member=Component TP*3 TP
+Added Member To Class: ClassName=EEG_Thesis Member=Component TP*4 TP
+Added Member To Class: ClassName=EEG_Thesis Member=Component TP*5 TP
+Added Member To Class: ClassName=EEG_Thesis Member=Component TP*6 TP
+Added Member To Class: ClassName=EEG_Thesis Member=Component TP*8 TP
+Added Member To Class: ClassName=EEG_Thesis Member=Component TP*9 TP
+Added Member To Class: ClassName=EEG_Thesis Member=Component TP*10 TP
+Added Member To Class: ClassName=EEG_Thesis Member=Component TP*11 TP
+Added Member To Class: ClassName=EEG_Thesis Member=Component TP*12 TP
+Added Member To Class: ClassName=EEG_Thesis Member=Component TP*13 TP
+Added Member To Class: ClassName=EEG_Thesis Member=Component TP*14 TP
+Added Member To Class: ClassName=EEG_Thesis Member=Component TP*15 TP
+Added Member To Class: ClassName=EEG_Thesis Member=Component TP*16 TP
+Added Member To Class: ClassName=EEG_Thesis Member=Component TP*17 TP
+Added Member To Class: ClassName=EEG_Thesis Member=Component U4 nRF54L15-QFAA

@@ -1,0 +1,103 @@
+Added Component: Designator=R?(ERA1A_(0201))
+Add component (AddParameter): Name = "Arrow Part Number"; Value = "ERA-1AEB101C"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Arrow Price/Stock"; Value = "https://www.arrow.com/en/products/era-1aeb101c/panasonic?region=nac"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Datasheet Link"; Value = "http://industrial.panasonic.com/cdbs/www-data/pdf/RDM0000/AOA0000C307.pdf"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Height"; Value = "0.26mm"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Manufacturer_Name"; Value = "Panasonic"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Manufacturer_Part_Number"; Value = "ERA-1AEB101C"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Mouser Part Number"; Value = "667-ERA-1AEB101C"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Mouser Price/Stock"; Value = "https://www.mouser.co.uk/ProductDetail/Panasonic/ERA-1AEB101C?qs=6%252Bc%252B2ke79U4NC8Nf%252Bq1i6A%3D%3D"; VariantName = "[No Variations]"
+Added Component: Designator=R?(ERA1A_(0201))
+Add component (AddParameter): Name = "Arrow Part Number"; Value = "ERA-1AEB101C"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Arrow Price/Stock"; Value = "https://www.arrow.com/en/products/era-1aeb101c/panasonic?region=nac"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Datasheet Link"; Value = "http://industrial.panasonic.com/cdbs/www-data/pdf/RDM0000/AOA0000C307.pdf"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Height"; Value = "0.26mm"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Manufacturer_Name"; Value = "Panasonic"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Manufacturer_Part_Number"; Value = "ERA-1AEB101C"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Mouser Part Number"; Value = "667-ERA-1AEB101C"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Mouser Price/Stock"; Value = "https://www.mouser.co.uk/ProductDetail/Panasonic/ERA-1AEB101C?qs=6%252Bc%252B2ke79U4NC8Nf%252Bq1i6A%3D%3D"; VariantName = "[No Variations]"
+Added Component: Designator=R?(ERA1A_(0201))
+Add component (AddParameter): Name = "Arrow Part Number"; Value = "ERA-1AEB101C"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Arrow Price/Stock"; Value = "https://www.arrow.com/en/products/era-1aeb101c/panasonic?region=nac"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Datasheet Link"; Value = "http://industrial.panasonic.com/cdbs/www-data/pdf/RDM0000/AOA0000C307.pdf"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Height"; Value = "0.26mm"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Manufacturer_Name"; Value = "Panasonic"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Manufacturer_Part_Number"; Value = "ERA-1AEB101C"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Mouser Part Number"; Value = "667-ERA-1AEB101C"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Mouser Price/Stock"; Value = "https://www.mouser.co.uk/ProductDetail/Panasonic/ERA-1AEB101C?qs=6%252Bc%252B2ke79U4NC8Nf%252Bq1i6A%3D%3D"; VariantName = "[No Variations]"
+Added Component: Designator=TP*?(TP)
+Added Component: Designator=TP*?(TP)
+Added Component: Designator=TP*?(TP)
+Added Component: Designator=TP*?(TP)
+Added Component: Designator=TP*?(TP)
+Added Component: Designator=TP*?(TP)
+Added Component: Designator=TP*?(TP)
+Added Component: Designator=TP*?(TP)
+Added Component: Designator=TP*?(TP)
+Added Component: Designator=TP*?(TP)
+Added Component: Designator=TP*?(TP)
+Added Component: Designator=TP*?(TP)
+Added Component: Designator=TP*?(TP)
+Added Component: Designator=TP*?(TP)
+Added Component: Designator=TP*?(TP)
+Added Component: Designator=TP*?(TP)
+Added Component: Designator=TP*?(TP)
+Add Component: Footprint Not Found QFN40P600X600X90-48N
+Added Pin To Net: NetName=VBAT Pin=R?-2
+Add Pin To Net: Unknown Pin: Pin TP*?-1
+Add Pin To Net: Unknown Pin: Pin TP*?-1
+Add Pin To Net: Unknown Pin: Pin TP*?-1
+Add Pin To Net: Unknown Pin: Pin TP*?-1
+Add Pin To Net: Unknown Pin: Pin TP*?-1
+Add Pin To Net: Unknown Pin: Pin TP*?-1
+Add Pin To Net: Unknown Pin: Pin TP*?-1
+Add Pin To Net: Unknown Pin: Pin TP*?-1
+Add Pin To Net: Unknown Pin: Pin TP*?-1
+Add Pin To Net: Unknown Pin: Pin TP*?-1
+Add Pin To Net: Unknown Pin: Pin TP*?-1
+Add Pin To Net: Unknown Pin: Pin TP*?-1
+Add Pin To Net: Unknown Pin: Pin TP*?-1
+Added Pin To Net: NetName=NRF_ADS_SCLK Pin=U4-12
+Added Pin To Net: NetName=NRF_ADS_DIN Pin=U4-13
+Added Pin To Net: NetName=NRF_ADS_DOUT Pin=U4-15
+Added Pin To Net: NetName=NRF_ADS_CS Pin=U4-16
+Added Pin To Net: NetName=NetR?_1 Pin=R?-1
+Added Pin To Net: NetName=NetR?_1 Pin=R?-2
+Added Net: Name=NetR?_1
+Added Pin To Net: NetName=NRF_IMU_SCL Pin=R13-1
+Added Pin To Net: NetName=NRF_IMU_SCL Pin=U1-1
+Added Pin To Net: NetName=NRF_IMU_SCL Pin=U4-4
+Added Net: Name=NRF_IMU_SCL
+Added Pin To Net: NetName=NRF_IMU_SDA Pin=R15-1
+Added Pin To Net: NetName=NRF_IMU_SDA Pin=U1-4
+Added Pin To Net: NetName=NRF_IMU_SDA Pin=U4-3
+Added Net: Name=NRF_IMU_SDA
+Added Pin To Net: NetName=NRF_UART_RX Pin=U4-7
+Added Net: Name=NRF_UART_RX
+Added Pin To Net: NetName=NRF_UART_TX Pin=U4-6
+Added Net: Name=NRF_UART_TX
+Added Pin To Net: NetName=NRF_VBAT Pin=R?-1
+Added Pin To Net: NetName=NRF_VBAT Pin=R?-2
+Added Pin To Net: NetName=NRF_VBAT Pin=U4-39
+Added Net: Name=NRF_VBAT
+Added Member To Class: ClassName=EEG_Thesis Member=Component R? AF0201JR-071ML
+Added Member To Class: ClassName=EEG_Thesis Member=Component R? AF0201JR-071ML
+Added Member To Class: ClassName=EEG_Thesis Member=Component R? AF0201JR-071ML
+Added Member To Class: ClassName=EEG_Thesis Member=Component TP*? TP
+Added Member To Class: ClassName=EEG_Thesis Member=Component TP*? TP
+Added Member To Class: ClassName=EEG_Thesis Member=Component TP*? TP
+Added Member To Class: ClassName=EEG_Thesis Member=Component TP*? TP
+Added Member To Class: ClassName=EEG_Thesis Member=Component TP*? TP
+Added Member To Class: ClassName=EEG_Thesis Member=Component TP*? TP
+Added Member To Class: ClassName=EEG_Thesis Member=Component TP*? TP
+Added Member To Class: ClassName=EEG_Thesis Member=Component TP*? TP
+Added Member To Class: ClassName=EEG_Thesis Member=Component TP*? TP
+Added Member To Class: ClassName=EEG_Thesis Member=Component TP*? TP
+Added Member To Class: ClassName=EEG_Thesis Member=Component TP*? TP
+Added Member To Class: ClassName=EEG_Thesis Member=Component TP*? TP
+Added Member To Class: ClassName=EEG_Thesis Member=Component TP*? TP
+Added Member To Class: ClassName=EEG_Thesis Member=Component TP*? TP
+Added Member To Class: ClassName=EEG_Thesis Member=Component TP*? TP
+Added Member To Class: ClassName=EEG_Thesis Member=Component TP*? TP
+Added Member To Class: ClassName=EEG_Thesis Member=Component TP*? TP
+Added Member To Class: ClassName=EEG_Thesis Member=Component U4 nRF54L15-QFAA

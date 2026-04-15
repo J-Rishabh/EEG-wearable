@@ -1,0 +1,15 @@
+Add Component: Footprint Not Found 10FHH-SM1-GAN-TF FPC
+Add Component: Footprint Not Found 10FHH-SM1-GAN-TF FPC
+Added Net: Name=GND
+Added Net: Name=Pad1
+Added Net: Name=Pad2
+Added Net: Name=Pad3
+Added Net: Name=Pad4
+Added Net: Name=Pad5
+Added Net: Name=Pad6
+Added Net: Name=Pad7
+Added Net: Name=Pad8
+Added Net: Name=VCC
+Added Class: Name=Sheet1
+Added Rule: Name=Schematic Supply Nets
+Added Rule: Name=Schematic Supply Nets_1

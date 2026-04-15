@@ -1,0 +1,50 @@
+Removed Pin From Net: NetName=VBUS Pin=C?-1
+Removed Pin From Net: NetName=GND Pin=C?-2
+Removed Member From Class: ClassName=EEG_Thesis Member=C?
+Change Component Designator: OldDesignator=C? NewDesignator=C3
+Change Component Designator: OldDesignator=D? NewDesignator=D1
+Change Component Designator: OldDesignator=IC? NewDesignator=IC5
+Change Component Designator: OldDesignator=J? NewDesignator=J3
+Change Component Designator: OldDesignator=J? NewDesignator=J4
+Change Component Designator: OldDesignator=L? NewDesignator=L1
+Change Component Designator: OldDesignator=R? NewDesignator=R3
+Change Component Designator: OldDesignator=R? NewDesignator=R4
+Added Component: Designator=C4(CAPC0603X33N)
+Add component (AddParameter): Name = "Arrow Part Number"; Value = "GRM033R6YA104KE14D"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Arrow Price/Stock"; Value = "https://www.arrow.com/en/products/grm033r6ya104ke14d/murata-manufacturing?utm_currency=USD&region=europe"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Datasheet Link"; Value = "https://search.murata.co.jp/Ceramy/image/img/A01X/G101/ENG/GRM033R6YA104KE14-01A.pdf"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Height"; Value = "0.33mm"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Manufacturer_Name"; Value = "Murata Electronics"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Manufacturer_Part_Number"; Value = "GRM033R6YA104KE14D"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Mouser Part Number"; Value = "81-GRM33R6YA104KE14D"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Mouser Price/Stock"; Value = "https://www.mouser.co.uk/ProductDetail/Murata-Electronics/GRM033R6YA104KE14D?qs=P%2FC4Eoq9CDwTt3wOuyKhXw%3D%3D"; VariantName = "[No Variations]"
+Added Component: Designator=F1(0402L010SLKR)
+Add component (AddParameter): Name = "Arrow Part Number"; Value = ""; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Arrow Price/Stock"; Value = ""; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Datasheet Link"; Value = "https://g.componentsearchengine.com/Datasheets/1/0402L010SLKR.pdf"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Height"; Value = "0.6mm"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Manufacturer_Name"; Value = "LITTELFUSE"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Manufacturer_Part_Number"; Value = "0402L075SLKR"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Mouser Part Number"; Value = "576-0402L075SLKR"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Mouser Price/Stock"; Value = "https://www.mouser.co.uk/ProductDetail/Littelfuse/0402L075SLKR?qs=DPoM0jnrROWIYuSx31dtNw%3D%3D"; VariantName = "[No Variations]"
+Add Component: Footprint Not Found TP_3x1mm_TH
+Added Pin To Net: NetName=VBUS Pin=C4-1
+Added Pin To Net: NetName=GND Pin=C4-2
+Added Pin To Net: NetName=VBUS Pin=F1-1
+Change Net Name : Old Net Name=NetIC?_4 New Net Name=NetIC5_4
+Change Net Name : Old Net Name=NetIC?_6 New Net Name=NetIC5_6
+Added Pin To Net: NetName=+5V Pin=F1-2
+Added Net: Name=+5V
+Added Pin To Net: NetName=D_N Pin=IC1-19
+Added Net: Name=D_N
+Added Pin To Net: NetName=D_P Pin=IC1-20
+Added Net: Name=D_P
+Add Differential Pair: Number of nets in differential pair NetIC5_4 is 1 instead of 2
+Add Differential Pair: Number of nets in differential pair NetIC5_6 is 1 instead of 2
+Added Member To Class: ClassName=EEG_Thesis Member=Component C3 GRM035R61C225ME01D
+Added Member To Class: ClassName=EEG_Thesis Member=Component C4 GRM033R6YA104KE14D
+Added Member To Class: ClassName=EEG_Thesis Member=Component F1 0402L075SLKR
+Add Class Member: Failed to add class member : Component J2 Battery pack
+Added Member To Class: ClassName=EEG_Thesis Member=Component J4 2171790001
+Added Member To Class: ClassName=EEG_Thesis Member=Component R4 RC0201JR-075K1L
+Added Rule: Name=Schematic Supply Nets_3

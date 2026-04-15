@@ -1,0 +1,73 @@
+Change Component Designator: OldDesignator=Y? NewDesignator=Y1
+Added Component: Designator=ANT1(ANTC3216X140N)
+Add component (AddParameter): Name = "Arrow Part Number"; Value = ""; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Arrow Price/Stock"; Value = ""; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Datasheet Link"; Value = "https://www.johansontechnology.com/docs/3829/Antenna-2450AT18B0100001E-Rev5.0_uMmswfC.pdf"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Height"; Value = "1.4mm"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Manufacturer_Name"; Value = "JOHANSON TECHNOLOGY"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Manufacturer_Part_Number"; Value = "2450AT18B0100001E"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Mouser Part Number"; Value = ""; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Mouser Price/Stock"; Value = ""; VariantName = "[No Variations]"
+Added Component: Designator=C33(CAP_500R07S1R2BV4T_JOT)
+Add component (AddParameter): Name = "Copyright"; Value = "Copyright (C) 2025 Ultra Librarian. All rights reserved."; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Manufacturer_Name"; Value = "Johanson Technology"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Manufacturer_Part_Number"; Value = "500R07S1R2BV4T"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "RefDes"; Value = ""; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Type"; Value = ""; VariantName = "[No Variations]"
+Add Component: Footprint Not Found CAPC0603X03L_C
+Add Component: Footprint Not Found CAPC0603X03L_C
+Add Component: Footprint Not Found CAPC0603X03L_C
+Add Component: Footprint Not Found INDC0603X03L_C
+Add Component: Footprint Not Found INDC0603X03L_C
+Add Component: Footprint Not Found INDC0603X03L_C
+Added Component: Designator=L7(INDC1005X60N)
+Add component (AddParameter): Name = "Arrow Part Number"; Value = ""; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Arrow Price/Stock"; Value = ""; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Datasheet Link"; Value = "https://www.johansontechnology.com/docs/4510/ceramic-inductors-datasheet.pdf"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Height"; Value = "0.6mm"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Manufacturer_Name"; Value = "JOHANSON TECHNOLOGY"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Manufacturer_Part_Number"; Value = "LRC0402CS3N3GV001T"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Mouser Part Number"; Value = ""; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Mouser Price/Stock"; Value = ""; VariantName = "[No Variations]"
+Added Component: Designator=L8(INDC1005X60N)
+Add component (AddParameter): Name = "Arrow Part Number"; Value = ""; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Arrow Price/Stock"; Value = ""; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Datasheet Link"; Value = "https://www.johansontechnology.com/docs/4510/ceramic-inductors-datasheet.pdf"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Height"; Value = "0.6mm"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Manufacturer_Name"; Value = "JOHANSON TECHNOLOGY"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Manufacturer_Part_Number"; Value = "LRC0402CS3N3GV001T"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Mouser Part Number"; Value = ""; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Mouser Price/Stock"; Value = ""; VariantName = "[No Variations]"
+Add Component: Footprint Not Found QFN40P600X600X90-48N
+Added Pin To Net: NetName=GND Pin=C33-1
+Add Pin To Net: Unknown Pin: Pin C45-1
+Add Pin To Net: Unknown Pin: Pin C45-2
+Add Pin To Net: Unknown Pin: Pin C46-1
+Add Pin To Net: Unknown Pin: Pin C46-2
+Add Pin To Net: Unknown Pin: Pin C47-1
+Add Pin To Net: Unknown Pin: Pin C47-2
+Add Pin To Net: Unknown Pin: Pin L3-1
+Add Pin To Net: Unknown Pin: Pin L3-2
+Add Pin To Net: Unknown Pin: Pin L5-1
+Add Pin To Net: Unknown Pin: Pin L5-2
+Add Pin To Net: Unknown Pin: Pin L6-1
+Add Pin To Net: Unknown Pin: Pin L6-2
+Added Pin To Net: NetName=RF Pin=L7-1
+Added Pin To Net: NetName=NetANT1_1 Pin=ANT1-1
+Added Pin To Net: NetName=NetANT1_1 Pin=L8-2
+Added Net: Name=NetANT1_1
+Added Pin To Net: NetName=NetC33_2 Pin=C33-2
+Added Pin To Net: NetName=NetC33_2 Pin=L7-2
+Added Pin To Net: NetName=NetC33_2 Pin=L8-1
+Added Net: Name=NetC33_2
+Added Member To Class: ClassName=EEG_Thesis Member=Component ANT1 2450AT18B100
+Added Member To Class: ClassName=EEG_Thesis Member=Component C33 500R07S1R2BV4T
+Add Class Member: Failed to add class member : Component C45 GJM0335C1E1R5WB01
+Add Class Member: Failed to add class member : Component C46 GJM0335C1E2R0WB01
+Add Class Member: Failed to add class member : Component C47 GJM0335C1HR30WB01D
+Add Class Member: Failed to add class member : Component L3 LQP03HQ3N5B02
+Add Class Member: Failed to add class member : Component L5 LQP03HQ2N7B02
+Add Class Member: Failed to add class member : Component L6 LQP03HQ3N5B02
+Added Member To Class: ClassName=EEG_Thesis Member=Component L7 L-07C2N7SV6T
+Added Member To Class: ClassName=EEG_Thesis Member=Component L8 L-07C3N3SV6T
+Added Member To Class: ClassName=EEG_Thesis Member=Component U4 nRF54L15-QFAA

@@ -1,0 +1,160 @@
+Added Component: Designator=C1A(0402_CAP)
+Added Component: Designator=C1B(0402_CAP)
+Added Component: Designator=C1C(0402_CAP)
+Added Component: Designator=C1D(0402_CAP)
+Added Component: Designator=C1E(0402_CAP)
+Added Component: Designator=C1F(0402_CAP)
+Added Component: Designator=C1G(0402_CAP)
+Added Component: Designator=C1H(0402_CAP)
+Added Component: Designator=R1A(0402_RES)
+Added Component: Designator=R1B(0402_RES)
+Added Component: Designator=R1C(0402_RES)
+Added Component: Designator=R1D(0402_RES)
+Added Component: Designator=R1E(0402_RES)
+Added Component: Designator=R1F(0402_RES)
+Added Component: Designator=R1G(0402_RES)
+Added Component: Designator=R1H(0402_RES)
+Added Component: Designator=R2A(0402_RES)
+Added Component: Designator=R2B(0402_RES)
+Added Component: Designator=R2C(0402_RES)
+Added Component: Designator=R2D(0402_RES)
+Added Component: Designator=R2E(0402_RES)
+Added Component: Designator=R2F(0402_RES)
+Added Component: Designator=R2G(0402_RES)
+Added Component: Designator=R2H(0402_RES)
+Added Component: Designator=R3A(0402_RES)
+Added Component: Designator=R3B(0402_RES)
+Added Component: Designator=R3C(0402_RES)
+Added Component: Designator=R3D(0402_RES)
+Added Component: Designator=R3E(0402_RES)
+Added Component: Designator=R3F(0402_RES)
+Added Component: Designator=R3G(0402_RES)
+Added Component: Designator=R3H(0402_RES)
+Added Component: Designator=R4A(0402_RES)
+Added Component: Designator=R4B(0402_RES)
+Added Component: Designator=R4C(0402_RES)
+Added Component: Designator=R4D(0402_RES)
+Added Component: Designator=R4E(0402_RES)
+Added Component: Designator=R4F(0402_RES)
+Added Component: Designator=R4G(0402_RES)
+Added Component: Designator=R4H(0402_RES)
+Added Pin To Net: NetName=VCC Pin=C1A-1
+Added Pin To Net: NetName=GND Pin=C1A-2
+Added Pin To Net: NetName=VCC Pin=C1B-1
+Added Pin To Net: NetName=GND Pin=C1B-2
+Added Pin To Net: NetName=VCC Pin=C1C-1
+Added Pin To Net: NetName=GND Pin=C1C-2
+Added Pin To Net: NetName=VCC Pin=C1D-1
+Added Pin To Net: NetName=GND Pin=C1D-2
+Added Pin To Net: NetName=VCC Pin=C1E-1
+Added Pin To Net: NetName=GND Pin=C1E-2
+Added Pin To Net: NetName=VCC Pin=C1F-1
+Added Pin To Net: NetName=GND Pin=C1F-2
+Added Pin To Net: NetName=VCC Pin=C1G-1
+Added Pin To Net: NetName=GND Pin=C1G-2
+Added Pin To Net: NetName=VCC Pin=C1H-1
+Added Pin To Net: NetName=GND Pin=C1H-2
+Added Pin To Net: NetName=Pad8 Pin=R1A-1
+Added Pin To Net: NetName=INT1A Pin=R1A-2
+Added Pin To Net: NetName=Pad7 Pin=R1B-1
+Added Pin To Net: NetName=INT1B Pin=R1B-2
+Added Pin To Net: NetName=Pad6 Pin=R1C-1
+Added Pin To Net: NetName=INT1C Pin=R1C-2
+Added Pin To Net: NetName=Pad5 Pin=R1D-1
+Added Pin To Net: NetName=INT1D Pin=R1D-2
+Added Pin To Net: NetName=Pad4 Pin=R1E-1
+Added Pin To Net: NetName=INT1E Pin=R1E-2
+Added Pin To Net: NetName=Pad3 Pin=R1F-1
+Added Pin To Net: NetName=INT1F Pin=R1F-2
+Added Pin To Net: NetName=Pad2 Pin=R1G-1
+Added Pin To Net: NetName=INT1G Pin=R1G-2
+Added Pin To Net: NetName=Pad1 Pin=R1H-1
+Added Pin To Net: NetName=INT1H Pin=R1H-2
+Added Pin To Net: NetName=NetIC1A_6 Pin=R2A-1
+Added Pin To Net: NetName=GUARD_RING1A Pin=R2A-2
+Added Pin To Net: NetName=NetIC1B_6 Pin=R2B-1
+Added Pin To Net: NetName=GUARD_RING1B Pin=R2B-2
+Added Pin To Net: NetName=NetIC1C_6 Pin=R2C-1
+Added Pin To Net: NetName=GUARD_RING1C Pin=R2C-2
+Added Pin To Net: NetName=NetIC1D_6 Pin=R2D-1
+Added Pin To Net: NetName=GUARD_RING1D Pin=R2D-2
+Added Pin To Net: NetName=NetIC1E_6 Pin=R2E-1
+Added Pin To Net: NetName=GUARD_RING1E Pin=R2E-2
+Added Pin To Net: NetName=NetIC1F_6 Pin=R2F-1
+Added Pin To Net: NetName=GUARD_RING1F Pin=R2F-2
+Added Pin To Net: NetName=NetIC1G_6 Pin=R2G-1
+Added Pin To Net: NetName=GUARD_RING1G Pin=R2G-2
+Added Pin To Net: NetName=NetIC1H_6 Pin=R2H-1
+Added Pin To Net: NetName=GUARD_RING1H Pin=R2H-2
+Added Pin To Net: NetName=NetE8_1 Pin=R3A-1
+Added Pin To Net: NetName=NetIC1A_3 Pin=R3A-2
+Added Pin To Net: NetName=NetE7_1 Pin=R3B-1
+Added Pin To Net: NetName=NetIC1B_3 Pin=R3B-2
+Added Pin To Net: NetName=NetE6_1 Pin=R3C-1
+Added Pin To Net: NetName=NetIC1C_3 Pin=R3C-2
+Added Pin To Net: NetName=NetE5_1 Pin=R3D-1
+Added Pin To Net: NetName=NetIC1D_3 Pin=R3D-2
+Added Pin To Net: NetName=NetE4_1 Pin=R3E-1
+Added Pin To Net: NetName=NetIC1E_3 Pin=R3E-2
+Added Pin To Net: NetName=NetE3_1 Pin=R3F-1
+Added Pin To Net: NetName=NetIC1F_3 Pin=R3F-2
+Added Pin To Net: NetName=NetE2_1 Pin=R3G-1
+Added Pin To Net: NetName=NetIC1G_3 Pin=R3G-2
+Added Pin To Net: NetName=NetE1_1 Pin=R3H-1
+Added Pin To Net: NetName=NetIC1H_3 Pin=R3H-2
+Added Pin To Net: NetName=GUARD_RING1A Pin=R4A-1
+Added Pin To Net: NetName=GND Pin=R4A-2
+Added Pin To Net: NetName=GUARD_RING1B Pin=R4B-1
+Added Pin To Net: NetName=GND Pin=R4B-2
+Added Pin To Net: NetName=GUARD_RING1C Pin=R4C-1
+Added Pin To Net: NetName=GND Pin=R4C-2
+Added Pin To Net: NetName=GUARD_RING1D Pin=R4D-1
+Added Pin To Net: NetName=GND Pin=R4D-2
+Added Pin To Net: NetName=GUARD_RING1E Pin=R4E-1
+Added Pin To Net: NetName=GND Pin=R4E-2
+Added Pin To Net: NetName=GUARD_RING1F Pin=R4F-1
+Added Pin To Net: NetName=GND Pin=R4F-2
+Added Pin To Net: NetName=GUARD_RING1G Pin=R4G-1
+Added Pin To Net: NetName=GND Pin=R4G-2
+Added Pin To Net: NetName=GUARD_RING1H Pin=R4H-1
+Added Pin To Net: NetName=GND Pin=R4H-2
+Added Member To Class: ClassName=Designator1 Member=Component C1A (C1) 0.1u
+Added Member To Class: ClassName=Designator2 Member=Component C1B (C1) 0.1u
+Added Member To Class: ClassName=Designator3 Member=Component C1C (C1) 0.1u
+Added Member To Class: ClassName=Designator4 Member=Component C1D (C1) 0.1u
+Added Member To Class: ClassName=Designator5 Member=Component C1E (C1) 0.1u
+Added Member To Class: ClassName=Designator6 Member=Component C1F (C1) 0.1u
+Added Member To Class: ClassName=Designator7 Member=Component C1G (C1) 0.1u
+Added Member To Class: ClassName=Designator8 Member=Component C1H (C1) 0.1u
+Added Member To Class: ClassName=Designator1 Member=Component R1A (R1) 100
+Added Member To Class: ClassName=Designator2 Member=Component R1B (R1) 100
+Added Member To Class: ClassName=Designator3 Member=Component R1C (R1) 100
+Added Member To Class: ClassName=Designator4 Member=Component R1D (R1) 100
+Added Member To Class: ClassName=Designator5 Member=Component R1E (R1) 100
+Added Member To Class: ClassName=Designator6 Member=Component R1F (R1) 100
+Added Member To Class: ClassName=Designator7 Member=Component R1G (R1) 100
+Added Member To Class: ClassName=Designator8 Member=Component R1H (R1) 100
+Added Member To Class: ClassName=Designator1 Member=Component R2A (R2) 100
+Added Member To Class: ClassName=Designator2 Member=Component R2B (R2) 100
+Added Member To Class: ClassName=Designator3 Member=Component R2C (R2) 100
+Added Member To Class: ClassName=Designator4 Member=Component R2D (R2) 100
+Added Member To Class: ClassName=Designator5 Member=Component R2E (R2) 100
+Added Member To Class: ClassName=Designator6 Member=Component R2F (R2) 100
+Added Member To Class: ClassName=Designator7 Member=Component R2G (R2) 100
+Added Member To Class: ClassName=Designator8 Member=Component R2H (R2) 100
+Added Member To Class: ClassName=Designator1 Member=Component R3A (R3) 68k
+Added Member To Class: ClassName=Designator2 Member=Component R3B (R3) 68k
+Added Member To Class: ClassName=Designator3 Member=Component R3C (R3) 68k
+Added Member To Class: ClassName=Designator4 Member=Component R3D (R3) 68k
+Added Member To Class: ClassName=Designator5 Member=Component R3E (R3) 68k
+Added Member To Class: ClassName=Designator6 Member=Component R3F (R3) 68k
+Added Member To Class: ClassName=Designator7 Member=Component R3G (R3) 68k
+Added Member To Class: ClassName=Designator8 Member=Component R3H (R3) 68k
+Added Member To Class: ClassName=Designator1 Member=Component R4A (R4) 10k
+Added Member To Class: ClassName=Designator2 Member=Component R4B (R4) 10k
+Added Member To Class: ClassName=Designator3 Member=Component R4C (R4) 10k
+Added Member To Class: ClassName=Designator4 Member=Component R4D (R4) 10k
+Added Member To Class: ClassName=Designator5 Member=Component R4E (R4) 10k
+Added Member To Class: ClassName=Designator6 Member=Component R4F (R4) 10k
+Added Member To Class: ClassName=Designator7 Member=Component R4G (R4) 10k
+Added Member To Class: ClassName=Designator8 Member=Component R4H (R4) 10k

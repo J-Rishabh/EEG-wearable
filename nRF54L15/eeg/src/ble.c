@@ -296,6 +296,24 @@ static void dle_work_handler(struct k_work *work)
     } else {
         LOG_INF("DLE update requested (delayed for Windows compatibility)");
     }
+
+    /* Request a 6 s supervision timeout so momentary RF attenuation from
+     * on-body wear doesn't kill the link. Windows default is ~720 ms which
+     * is too short when the antenna is pressed against skin.
+     * 600 units × 10 ms = 6000 ms.  Connection interval kept at 7.5–15 ms
+     * for low-latency EEG streaming. */
+    const struct bt_le_conn_param conn_param = BT_LE_CONN_PARAM_INIT(
+        6,    /* interval_min: 6 × 1.25 ms =  7.5 ms */
+        12,   /* interval_max: 12 × 1.25 ms = 15.0 ms */
+        0,    /* latency: 0 skipped connection events */
+        600   /* timeout: 600 × 10 ms = 6 s */
+    );
+    err = bt_conn_le_param_update(current_conn, &conn_param);
+    if (err) {
+        LOG_WRN("Supervision timeout update failed (%d) — using host default", err);
+    } else {
+        LOG_INF("Connection params update requested: interval 7.5–15 ms, supervision 6 s");
+    }
 }
 
 /* ---------- Connection callbacks ---------- */
@@ -415,6 +433,39 @@ bool ble_status_subscribed(void)
     return status_subscribed;
 }
 
+/* Read RSSI for the current connection via HCI Read RSSI command.
+ * Must be called from a thread context (not ISR, not BLE callback).
+ * Returns true and writes rssi_out on success; false on any failure. */
+static bool read_rssi(int8_t *rssi_out)
+{
+    if (!current_conn) {
+        return false;
+    }
+    uint16_t handle;
+    if (bt_hci_get_conn_handle(current_conn, &handle) != 0) {
+        return false;
+    }
+    struct net_buf *buf = bt_hci_cmd_create(BT_HCI_OP_READ_RSSI,
+                                             sizeof(struct bt_hci_cp_read_rssi));
+    if (!buf) {
+        return false;
+    }
+    struct bt_hci_cp_read_rssi *cp = net_buf_add(buf, sizeof(*cp));
+    cp->handle = sys_cpu_to_le16(handle);
+
+    struct net_buf *rsp = NULL;
+    if (bt_hci_cmd_send_sync(BT_HCI_OP_READ_RSSI, buf, &rsp) != 0) {
+        return false;
+    }
+    struct bt_hci_rp_read_rssi *rp = (void *)rsp->data;
+    bool ok = (rp->status == 0);
+    if (ok) {
+        *rssi_out = rp->rssi;
+    }
+    net_buf_unref(rsp);
+    return ok;
+}
+
 int ble_notify_status(uint16_t vbat_mv, uint8_t pct, bool charging, bool error)
 {
     if (current_conn == NULL) {
@@ -423,11 +474,19 @@ int ble_notify_status(uint16_t vbat_mv, uint8_t pct, bool charging, bool error)
     if (!status_subscribed) {
         return -EACCES;
     }
-    /* 4-byte packet: [vbat_lo, vbat_hi, pct, flags]
-     * flags bit 0 = charging,  bit 1 = error */
-    uint8_t buf[4];
+    /* 5-byte packet:
+     *   [0:1]  uint16_t LE  battery voltage mV
+     *   [2]    uint8_t      state-of-charge 0–100
+     *   [3]    uint8_t      flags: bit0=charging, bit1=error
+     *   [4]    int8_t       RSSI in dBm  (127 = unavailable)
+     */
+    int8_t rssi = 127;   /* 127 = invalid sentinel per BT convention */
+    read_rssi(&rssi);
+
+    uint8_t buf[5];
     sys_put_le16(vbat_mv, &buf[0]);
     buf[2] = pct;
     buf[3] = (charging ? BIT(0) : 0) | (error ? BIT(1) : 0);
+    buf[4] = (uint8_t)rssi;
     return bt_gatt_notify(NULL, &eeg_svc.attrs[10], buf, sizeof(buf));
 }

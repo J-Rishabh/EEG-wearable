@@ -40,10 +40,11 @@ bool ble_status_subscribed(void);
 
 /**
  * Send device status via the Device Status NOTIFY characteristic.
- * Packet format (4 bytes):
+ * Packet format (5 bytes):
  *   [0:1]  uint16_t LE  battery voltage in mV  (0 if VBAT unavailable)
  *   [2]    uint8_t      battery state-of-charge percent  0–100
  *   [3]    uint8_t      PMIC flags:  bit 0 = charging,  bit 1 = error
+ *   [4]    int8_t       connection RSSI in dBm  (127 = unavailable)
  *
  * @param vbat_mv   Battery voltage in millivolts.
  * @param pct       State-of-charge 0–100.

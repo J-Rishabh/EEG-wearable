@@ -70,12 +70,12 @@ static void led_thread(void *p1, void *p2, void *p3)
             continue;
         }
 
-        /* --- CONNECTED: dim PWM (~30 % duty, 100 Hz) saves current vs solid on --- */
+        /* --- CONNECTED: very dim (step 1 / 10% duty) to show we're alive --- */
         if (ble_is_connected()) {
             gpio_pin_set_dt(l, 1);
-            k_msleep(3);
+            k_msleep(1);
             gpio_pin_set_dt(l, 0);
-            k_msleep(7);
+            k_msleep(9);
             was_connected = true;
             continue;
         }
@@ -89,20 +89,12 @@ static void led_thread(void *p1, void *p2, void *p3)
 
         /* --- ADVERTISING --- */
 
-        /* -- HEARTBEAT (double-pulse ~1 Hz) --
-         * Uncomment this block and comment out the BREATHING block to use.
-         *
-         * gpio_pin_set_dt(l, 1); k_msleep(80);
-         * gpio_pin_set_dt(l, 0); k_msleep(80);
-         * gpio_pin_set_dt(l, 1); k_msleep(80);
-         * gpio_pin_set_dt(l, 0); k_msleep(760);
-         * continue;
-         */
 
         /* -- BREATHING: triangle-wave software PWM --
          * step 0 → 0 % duty (off), step BREATH_STEPS → 100 % (full on).
          * Each step holds for BREATH_HOLD_CYCLES × BREATH_PERIOD_MS ms so the
          * PWM carrier runs at 100 Hz — invisible to the naked eye.  */
+
         int on_ms  = (step * BREATH_PERIOD_MS) / BREATH_STEPS;
         int off_ms = BREATH_PERIOD_MS - on_ms;
 
@@ -137,7 +129,7 @@ int main(void)
 
     /* ------------------------------------------------------------------ */
     /* Give RTT viewer 3 s to connect before boot logs scroll past.       */
-    k_msleep(3000);
+    //k_msleep(3000);
     LOG_INF("=== EEG Wearable booting ===");
     /* ------------------------------------------------------------------ */
 
@@ -168,28 +160,6 @@ int main(void)
         return ret;
     }
     LOG_INF("[BLE] OK - advertising as \"EEG Wearable\"");
-
-    /* --- GPIO1 sanity check on unused pin P1.04 (AIN0, not wired) ---
-     * Proves the gpio1 controller works. Do NOT test P1.02/P1.03 here:
-     * TWIM22 already owns them via PSEL and reconfiguring them as GPIO
-     * corrupts the TWIM pin state (S0D1 drive + pull-up get wiped). */
-    {
-        const struct device *g1 = DEVICE_DT_GET(DT_NODELABEL(gpio1));
-        if (!device_is_ready(g1)) {
-            LOG_ERR("[GPIO TEST] gpio1 not ready");
-        } else {
-            gpio_pin_configure(g1, 4, GPIO_OUTPUT_INACTIVE); /* P1.04 = free */
-            LOG_INF("[GPIO TEST] toggling P1.04 3x (scope P1.04 if you can)");
-            for (int i = 0; i < 3; i++) {
-                gpio_pin_set(g1, 4, 1);
-                k_msleep(200);
-                gpio_pin_set(g1, 4, 0);
-                k_msleep(200);
-            }
-            gpio_pin_configure(g1, 4, GPIO_DISCONNECTED);
-            LOG_INF("[GPIO TEST] P1.04 done - gpio1 works");
-        }
-    }
 
     /* --- IMU (LIS2DW12) --- */
     ret = imu_init();
@@ -247,6 +217,31 @@ int main(void)
     uint8_t  eeg_packet[EEG_PACKET_BYTES];
     uint32_t log_tick = 0;   /* increments every 4 ms, logs every 1250 = 5 s */
     uint32_t imu_tick = 0;   /* increments every 4 ms, samples every 10 = 40 ms */
+
+    /* ADS1299 power state machine.
+     *   RUNNING: START=1, RDATAC active, 250 SPS, ~6.5 mA
+     *   STOPPED: START=0, analog stays on, ~2-3 mA, instant resume
+     *   DOWN:    PWDN=1, ~65 µA, full re-init needed on reconnect
+     *
+     * Transitions:
+     *   Boot (no connection) → eeg_stop()     → STOPPED  (30 s countdown starts immediately)
+     *   BLE disconnect       → eeg_stop()     → STOPPED
+     *   30 s idle            → eeg_powerdown() → DOWN
+     *   BLE reconnect (from STOPPED) → eeg_start()   → RUNNING
+     *   BLE reconnect (from DOWN)    → eeg_powerup() → RUNNING
+     */
+    typedef enum { EEG_PWR_RUNNING, EEG_PWR_STOPPED, EEG_PWR_DOWN } eeg_pwr_t;
+
+    /* Start stopped so the 30 s idle countdown begins immediately on boot
+     * rather than waiting for a connect-then-disconnect cycle first. */
+    eeg_pwr_t eeg_pwr  = EEG_PWR_DOWN;
+    if (eeg_ok) {
+        eeg_stop();
+        eeg_pwr = EEG_PWR_STOPPED;
+        LOG_INF("[PWR] Boot with no connection — ADS1299 stopped, 30 s countdown started");
+    }
+    bool     conn_prev = false;      /* BLE state last iteration */
+    uint32_t idle_tick = 0;          /* ticks since boot / last disconnect */
 
     while (1) {
         /* EEG — always drain the ring buffer so it never overflows when
@@ -319,6 +314,45 @@ int main(void)
                 ble_notify_status((uint16_t)vbat_mv, vbat_pct, chg, err);
             }
 
+        }
+
+        /* ADS1299 power management — run once per 4 ms tick */
+        if (eeg_ok) {
+            bool conn_now = ble_is_connected();
+
+            if (conn_prev && !conn_now) {
+                /* BLE just disconnected — stop conversions immediately */
+                eeg_stop();
+                eeg_pwr   = EEG_PWR_STOPPED;
+                idle_tick = 0;
+                LOG_INF("[PWR] BLE disconnected — ADS1299 stopped (START=0)");
+
+            } else if (!conn_now && eeg_pwr == EEG_PWR_STOPPED) {
+                /* Still disconnected — count toward 30 s power-down */
+                if (++idle_tick >= 7500) {   /* 7500 × 4 ms = 30 s */
+                    eeg_powerdown();
+                    eeg_pwr = EEG_PWR_DOWN;
+                    LOG_INF("[PWR] 30 s idle — ADS1299 powered down (~65 µA)");
+                }
+
+            } else if (!conn_prev && conn_now) {
+                /* BLE just reconnected */
+                if (eeg_pwr == EEG_PWR_STOPPED) {
+                    eeg_start();
+                    eeg_pwr = EEG_PWR_RUNNING;
+                    LOG_INF("[PWR] BLE reconnected — ADS1299 restarted (instant)");
+                } else if (eeg_pwr == EEG_PWR_DOWN) {
+                    if (eeg_powerup() == 0) {
+                        eeg_pwr = EEG_PWR_RUNNING;
+                        LOG_INF("[PWR] BLE reconnected — ADS1299 powered up");
+                    } else {
+                        LOG_ERR("[PWR] ADS1299 power-up failed — EEG unavailable");
+                    }
+                }
+                idle_tick = 0;
+            }
+
+            conn_prev = conn_now;
         }
 
         k_msleep(4); /* 250 Hz */

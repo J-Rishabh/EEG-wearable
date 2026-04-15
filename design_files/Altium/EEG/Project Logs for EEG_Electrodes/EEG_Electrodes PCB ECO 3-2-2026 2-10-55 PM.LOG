@@ -1,0 +1,76 @@
+Added Component: Designator=C1H(CAPC0603X33N)
+Add component (AddParameter): Name = "Arrow Part Number"; Value = "GRM033R6YA104KE14D"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Arrow Price/Stock"; Value = "https://www.arrow.com/en/products/grm033r6ya104ke14d/murata-manufacturing?utm_currency=USD&region=europe"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Datasheet Link"; Value = "https://search.murata.co.jp/Ceramy/image/img/A01X/G101/ENG/GRM033R6YA104KE14-01A.pdf"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Height"; Value = "0.33mm"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Manufacturer_Name"; Value = "Murata Electronics"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Manufacturer_Part_Number"; Value = "GRM033R6YA104KE14D"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Mouser Part Number"; Value = "81-GRM33R6YA104KE14D"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Mouser Price/Stock"; Value = "https://www.mouser.co.uk/ProductDetail/Murata-Electronics/GRM033R6YA104KE14D?qs=P%2FC4Eoq9CDwTt3wOuyKhXw%3D%3D"; VariantName = "[No Variations]"
+Added Component: Designator=IC1H(SOP65P490X110-8N)
+Add component (AddParameter): Name = "Arrow Part Number"; Value = "LTC6078ACMS8#TRPBF"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Arrow Price/Stock"; Value = "https://www.arrow.com/en/products/ltc6078acms8trpbf/analog-devices?region=nac"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Datasheet Link"; Value = "https://datasheet.datasheetarchive.com/originals/distributors/Datasheets_SAMA/f60955edb7006695a84935bb44c6cde2.pdf"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Height"; Value = "1.1mm"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Manufacturer_Name"; Value = "Analog Devices"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Manufacturer_Part_Number"; Value = "LTC6078ACMS8#TRPBF"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Mouser Part Number"; Value = "584-C6078ACMS8TRPBF"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Mouser Price/Stock"; Value = "https://www.mouser.com/Search/Refine.aspx?Keyword=584-C6078ACMS8TRPBF"; VariantName = "[No Variations]"
+Added Component: Designator=R1H(ERA1A_(0201))
+Add component (AddParameter): Name = "Arrow Part Number"; Value = "ERA-1AEB101C"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Arrow Price/Stock"; Value = "https://www.arrow.com/en/products/era-1aeb101c/panasonic?region=nac"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Datasheet Link"; Value = "http://industrial.panasonic.com/cdbs/www-data/pdf/RDM0000/AOA0000C307.pdf"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Height"; Value = "0.26mm"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Manufacturer_Name"; Value = "Panasonic"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Manufacturer_Part_Number"; Value = "ERA-1AEB101C"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Mouser Part Number"; Value = "667-ERA-1AEB101C"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Mouser Price/Stock"; Value = "https://www.mouser.co.uk/ProductDetail/Panasonic/ERA-1AEB101C?qs=6%252Bc%252B2ke79U4NC8Nf%252Bq1i6A%3D%3D"; VariantName = "[No Variations]"
+Added Component: Designator=R2H(ERA1A_(0201))
+Add component (AddParameter): Name = "Arrow Part Number"; Value = "ERA-1AEB101C"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Arrow Price/Stock"; Value = "https://www.arrow.com/en/products/era-1aeb101c/panasonic?region=nac"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Datasheet Link"; Value = "http://industrial.panasonic.com/cdbs/www-data/pdf/RDM0000/AOA0000C307.pdf"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Height"; Value = "0.26mm"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Manufacturer_Name"; Value = "Panasonic"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Manufacturer_Part_Number"; Value = "ERA-1AEB101C"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Mouser Part Number"; Value = "667-ERA-1AEB101C"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Mouser Price/Stock"; Value = "https://www.mouser.co.uk/ProductDetail/Panasonic/ERA-1AEB101C?qs=6%252Bc%252B2ke79U4NC8Nf%252Bq1i6A%3D%3D"; VariantName = "[No Variations]"
+Added Component: Designator=R3H(ERA1A_(0201))
+Add component (AddParameter): Name = "Arrow Part Number"; Value = "ERA-1AEB101C"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Arrow Price/Stock"; Value = "https://www.arrow.com/en/products/era-1aeb101c/panasonic?region=nac"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Datasheet Link"; Value = "http://industrial.panasonic.com/cdbs/www-data/pdf/RDM0000/AOA0000C307.pdf"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Height"; Value = "0.26mm"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Manufacturer_Name"; Value = "Panasonic"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Manufacturer_Part_Number"; Value = "ERA-1AEB101C"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Mouser Part Number"; Value = "667-ERA-1AEB101C"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Mouser Price/Stock"; Value = "https://www.mouser.co.uk/ProductDetail/Panasonic/ERA-1AEB101C?qs=6%252Bc%252B2ke79U4NC8Nf%252Bq1i6A%3D%3D"; VariantName = "[No Variations]"
+Added Component: Designator=R4H(ERA1A_(0201))
+Add component (AddParameter): Name = "Arrow Part Number"; Value = "ERA-1AEB101C"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Arrow Price/Stock"; Value = "https://www.arrow.com/en/products/era-1aeb101c/panasonic?region=nac"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Datasheet Link"; Value = "http://industrial.panasonic.com/cdbs/www-data/pdf/RDM0000/AOA0000C307.pdf"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Height"; Value = "0.26mm"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Manufacturer_Name"; Value = "Panasonic"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Manufacturer_Part_Number"; Value = "ERA-1AEB101C"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Mouser Part Number"; Value = "667-ERA-1AEB101C"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Mouser Price/Stock"; Value = "https://www.mouser.co.uk/ProductDetail/Panasonic/ERA-1AEB101C?qs=6%252Bc%252B2ke79U4NC8Nf%252Bq1i6A%3D%3D"; VariantName = "[No Variations]"
+Added Pin To Net: NetName=VCC Pin=C1H-1
+Added Pin To Net: NetName=GND Pin=C1H-2
+Added Pin To Net: NetName=INT1H Pin=IC1H-1
+Added Pin To Net: NetName=INT1H Pin=IC1H-2
+Added Pin To Net: NetName=NetIC1H_3 Pin=IC1H-3
+Added Pin To Net: NetName=GND Pin=IC1H-4
+Added Pin To Net: NetName=INT1H Pin=IC1H-5
+Added Pin To Net: NetName=NetIC1H_6 Pin=IC1H-6
+Added Pin To Net: NetName=NetIC1H_6 Pin=IC1H-7
+Added Pin To Net: NetName=VCC Pin=IC1H-8
+Added Pin To Net: NetName=Pad7 Pin=R1H-1
+Added Pin To Net: NetName=INT1H Pin=R1H-2
+Added Pin To Net: NetName=NetIC1H_6 Pin=R2H-1
+Added Pin To Net: NetName=GUARD_RING1H Pin=R2H-2
+Added Pin To Net: NetName=NetE7_1 Pin=R3H-1
+Added Pin To Net: NetName=NetIC1H_3 Pin=R3H-2
+Added Member To Class: ClassName=Designator8 Member=Component C1H (C1) GRM033R6YA104KE14D
+Added Member To Class: ClassName=Designator8 Member=Component IC1H (IC1) LTC6078ACMS8#TRPBF
+Added Member To Class: ClassName=Designator8 Member=Component R1H (R1) ERA-1AEB101C
+Added Member To Class: ClassName=Designator8 Member=Component R2H (R2) ERA-1AEB101C
+Added Member To Class: ClassName=Designator8 Member=Component R3H (R3) AF0201JR-0768KL
+Added Member To Class: ClassName=Designator8 Member=Component R4H (R4) AF0201JR-071ML

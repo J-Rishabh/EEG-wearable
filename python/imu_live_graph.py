@@ -117,9 +117,9 @@ line_z, = ax.plot(t_vals, list(zs), color="#f5a623", linewidth=1.2, label="Z")
 
 ax.set_xlim(-WINDOW + 1, 0)
 ax.set_ylim(-2000, 2000)          # ±2 g expressed in mg
-ax.set_xlabel("Samples (25 Hz, newest = right)", color="#cccccc")
+ax.set_xlabel("Samples (25 Hz)", color="#cccccc")
 ax.set_ylabel("Acceleration (mg)", color="#cccccc")
-ax.set_title("LIS2DW12 — Live 3-axis Acceleration", color="#ffffff", fontsize=13)
+ax.set_title("LIS2DW12 - Live Acceleration", color="#ffffff", fontsize=13)
 ax.tick_params(colors="#cccccc")
 for spine in ax.spines.values():
     spine.set_edgecolor("#444466")

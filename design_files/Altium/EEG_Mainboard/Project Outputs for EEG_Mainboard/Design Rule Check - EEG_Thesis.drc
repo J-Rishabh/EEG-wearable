@@ -1,0 +1,562 @@
+Protel Design System Design Rule Check
+PCB File : C:\Users\Public\Documents\Altium\EEG_Mainboard\EEG_Thesis.PcbDoc
+Date     : 3/18/2026
+Time     : 1:15:12 PM
+
+WARNING: Design contains shelved or modified (but not repoured) polygons. The result of DRC is not correct. Recommended to restore/repour all polygons and proceed with DRC again
+   Polygon named: NONET_L02_P002 In net GND On Inner Layer 1
+
+Processing Rule : Clearance Constraint (Gap=5mil) (All),(All)
+   Violation between Clearance Constraint: (2.756mil < 5mil) Between Pad J2-1(5976mil,1863mil) on Multi-Layer And Pad J2-2(5926mil,1863mil) on Multi-Layer 
+   Violation between Clearance Constraint: (2.756mil < 5mil) Between Pad J2-1(5976mil,1863mil) on Multi-Layer And Pad J2-3(5976mil,1913mil) on Multi-Layer 
+   Violation between Clearance Constraint: (2.756mil < 5mil) Between Pad J2-2(5926mil,1863mil) on Multi-Layer And Pad J2-4(5926mil,1913mil) on Multi-Layer 
+   Violation between Clearance Constraint: (2.756mil < 5mil) Between Pad J2-3(5976mil,1913mil) on Multi-Layer And Pad J2-4(5926mil,1913mil) on Multi-Layer 
+   Violation between Clearance Constraint: (2.756mil < 5mil) Between Pad J2-3(5976mil,1913mil) on Multi-Layer And Pad J2-5(5976mil,1963mil) on Multi-Layer 
+   Violation between Clearance Constraint: (2.756mil < 5mil) Between Pad J2-4(5926mil,1913mil) on Multi-Layer And Pad J2-6(5926mil,1963mil) on Multi-Layer 
+   Violation between Clearance Constraint: (2.756mil < 5mil) Between Pad J2-5(5976mil,1963mil) on Multi-Layer And Pad J2-6(5926mil,1963mil) on Multi-Layer 
+   Violation between Clearance Constraint: (7.575mil < 9.842mil) Between Hole of Pad J2-MH3(5991mil,2013mil) on Multi-Layer And Pad J2-5(5976mil,1963mil) on Multi-Layer 
+   Violation between Clearance Constraint: (7.575mil < 9.842mil) Between Hole of Pad J2-MH2(5911mil,2013mil) on Multi-Layer And Pad J2-6(5926mil,1963mil) on Multi-Layer 
+Rule Violations :9
+
+Processing Rule : Short-Circuit Constraint (Allowed=No) (All),(All)
+Rule Violations :0
+
+Processing Rule : Un-Routed Net Constraint ( (All) )
+   Violation between Un-Routed Net Constraint: Net GND Between Pad C11-2(6924.071mil,1788.559mil) on Top Layer [Unplated] And Pad C10-1(6958.071mil,1813.339mil) on Top Layer [Unplated] 
+   Violation between Un-Routed Net Constraint: Net GND Between Pad J1-1(6953.937mil,1966.535mil) on Top Layer [Unplated] And Pad C10-1(6958.071mil,1813.339mil) on Top Layer [Unplated] 
+   Violation between Un-Routed Net Constraint: Net +1.8V Between Pad C11-1(6924.071mil,1769.898mil) on Top Layer [Unplated] And Pad C10-2(6958.071mil,1777.118mil) on Top Layer [Unplated] 
+   Violation between Un-Routed Net Constraint: Net +1.8V Between Pad U1-48(6885.827mil,1768.701mil) on Top Layer [Unplated] And Pad C11-1(6924.071mil,1769.898mil) on Top Layer [Unplated] 
+   Violation between Un-Routed Net Constraint: Net GND Between Pad U1-44(6885.827mil,1705.709mil) on Top Layer [Unplated] And Pad C11-2(6924.071mil,1788.559mil) on Top Layer [Unplated] 
+   Violation between Un-Routed Net Constraint: Net GND Between Pad C19-2(6405.205mil,2201.189mil) on Top Layer [Unplated] And Pad C1-2(6438.221mil,2201.189mil) on Top Layer [Unplated] 
+   Violation between Un-Routed Net Constraint: Net GND Between Pad C1-2(6438.221mil,2201.189mil) on Top Layer [Unplated] And Pad C2-2(6455.024mil,2232.189mil) on Top Layer [Unplated] 
+   Violation between Un-Routed Net Constraint: Net GND Between Pad C1-2(6438.221mil,2201.189mil) on Top Layer [Unplated] And Pad IC1-20(6450.89mil,2147.882mil) on Top Layer [Unplated] 
+   Violation between Un-Routed Net Constraint: Net GND Between Pad IC2-3(6455.63mil,1499.48mil) on Top Layer [Unplated] And Pad C12-1(6457.299mil,1547mil) on Top Layer [Unplated] 
+   Violation between Un-Routed Net Constraint: Net +1.8V Between Pad C12-2(6494.701mil,1547mil) on Top Layer [Unplated] And Pad IC2-1(6495mil,1499.48mil) on Top Layer [Unplated] 
+   Violation between Un-Routed Net Constraint: Net +1.8V Between Pad R20-2(6260.213mil,1619.378mil) on Top Layer [Unplated] And Pad C12-2(6494.701mil,1547mil) on Top Layer [Unplated] 
+   Violation between Un-Routed Net Constraint: Net GND Between Pad C14-2(6202.213mil,2228.953mil) on Top Layer [Unplated] And Pad C13-2(6242.913mil,2226.378mil) on Top Layer [Unplated] 
+   Violation between Un-Routed Net Constraint: Net GND Between Pad C13-2(6242.913mil,2226.378mil) on Top Layer [Unplated] And Pad C17-2(6347.213mil,2228.378mil) on Top Layer [Unplated] 
+   Violation between Un-Routed Net Constraint: Net GND Between Pad IC1-31(6234.354mil,2147.882mil) on Top Layer [Unplated] And Pad C13-2(6242.913mil,2226.378mil) on Top Layer [Unplated] 
+   Violation between Un-Routed Net Constraint: Net GND Between Pad C15-2(6374.205mil,1642.189mil) on Top Layer [Unplated] And Pad C16-2(6374.402mil,1613.189mil) on Top Layer [Unplated] 
+   Violation between Un-Routed Net Constraint: Net GND Between Via (6372mil,1673mil) from Top Layer to Bottom Layer And Pad C15-2(6374.205mil,1642.189mil) on Top Layer [Unplated] 
+   Violation between Un-Routed Net Constraint: Net GND Between Pad C17-2(6347.213mil,2228.378mil) on Top Layer [Unplated] And Pad C20-2(6419.323mil,2238.189mil) on Top Layer [Unplated] 
+   Violation between Un-Routed Net Constraint: Net GND Between Pad C17-2(6347.213mil,2228.378mil) on Top Layer [Unplated] And Via (6347.441mil,2250.984mil) from Top Layer to Bottom Layer 
+   Violation between Un-Routed Net Constraint: Net GND Between Pad R1-1(6358.189mil,1300mil) on Top Layer [Unplated] And Pad C18-2(6408.669mil,1297mil) on Top Layer [Unplated] 
+   Violation between Un-Routed Net Constraint: Net GND Between Pad C20-2(6419.323mil,2238.189mil) on Top Layer [Unplated] And Pad C2-2(6455.024mil,2232.189mil) on Top Layer [Unplated] 
+   Violation between Un-Routed Net Constraint: Net GND Between Pad U1-44(6885.827mil,1705.709mil) on Top Layer [Unplated] And Pad C21-1(6983.071mil,1705.89mil) on Top Layer [Unplated] 
+   Violation between Un-Routed Net Constraint: Net GND Between Pad C22-1(6803.15mil,1514.252mil) on Top Layer [Unplated] And Pad C30-1(6831.693mil,1495.591mil) on Top Layer [Unplated] 
+   Violation between Un-Routed Net Constraint: Net GND Between Pad C31-1(6729.669mil,1513mil) on Top Layer [Unplated] And Pad C22-1(6803.15mil,1514.252mil) on Top Layer [Unplated] 
+   Violation between Un-Routed Net Constraint: Net GND Between Pad U1-32(6793.307mil,1565.945mil) on Top Layer [Unplated] And Pad C22-1(6803.15mil,1514.252mil) on Top Layer [Unplated] 
+   Violation between Un-Routed Net Constraint: Net NetC22_2 Between Pad L3-2(6777.559mil,1501.968mil) on Top Layer [Unplated] And Pad C22-2(6803.15mil,1495.591mil) on Top Layer [Unplated] 
+   Violation between Un-Routed Net Constraint: Net GND Between Pad C24-1(6758.386mil,1356.299mil) on Top Layer [Unplated] And Pad C23-1(6758.386mil,1429.134mil) on Top Layer [Unplated] 
+   Violation between Un-Routed Net Constraint: Net GND Between Pad C31-1(6729.669mil,1513mil) on Top Layer [Unplated] And Pad C23-1(6758.386mil,1429.134mil) on Top Layer [Unplated] 
+   Violation between Un-Routed Net Constraint: Net GND Between Pad C6-2(6605.709mil,1411.417mil) on Top Layer [Unplated] And Pad C23-1(6758.386mil,1429.134mil) on Top Layer [Unplated] 
+   Violation between Un-Routed Net Constraint: Net NetC26_2 Between Pad IC1-61(6450.89mil,1696.071mil) on Top Layer [Unplated] And Pad C26-2(6463.551mil,1639.189mil) on Top Layer [Unplated] 
+   Violation between Un-Routed Net Constraint: Net NetC26_2 Between Pad R5-1(6460.402mil,1607.189mil) on Top Layer [Unplated] And Pad C26-2(6463.551mil,1639.189mil) on Top Layer [Unplated] 
+   Violation between Un-Routed Net Constraint: Net GND Between Pad C28-1(6956.071mil,1559.898mil) on Top Layer [Unplated] And Pad C29-1(6984.071mil,1559.898mil) on Top Layer [Unplated] 
+   Violation between Un-Routed Net Constraint: Net GND Between Pad C8-2(6936.496mil,1528.543mil) on Top Layer [Unplated] And Pad C28-1(6956.071mil,1559.898mil) on Top Layer [Unplated] 
+   Violation between Un-Routed Net Constraint: Net GND Between Pad R19-1(6926.071mil,1608.417mil) on Top Layer [Unplated] And Pad C28-1(6956.071mil,1559.898mil) on Top Layer [Unplated] 
+   Violation between Un-Routed Net Constraint: Net GND Between Pad C30-1(6831.693mil,1495.591mil) on Top Layer [Unplated] And Pad Y1-2(6875.984mil,1492.126mil) on Top Layer [Unplated] 
+   Violation between Un-Routed Net Constraint: Net VBUS Between Pad C3-1(6537mil,1297.331mil) on Top Layer [Unplated] And Pad F1-2(6575.315mil,1324mil) on Top Layer [Unplated] 
+   Violation between Un-Routed Net Constraint: Net VBUS Between Pad IC2-17(6475.315mil,1342mil) on Top Layer [Unplated] And Pad C3-1(6537mil,1297.331mil) on Top Layer [Unplated] 
+   Violation between Un-Routed Net Constraint: Net GND Between Pad C3-2(6537mil,1278.669mil) on Top Layer [Unplated] And Pad Q1-3(6570.11mil,1288.417mil) on Top Layer [Unplated] 
+   Violation between Un-Routed Net Constraint: Net GND Between Via (6510mil,1296mil) from Top Layer to Bottom Layer And Pad C3-2(6537mil,1278.669mil) on Top Layer [Unplated] 
+   Violation between Un-Routed Net Constraint: Net GND Between Pad C32-2(6163.386mil,1462.126mil) on Top Layer [Unplated] And Via (6164mil,1437mil) from Top Layer to Bottom Layer 
+   Violation between Un-Routed Net Constraint: Net GND Between Pad C33-2(6195.866mil,1459.449mil) on Top Layer [Unplated] And Pad D1-2(6228.346mil,1463.307mil) on Top Layer [Unplated] 
+   Violation between Un-Routed Net Constraint: Net GND Between Pad C33-2(6195.866mil,1459.449mil) on Top Layer [Unplated] And Via (6202.524mil,1427.168mil) from Top Layer to Bottom Layer 
+   Violation between Un-Routed Net Constraint: Net +1.8V Between Pad C34-1(6229.402mil,1640.764mil) on Top Layer [Unplated] And Pad IC1-50(6234.354mil,1696.071mil) on Top Layer [Unplated] 
+   Violation between Un-Routed Net Constraint: Net +1.8V Between Pad C34-1(6229.402mil,1640.764mil) on Top Layer [Unplated] And Pad R20-2(6260.213mil,1619.378mil) on Top Layer [Unplated] 
+   Violation between Un-Routed Net Constraint: Net GND Between Pad C34-2(6203.024mil,1640.764mil) on Top Layer [Unplated] And Pad IC1-49(6214.669mil,1696.071mil) on Top Layer [Unplated] 
+   Violation between Un-Routed Net Constraint: Net GND Between Pad C34-2(6203.024mil,1640.764mil) on Top Layer [Unplated] And Via (6290.024mil,1642.189mil) from Top Layer to Bottom Layer 
+   Violation between Un-Routed Net Constraint: Net +1.8V Between Pad C35-1(6083.205mil,1773.764mil) on Top Layer [Unplated] And Pad IC1-48(6136.402mil,1774.339mil) on Top Layer [Unplated] 
+   Violation between Un-Routed Net Constraint: Net +1.8V Between Pad J2-1(5976mil,1863mil) on Multi-Layer And Pad C35-1(6083.205mil,1773.764mil) on Top Layer [Unplated] 
+   Violation between Un-Routed Net Constraint: Net +1.8V Between Pad R17-2(6060.402mil,1950.189mil) on Top Layer [Unplated] And Pad C35-1(6083.205mil,1773.764mil) on Top Layer [Unplated] 
+   Violation between Un-Routed Net Constraint: Net GND Between Pad J3-B1(6033.465mil,1678.15mil) on Top Layer [Unplated] And Pad C35-2(6057.221mil,1773.764mil) on Top Layer [Unplated] 
+   Violation between Un-Routed Net Constraint: Net GND Between Pad C35-2(6057.221mil,1773.764mil) on Top Layer [Unplated] And Pad R27-1(6060.402mil,1803.189mil) on Top Layer [Unplated] 
+   Violation between Un-Routed Net Constraint: Net NetC36_2 Between Pad IC1-6(6588.213mil,1872.764mil) on Top Layer [Unplated] And Pad C36-2(6643.701mil,1828.78mil) on Top Layer [Unplated] 
+   Violation between Un-Routed Net Constraint: Net NetC36_2 Between Pad C36-2(6643.701mil,1828.78mil) on Top Layer [Unplated] And Pad R10-2(6675.197mil,1830.709mil) on Top Layer [Unplated] 
+   Violation between Un-Routed Net Constraint: Net GND Between Pad C4-2(6486.992mil,1296mil) on Top Layer [Unplated] And Via (6510mil,1296mil) from Top Layer to Bottom Layer 
+   Violation between Un-Routed Net Constraint: Net +1.8V Between Pad C43-1(5992.992mil,2116mil) on Top Layer [Unplated] And Pad C42-1(5994.11mil,2080mil) on Top Layer [Unplated] 
+   Violation between Un-Routed Net Constraint: Net +1.8V Between Pad C42-1(5994.11mil,2080mil) on Top Layer [Unplated] And Pad R21-2(6060.402mil,2028.189mil) on Top Layer [Unplated] 
+   Violation between Un-Routed Net Constraint: Net GND Between Pad C42-2(5957.89mil,2080mil) on Top Layer [Unplated] And Pad C43-2(5967.008mil,2116mil) on Top Layer [Unplated] 
+   Violation between Un-Routed Net Constraint: Net GND Between Pad C42-2(5957.89mil,2080mil) on Top Layer [Unplated] And Pad J2-5(5976mil,1963mil) on Multi-Layer 
+   Violation between Un-Routed Net Constraint: Net +1.8V Between Pad C43-1(5992.992mil,2116mil) on Top Layer [Unplated] And Pad U2-10(5993.528mil,2159.98mil) on Top Layer 
+   Violation between Un-Routed Net Constraint: Net GND Between Pad U2-8(5954.158mil,2159.98mil) on Top Layer And Pad C43-2(5967.008mil,2116mil) on Top Layer [Unplated] 
+   Violation between Un-Routed Net Constraint: Net GND Between Pad C44-2(6290.189mil,1351mil) on Top Layer [Unplated] And Pad R2-2(6326mil,1350.78mil) on Top Layer [Unplated] 
+   Violation between Un-Routed Net Constraint: Net GND Between Pad U3-2(6264.205mil,1423.504mil) on Top Layer And Pad C45-2(6264.811mil,1462mil) on Top Layer [Unplated] 
+   Violation between Un-Routed Net Constraint: Net GND Between Via (6261mil,1494mil) from Top Layer to Bottom Layer And Pad C45-2(6264.811mil,1462mil) on Top Layer [Unplated] 
+   Violation between Un-Routed Net Constraint: Net GND Between Pad C46-1(6496.701mil,1219mil) on Top Layer [Unplated] And Via (6529mil,1220mil) from Top Layer to Bottom Layer 
+   Violation between Un-Routed Net Constraint: Net GND Between Pad C47-1(6293.299mil,1188mil) on Top Layer [Unplated] And Pad IC4-4(6358.008mil,1258.685mil) on Top Layer [Unplated] 
+   Violation between Un-Routed Net Constraint: Net GND Between Pad C47-1(6293.299mil,1188mil) on Top Layer [Unplated] And Pad S1-4(6326.772mil,1059.449mil) on Top Layer [Unplated] 
+   Violation between Un-Routed Net Constraint: Net GND Between Pad C5-2(6498.11mil,1262mil) on Top Layer [Unplated] And Via (6510mil,1296mil) from Top Layer to Bottom Layer 
+   Violation between Un-Routed Net Constraint: Net GND Between Via (6533mil,1450mil) from Top Layer to Bottom Layer And Pad C6-2(6605.709mil,1411.417mil) on Top Layer [Unplated] 
+   Violation between Un-Routed Net Constraint: Net +1.8V Between Pad L1-1(6581.693mil,1506.89mil) on Top Layer [Unplated] And Pad C7-1(6618.071mil,1626.898mil) on Top Layer [Unplated] 
+   Violation between Un-Routed Net Constraint: Net +1.8V Between Pad C7-1(6618.071mil,1626.898mil) on Top Layer [Unplated] And Pad U1-22(6653.543mil,1626.968mil) on Top Layer [Unplated] 
+   Violation between Un-Routed Net Constraint: Net GND Between Pad C7-2(6618.071mil,1645.559mil) on Top Layer [Unplated] And Pad U1-49(6769.685mil,1682.087mil) on Top Layer [Unplated] 
+   Violation between Un-Routed Net Constraint: Net +1.8V Between Pad U1-36(6856.299mil,1565.945mil) on Top Layer [Unplated] And Pad C8-1(6917.835mil,1528.543mil) on Top Layer [Unplated] 
+   Violation between Un-Routed Net Constraint: Net GND Between Pad Y1-4(6929.134mil,1450.787mil) on Top Layer [Unplated] And Pad C8-2(6936.496mil,1528.543mil) on Top Layer [Unplated] 
+   Violation between Un-Routed Net Constraint: Net +1.8V Between Pad U1-10(6714.567mil,1798.228mil) on Top Layer [Unplated] And Pad C9-1(6719.961mil,1836.614mil) on Top Layer [Unplated] 
+   Violation between Un-Routed Net Constraint: Net +1.8V Between Pad C9-1(6719.961mil,1836.614mil) on Top Layer [Unplated] And Via (6737mil,1835mil) from Top Layer to Bottom Layer 
+   Violation between Un-Routed Net Constraint: Net GND Between Pad C9-2(6701.299mil,1836.614mil) on Top Layer [Unplated] And Pad J1-11(6757.874mil,1908.465mil) on Top Layer [Unplated] 
+   Violation between Un-Routed Net Constraint: Net VBUS_PRE Between Pad F1-1(6614.685mil,1324mil) on Top Layer [Unplated] And Via (6622mil,1358mil) from Top Layer to Bottom Layer 
+   Violation between Un-Routed Net Constraint: Net VBAT_PRE Between Pad F2-2(6209.685mil,1396mil) on Top Layer [Unplated] And Pad S1-3(6444.882mil,1112.795mil) on Top Layer [Unplated] 
+   Violation between Un-Routed Net Constraint: Net NetC36_1 Between Via (6509.842mil,2168.307mil) from Top Layer to Bottom Layer And Pad Free-24(6614mil,2181mil) on Multi-Layer 
+   Violation between Un-Routed Net Constraint: Net GND Between Pad IC1-20(6450.89mil,2147.882mil) on Top Layer [Unplated] And Pad IC1-18(6490.26mil,2147.882mil) on Top Layer [Unplated] 
+   Violation between Un-Routed Net Constraint: Net GND Between Pad IC1-23(6391.835mil,2147.882mil) on Top Layer [Unplated] And Pad IC1-20(6450.89mil,2147.882mil) on Top Layer [Unplated] 
+   Violation between Un-Routed Net Constraint: Net GND Between Pad IC1-25(6352.465mil,2147.882mil) on Top Layer [Unplated] And Pad IC1-23(6391.835mil,2147.882mil) on Top Layer [Unplated] 
+   Violation between Un-Routed Net Constraint: Net GND Between Pad IC1-33(6136.402mil,2069.614mil) on Top Layer [Unplated] And Pad IC1-32(6214.669mil,2147.882mil) on Top Layer [Unplated] 
+   Violation between Un-Routed Net Constraint: Net GND Between Pad R24-1(6060.402mil,1892.189mil) on Top Layer [Unplated] And Pad IC1-41(6136.402mil,1912.134mil) on Top Layer [Unplated] 
+   Violation between Un-Routed Net Constraint: Net +1.8V Between Pad IC1-48(6136.402mil,1774.339mil) on Top Layer [Unplated] And Pad IC1-50(6234.354mil,1696.071mil) on Top Layer [Unplated] 
+   Violation between Un-Routed Net Constraint: Net GND Between Pad IC1-49(6214.669mil,1696.071mil) on Top Layer [Unplated] And Pad IC1-51(6254.039mil,1696.071mil) on Top Layer [Unplated] 
+   Violation between Un-Routed Net Constraint: Net GND Between Pad IC1-51(6254.039mil,1696.071mil) on Top Layer [Unplated] And Pad IC1-53(6293.409mil,1696.071mil) on Top Layer [Unplated] 
+   Violation between Un-Routed Net Constraint: Net GND Between Pad IC1-58(6391.835mil,1696.071mil) on Top Layer [Unplated] And Pad IC1-60(6431.205mil,1696.071mil) on Top Layer [Unplated] 
+   Violation between Un-Routed Net Constraint: Net GND Between Pad IC1-60(6431.205mil,1696.071mil) on Top Layer [Unplated] And Pad IC1-62(6470.575mil,1696.071mil) on Top Layer [Unplated] 
+   Violation between Un-Routed Net Constraint: Net +1.8V Between Pad IC2-1(6495mil,1499.48mil) on Top Layer [Unplated] And Pad L1-1(6581.693mil,1506.89mil) on Top Layer [Unplated] 
+   Violation between Un-Routed Net Constraint: Net NRF_PMIC_ERR Between Via (6340.512mil,1417.795mil) from Top Layer to Bottom Layer And Pad IC2-10(6367.047mil,1410.898mil) on Top Layer [Unplated] 
+   Violation between Un-Routed Net Constraint: Net GND Between Pad IC2-11(6367.047mil,1391.213mil) on Top Layer [Unplated] And Pad IC2-7(6367.047mil,1469.953mil) on Top Layer [Unplated] 
+   Violation between Un-Routed Net Constraint: Net GND Between Pad R2-2(6326mil,1350.78mil) on Top Layer [Unplated] And Pad IC2-11(6367.047mil,1391.213mil) on Top Layer [Unplated] 
+   Violation between Un-Routed Net Constraint: Net GND Between Pad IC2-3(6455.63mil,1499.48mil) on Top Layer [Unplated] And Pad IC2-2(6475.315mil,1499.48mil) on Top Layer [Unplated] 
+   Violation between Un-Routed Net Constraint: Net GND Between Pad IC2-25(6445.787mil,1420.74mil) on Top Layer [Unplated] And Pad IC2-3(6455.63mil,1499.48mil) on Top Layer [Unplated] 
+   Violation between Un-Routed Net Constraint: Net GND Between Pad IC2-4(6435.945mil,1499.48mil) on Top Layer [Unplated] And Pad IC2-3(6455.63mil,1499.48mil) on Top Layer [Unplated] 
+   Violation between Un-Routed Net Constraint: Net GND Between Pad IC2-5(6416.26mil,1499.48mil) on Top Layer [Unplated] And Pad IC2-4(6435.945mil,1499.48mil) on Top Layer [Unplated] 
+   Violation between Un-Routed Net Constraint: Net GND Between Pad IC2-6(6396.575mil,1499.48mil) on Top Layer [Unplated] And Pad IC2-5(6416.26mil,1499.48mil) on Top Layer [Unplated] 
+   Violation between Un-Routed Net Constraint: Net GND Between Pad IC2-7(6367.047mil,1469.953mil) on Top Layer [Unplated] And Pad IC2-6(6396.575mil,1499.48mil) on Top Layer [Unplated] 
+   Violation between Un-Routed Net Constraint: Net NRF_PMIC_CHG Between Pad IC2-8(6367.047mil,1450.268mil) on Top Layer [Unplated] And Via (6707.606mil,1514.958mil) from Top Layer to Bottom Layer 
+   Violation between Un-Routed Net Constraint: Net GND Between Pad IC3-2(6227.874mil,1569.882mil) on Top Layer [Unplated] And Pad R16-2(6298.701mil,1549.213mil) on Top Layer [Unplated] 
+   Violation between Un-Routed Net Constraint: Net GND Between Pad IC4-4(6358.008mil,1258.685mil) on Top Layer [Unplated] And Pad R1-1(6358.189mil,1300mil) on Top Layer [Unplated] 
+   Violation between Un-Routed Net Constraint: Net GND Between Pad J1-11(6757.874mil,1908.465mil) on Top Layer [Unplated] And Via (6807.164mil,1948.502mil) from Top Layer to Bottom Layer 
+   Violation between Un-Routed Net Constraint: Net GND Between Pad J1-12(6757.874mil,2201.772mil) on Top Layer [Unplated] And Via (6807.164mil,1948.502mil) from Top Layer to Bottom Layer 
+   Violation between Un-Routed Net Constraint: Net SWDIO Between Pad J2-2(5926mil,1863mil) on Multi-Layer And Via (6661mil,1550mil) from Top Layer to Bottom Layer 
+   Violation between Un-Routed Net Constraint: Net NRESET Between Pad J2-3(5976mil,1913mil) on Multi-Layer And Via (6707mil,1486mil) from Top Layer to Bottom Layer 
+   Violation between Un-Routed Net Constraint: Net SWDCLK Between Pad J2-4(5926mil,1913mil) on Multi-Layer And Via (6671mil,1532mil) from Top Layer to Bottom Layer 
+   Violation between Un-Routed Net Constraint: Net SWO Between Pad J2-6(5926mil,1963mil) on Multi-Layer And Via (6624mil,1690mil) from Top Layer to Bottom Layer 
+   Violation between Un-Routed Net Constraint: Net GND Between Pad J3-S1(5915.945mil,1475.394mil) on Multi-Layer And Pad J3-A1(5967.717mil,1461.614mil) on Top Layer [Unplated] 
+   Violation between Un-Routed Net Constraint: Net GND Between Pad J3-S2(5915.945mil,1664.37mil) on Multi-Layer And Pad J3-A12(5967.717mil,1678.15mil) on Top Layer [Unplated] 
+   Violation between Un-Routed Net Constraint: Net GND Between Pad J3-B1(6033.465mil,1678.15mil) on Top Layer [Unplated] And Pad J3-S3(6085.236mil,1664.37mil) on Multi-Layer 
+   Violation between Un-Routed Net Constraint: Net GND Between Pad J3-B12(6033.465mil,1461.614mil) on Top Layer [Unplated] And Pad J3-S4(6085.236mil,1475.394mil) on Multi-Layer 
+   Violation between Un-Routed Net Constraint: Net GND Between Pad J3-B12(6033.465mil,1461.614mil) on Top Layer [Unplated] And Pad J4-1(6046.63mil,1300.953mil) on Top Layer [Unplated] 
+   Violation between Un-Routed Net Constraint: Net GND Between Pad J4-MP1(5954.11mil,1074.575mil) on Top Layer [Unplated] And Pad J4-MP2(6217.89mil,1074.575mil) on Top Layer [Unplated] 
+   Violation between Un-Routed Net Constraint: Net GND Between Pad J4-MP2(6217.89mil,1074.575mil) on Top Layer [Unplated] And Pad S1-4(6326.772mil,1059.449mil) on Top Layer [Unplated] 
+   Violation between Un-Routed Net Constraint: Net GND Between Pad L7-1(6903.291mil,1273.622mil) on Top Layer [Unplated] And Pad Y1-4(6929.134mil,1450.787mil) on Top Layer [Unplated] 
+   Violation between Un-Routed Net Constraint: Net NRF_LED_PWM Between Pad Q1-2(6583.89mil,1288.417mil) on Top Layer [Unplated] And Pad U1-42(6885.827mil,1674.213mil) on Top Layer [Unplated] 
+   Violation between Un-Routed Net Constraint: Net GND Between Pad R1-1(6358.189mil,1300mil) on Top Layer [Unplated] And Via (6359mil,1321mil) from Top Layer to Bottom Layer 
+   Violation between Un-Routed Net Constraint: Net +1.8V Between Pad U2-10(5993.528mil,2159.98mil) on Top Layer And Pad R13-2(6045mil,2197.189mil) on Top Layer [Unplated] 
+   Violation between Un-Routed Net Constraint: Net +1.8V Between Pad R13-2(6045mil,2197.189mil) on Top Layer [Unplated] And Via (6071mil,2201mil) from Top Layer to Bottom Layer 
+   Violation between Un-Routed Net Constraint: Net +1.8V Between Pad R14-2(5884mil,2193.189mil) on Top Layer [Unplated] And Pad U2-2(5973.842mil,2220.02mil) on Top Layer 
+   Violation between Un-Routed Net Constraint: Net GND Between Pad R16-2(6298.701mil,1549.213mil) on Top Layer [Unplated] And Pad R18-2(6298.701mil,1591.535mil) on Top Layer [Unplated] 
+   Violation between Un-Routed Net Constraint: Net +1.8V Between Pad R17-2(6060.402mil,1950.189mil) on Top Layer [Unplated] And Pad R22-2(6060.402mil,1998.189mil) on Top Layer [Unplated] 
+   Violation between Un-Routed Net Constraint: Net GND Between Via (6290.024mil,1642.189mil) from Top Layer to Bottom Layer And Pad R18-2(6298.701mil,1591.535mil) on Top Layer [Unplated] 
+   Violation between Un-Routed Net Constraint: Net GND Between Pad U1-44(6885.827mil,1705.709mil) on Top Layer [Unplated] And Pad R19-1(6926.071mil,1608.417mil) on Top Layer [Unplated] 
+   Violation between Un-Routed Net Constraint: Net +1.8V Between Pad R22-2(6060.402mil,1998.189mil) on Top Layer [Unplated] And Pad R21-2(6060.402mil,2028.189mil) on Top Layer [Unplated] 
+   Violation between Un-Routed Net Constraint: Net GND Between Pad R2-2(6326mil,1350.78mil) on Top Layer [Unplated] And Via (6359mil,1321mil) from Top Layer to Bottom Layer 
+   Violation between Un-Routed Net Constraint: Net GND Between Pad R25-1(6060.402mil,1862.189mil) on Top Layer [Unplated] And Pad R24-1(6060.402mil,1892.189mil) on Top Layer [Unplated] 
+   Violation between Un-Routed Net Constraint: Net GND Between Pad R26-1(6060.402mil,1833.189mil) on Top Layer [Unplated] And Pad R25-1(6060.402mil,1862.189mil) on Top Layer [Unplated] 
+   Violation between Un-Routed Net Constraint: Net GND Between Pad R27-1(6060.402mil,1803.189mil) on Top Layer [Unplated] And Pad R26-1(6060.402mil,1833.189mil) on Top Layer [Unplated] 
+   Violation between Un-Routed Net Constraint: Net GND Between Via (6464mil,1161mil) from Top Layer to Bottom Layer And Pad R29-2(6464.811mil,1182mil) on Top Layer [Unplated] 
+   Violation between Un-Routed Net Constraint: Net NRESET Between Via (6707mil,1486mil) from Top Layer to Bottom Layer And Pad R6-2(6727.26mil,1487.228mil) on Top Layer [Unplated] 
+   Violation between Un-Routed Net Constraint: Net GND Between Via (6529mil,1220mil) from Top Layer to Bottom Layer And Pad S1-5(6562.992mil,1059.449mil) on Top Layer [Unplated] 
+   Violation between Un-Routed Net Constraint: Net +1.8V Between Pad U1-22(6653.543mil,1626.968mil) on Top Layer [Unplated] And Pad U1-10(6714.567mil,1798.228mil) on Top Layer [Unplated] 
+   Violation between Un-Routed Net Constraint: Net NRF_ADS_SCLK Between Track (6182.218mil,1931.819mil)(6353.518mil,1760.518mil) on Top Layer And Pad U1-12(6683.071mil,1798.228mil) on Top Layer [Unplated] 
+   Violation between Un-Routed Net Constraint: Net NRF_ADS_DOUT Between Via (6624mil,1737mil) from Top Layer to Bottom Layer And Pad U1-15(6653.543mil,1737.205mil) on Top Layer [Unplated] 
+   Violation between Un-Routed Net Constraint: Net NRF_ADS_CS Between Via (6624mil,1719mil) from Top Layer to Bottom Layer And Pad U1-16(6653.543mil,1721.457mil) on Top Layer [Unplated] 
+   Violation between Un-Routed Net Constraint: Net SWO Between Via (6624mil,1690mil) from Top Layer to Bottom Layer And Pad U1-18(6653.543mil,1689.961mil) on Top Layer [Unplated] 
+   Violation between Un-Routed Net Constraint: Net GND Between Pad U1-49(6769.685mil,1682.087mil) on Top Layer [Unplated] And Pad U1-32(6793.307mil,1565.945mil) on Top Layer [Unplated] 
+   Violation between Un-Routed Net Constraint: Net +1.8V Between Pad U1-36(6856.299mil,1565.945mil) on Top Layer [Unplated] And Pad U1-47(6885.827mil,1752.953mil) on Top Layer [Unplated] 
+   Violation between Un-Routed Net Constraint: Net NRF_ADS_DRDY Between Track (6276.704mil,1794.024mil)(6320.864mil,1749.864mil) on Top Layer And Pad U1-37(6885.827mil,1595.472mil) on Top Layer [Unplated] 
+   Violation between Un-Routed Net Constraint: Net NRF_ADS_PWDN Between Track (6172.505mil,2029.495mil)(6410mil,1792mil) on Top Layer And Pad U1-38(6885.827mil,1611.22mil) on Top Layer [Unplated] 
+   Violation between Un-Routed Net Constraint: Net NRF_ADS_RESET Between Track (6169.19mil,2009.81mil)(6396mil,1783mil) on Top Layer And Pad U1-39(6885.827mil,1626.968mil) on Top Layer [Unplated] 
+   Violation between Un-Routed Net Constraint: Net +1.8V Between Pad U1-47(6885.827mil,1752.953mil) on Top Layer [Unplated] And Pad U1-48(6885.827mil,1768.701mil) on Top Layer [Unplated] 
+   Violation between Un-Routed Net Constraint: Net +1.8V Between Via (6737mil,1835mil) from Top Layer to Bottom Layer And Pad U1-48(6885.827mil,1768.701mil) on Top Layer [Unplated] 
+   Violation between Un-Routed Net Constraint: Net NRF_ADS_START Between Track (6186.157mil,1971.189mil)(6382.173mil,1775.173mil) on Top Layer And Pad U1-9(6730.315mil,1798.228mil) on Top Layer [Unplated] 
+   Violation between Un-Routed Net Constraint: Net +1.8V Between Pad U2-9(5973.842mil,2159.98mil) on Top Layer And Pad U2-10(5993.528mil,2159.98mil) on Top Layer 
+   Violation between Un-Routed Net Constraint: Net +1.8V Between Pad U2-9(5973.842mil,2159.98mil) on Top Layer And Pad U2-2(5973.842mil,2220.02mil) on Top Layer 
+   Violation between Un-Routed Net Constraint: Net GND Between Pad U2-5(5933.98mil,2199.843mil) on Top Layer And Pad U2-3(5954.158mil,2220.02mil) on Top Layer 
+   Violation between Un-Routed Net Constraint: Net GND Between Pad U2-6(5933.98mil,2180.157mil) on Top Layer And Pad U2-5(5933.98mil,2199.843mil) on Top Layer 
+   Violation between Un-Routed Net Constraint: Net GND Between Pad U2-6(5933.98mil,2180.157mil) on Top Layer And Pad U2-7(5934.472mil,2159.98mil) on Top Layer 
+   Violation between Un-Routed Net Constraint: Net GND Between Pad U2-7(5934.472mil,2159.98mil) on Top Layer And Pad U2-8(5954.158mil,2159.98mil) on Top Layer 
+   Violation between Un-Routed Net Constraint: Net GND Between Pad U3-2(6264.205mil,1423.504mil) on Top Layer And Pad U3-5(6277mil,1405mil) on Top Layer 
+   Violation between Un-Routed Net Constraint: Net GND Between Pad Y1-2(6875.984mil,1492.126mil) on Top Layer [Unplated] And Pad Y1-4(6929.134mil,1450.787mil) on Top Layer [Unplated] 
+   Violation between Un-Routed Net Constraint: Polygon  (NONET_L-01_P-001) on Top Layer Dead Copper - Net Not Assigned.
+   Violation between Un-Routed Net Constraint: Net NRF_IMU_INT2 Between Track (6084.401mil,2169.284mil)(6443.395mil,1810.29mil) on Top Layer And Via (6622.995mil,1590.827mil) from Top Layer to Bottom Layer 
+   Violation between Un-Routed Net Constraint: Net NRF_ADS_CS Between Track (6184.187mil,1951.504mil)(6368.846mil,1766.845mil) on Top Layer And Via (6624mil,1719mil) from Top Layer to Bottom Layer 
+   Violation between Un-Routed Net Constraint: Net NRF_IMU_SDA Between Track (6205.154mil,2109.846mil)(6468.867mil,1846.133mil) on Top Layer And Via (6828mil,1831mil) from Top Layer to Bottom Layer 
+   Violation between Un-Routed Net Constraint: Net NRF_ADS_DOUT Between Track (6219.618mil,1872.764mil)(6338.191mil,1754.191mil) on Top Layer And Via (6624mil,1737mil) from Top Layer to Bottom Layer 
+   Violation between Un-Routed Net Constraint: Net VSYS Between Track (6283.795mil,1299mil)(6311.504mil,1299mil) on Top Layer And Via (6357mil,1431mil) from Top Layer to Bottom Layer 
+   Violation between Un-Routed Net Constraint: Net NRF_ADS_DIN Between Track (6425mil,1800mil)(6425mil,1803mil) on Top Layer And Via (6624mil,1755mil) from Top Layer to Bottom Layer 
+   Violation between Un-Routed Net Constraint: Net NRF_IMU_INT1 Between Track (6447.439mil,1824.63mil)(6447.439mil,1824.63mil) on Top Layer And Via (6623.463mil,1608.537mil) from Top Layer to Bottom Layer 
+   Violation between Un-Routed Net Constraint: Net NRF_IMU_SCL Between Track (6463mil,1833mil)(6474.358mil,1833mil) on Top Layer And Via (6806mil,1831mil) from Top Layer to Bottom Layer 
+   Violation between Un-Routed Net Constraint: Via (6027mil,2085mil) from Top Layer to Bottom Layer Dead Copper - Net Not Assigned.
+   Violation between Un-Routed Net Constraint: Via (6027mil,2114mil) from Top Layer to Bottom Layer Dead Copper - Net Not Assigned.
+   Violation between Un-Routed Net Constraint: Via (6054mil,2085mil) from Top Layer to Bottom Layer Dead Copper - Net Not Assigned.
+   Violation between Un-Routed Net Constraint: Via (6054mil,2113mil) from Top Layer to Bottom Layer Dead Copper - Net Not Assigned.
+   Violation between Un-Routed Net Constraint: Net NRF_PMIC_ERR Between Via (6340.512mil,1417.795mil) from Top Layer to Bottom Layer And Via (6689mil,1522mil) from Top Layer to Bottom Layer 
+   Violation between Un-Routed Net Constraint: Via (6356mil,1280mil) from Top Layer to Bottom Layer Dead Copper - Net Not Assigned.
+   Violation between Un-Routed Net Constraint: Via (6429mil,1529mil) from Top Layer to Bottom Layer Dead Copper - Net Not Assigned.
+   Violation between Un-Routed Net Constraint: Via (6461mil,1577mil) from Top Layer to Bottom Layer Dead Copper - Net Not Assigned.
+   Violation between Un-Routed Net Constraint: Net VBUS_PRE Between Via (6604mil,1380mil) from Top Layer to Bottom Layer And Via (6636mil,1380mil) from Top Layer to Bottom Layer 
+   Violation between Un-Routed Net Constraint: Net VBUS_PRE Between Via (6622mil,1358mil) from Top Layer to Bottom Layer And Via (6655mil,1357mil) from Top Layer to Bottom Layer 
+   Violation between Un-Routed Net Constraint: Net VBUS_PRE Between Via (6636mil,1380mil) from Top Layer to Bottom Layer And Via (6670mil,1381mil) from Top Layer to Bottom Layer 
+   Violation between Un-Routed Net Constraint: Net VBUS_PRE Between Via (6655mil,1357mil) from Top Layer to Bottom Layer And Via (6670mil,1381mil) from Top Layer to Bottom Layer 
+   Violation between Un-Routed Net Constraint: Via (6898mil,1577mil) from Top Layer to Bottom Layer Dead Copper - Net Not Assigned.
+Rule Violations :175
+
+Processing Rule : Modified Polygon (Allow modified: No), (Allow shelved: No)
+   Violation between Modified Polygon: Polygon Shelved  (NONET_L02_P002) on Inner Layer 1 
+Rule Violations :1
+
+Processing Rule : Width Constraint (Min=3.5mil) (Max=100mil) (Preferred=8mil) (All)
+Rule Violations :0
+
+Processing Rule : Width Constraint (Min=7.116mil) (Max=10.312mil) (Preferred=10.312mil) (InNetClass('RF'))
+Rule Violations :0
+
+Processing Rule : Routing Topology Rule(Topology=Shortest) (All)
+Rule Violations :0
+
+Processing Rule : Power Plane Connect Rule(Direct Connect )(Expansion=20mil) (Conductor Width=10mil) (Air Gap=10mil) (Entries=4) (InPadClass('PowerPads'))
+Rule Violations :0
+
+Processing Rule : Power Plane Connect Rule(Relief Connect )(Expansion=11.811mil) (Conductor Width=5mil) (Air Gap=5mil) (Entries=4) (All)
+Rule Violations :0
+
+Processing Rule : Minimum Annular Ring (Minimum=3mil) (All)
+   Violation between Minimum Annular Ring: (1.968mil < 3mil) Via (5891mil,1601mil) from Top Layer to Bottom Layer (Annular Ring=1.968mil) On (Top Layer)
+   Violation between Minimum Annular Ring: (1.968mil < 3mil) Via (5891mil,1624mil) from Top Layer to Bottom Layer (Annular Ring=1.968mil) On (Top Layer)
+   Violation between Minimum Annular Ring: (1.968mil < 3mil) Via (5892mil,1523mil) from Top Layer to Bottom Layer (Annular Ring=1.968mil) On (Top Layer)
+   Violation between Minimum Annular Ring: (1.968mil < 3mil) Via (5892mil,1546mil) from Top Layer to Bottom Layer (Annular Ring=1.968mil) On (Top Layer)
+   Violation between Minimum Annular Ring: (1.968mil < 3mil) Via (5911mil,1601mil) from Top Layer to Bottom Layer (Annular Ring=1.968mil) On (Top Layer)
+   Violation between Minimum Annular Ring: (1.968mil < 3mil) Via (5911mil,1624mil) from Top Layer to Bottom Layer (Annular Ring=1.968mil) On (Top Layer)
+   Violation between Minimum Annular Ring: (1.968mil < 3mil) Via (5912mil,1523mil) from Top Layer to Bottom Layer (Annular Ring=1.968mil) On (Top Layer)
+   Violation between Minimum Annular Ring: (1.968mil < 3mil) Via (5912mil,1546mil) from Top Layer to Bottom Layer (Annular Ring=1.968mil) On (Top Layer)
+   Violation between Minimum Annular Ring: (1.968mil < 3mil) Via (5926mil,1579mil) from Top Layer to Bottom Layer (Annular Ring=1.968mil) On (Top Layer)
+   Violation between Minimum Annular Ring: (1.968mil < 3mil) Via (5964.891mil,1646.255mil) from Top Layer to Bottom Layer (Annular Ring=1.968mil) On (Top Layer)
+   Violation between Minimum Annular Ring: (1.968mil < 3mil) Via (5984.891mil,1646.255mil) from Top Layer to Bottom Layer (Annular Ring=1.968mil) On (Top Layer)
+   Violation between Minimum Annular Ring: (1.968mil < 3mil) Via (6014.891mil,1646.255mil) from Top Layer to Bottom Layer (Annular Ring=1.968mil) On (Top Layer)
+   Violation between Minimum Annular Ring: (1.968mil < 3mil) Via (6027mil,2085mil) from Top Layer to Bottom Layer (Annular Ring=1.968mil) On (Top Layer)
+   Violation between Minimum Annular Ring: (1.968mil < 3mil) Via (6027mil,2114mil) from Top Layer to Bottom Layer (Annular Ring=1.968mil) On (Top Layer)
+   Violation between Minimum Annular Ring: (1.968mil < 3mil) Via (6034.891mil,1646.255mil) from Top Layer to Bottom Layer (Annular Ring=1.968mil) On (Top Layer)
+   Violation between Minimum Annular Ring: (1.968mil < 3mil) Via (6054mil,2085mil) from Top Layer to Bottom Layer (Annular Ring=1.968mil) On (Top Layer)
+   Violation between Minimum Annular Ring: (1.968mil < 3mil) Via (6054mil,2113mil) from Top Layer to Bottom Layer (Annular Ring=1.968mil) On (Top Layer)
+   Violation between Minimum Annular Ring: (1.968mil < 3mil) Via (6071mil,2201mil) from Top Layer to Bottom Layer (Annular Ring=1.968mil) On (Top Layer)
+   Violation between Minimum Annular Ring: (1.968mil < 3mil) Via (6072mil,1526mil) from Top Layer to Bottom Layer (Annular Ring=1.968mil) On (Top Layer)
+   Violation between Minimum Annular Ring: (1.968mil < 3mil) Via (6078mil,1559mil) from Top Layer to Bottom Layer (Annular Ring=1.968mil) On (Top Layer)
+   Violation between Minimum Annular Ring: (1.968mil < 3mil) Via (6083mil,1541mil) from Top Layer to Bottom Layer (Annular Ring=1.968mil) On (Top Layer)
+   Violation between Minimum Annular Ring: (1.968mil < 3mil) Via (6096mil,1526mil) from Top Layer to Bottom Layer (Annular Ring=1.968mil) On (Top Layer)
+   Violation between Minimum Annular Ring: (1.968mil < 3mil) Via (6111mil,1540mil) from Top Layer to Bottom Layer (Annular Ring=1.968mil) On (Top Layer)
+   Violation between Minimum Annular Ring: (1.968mil < 3mil) Via (6130mil,1464mil) from Top Layer to Bottom Layer (Annular Ring=1.968mil) On (Top Layer)
+   Violation between Minimum Annular Ring: (1.968mil < 3mil) Via (6130mil,1492mil) from Top Layer to Bottom Layer (Annular Ring=1.968mil) On (Top Layer)
+   Violation between Minimum Annular Ring: (1.968mil < 3mil) Via (6163mil,1508mil) from Top Layer to Bottom Layer (Annular Ring=1.968mil) On (Top Layer)
+   Violation between Minimum Annular Ring: (1.968mil < 3mil) Via (6164mil,1437mil) from Top Layer to Bottom Layer (Annular Ring=1.968mil) On (Top Layer)
+   Violation between Minimum Annular Ring: (1.968mil < 3mil) Via (6193.898mil,1549.213mil) from Top Layer to Bottom Layer (Annular Ring=1.968mil) On (Top Layer)
+   Violation between Minimum Annular Ring: (1.968mil < 3mil) Via (6194.163mil,1588.806mil) from Top Layer to Bottom Layer (Annular Ring=1.968mil) On (Top Layer)
+   Violation between Minimum Annular Ring: (1.968mil < 3mil) Via (6202.524mil,1427.168mil) from Top Layer to Bottom Layer (Annular Ring=1.968mil) On (Top Layer)
+   Violation between Minimum Annular Ring: (1.968mil < 3mil) Via (6234.291mil,1395.4mil) from Top Layer to Bottom Layer (Annular Ring=1.968mil) On (Top Layer)
+   Violation between Minimum Annular Ring: (1.968mil < 3mil) Via (6261mil,1494mil) from Top Layer to Bottom Layer (Annular Ring=1.968mil) On (Top Layer)
+   Violation between Minimum Annular Ring: (1.968mil < 3mil) Via (6266mil,1325mil) from Top Layer to Bottom Layer (Annular Ring=1.968mil) On (Top Layer)
+   Violation between Minimum Annular Ring: (1.968mil < 3mil) Via (6283.795mil,1299mil) from Top Layer to Bottom Layer (Annular Ring=1.968mil) On (Top Layer)
+   Violation between Minimum Annular Ring: (1.968mil < 3mil) Via (6290.024mil,1642.189mil) from Top Layer to Bottom Layer (Annular Ring=1.968mil) On (Top Layer)
+   Violation between Minimum Annular Ring: (1.968mil < 3mil) Via (6304mil,1619mil) from Top Layer to Bottom Layer (Annular Ring=1.968mil) On (Top Layer)
+   Violation between Minimum Annular Ring: (1.968mil < 3mil) Via (6314.079mil,1671.921mil) from Top Layer to Bottom Layer (Annular Ring=1.968mil) On (Top Layer)
+   Violation between Minimum Annular Ring: (1.968mil < 3mil) Via (6322mil,1421mil) from Top Layer to Bottom Layer (Annular Ring=1.968mil) On (Top Layer)
+   Violation between Minimum Annular Ring: (1.968mil < 3mil) Via (6322mil,1444mil) from Top Layer to Bottom Layer (Annular Ring=1.968mil) On (Top Layer)
+   Violation between Minimum Annular Ring: (1.968mil < 3mil) Via (6322mil,1467mil) from Top Layer to Bottom Layer (Annular Ring=1.968mil) On (Top Layer)
+   Violation between Minimum Annular Ring: (1.968mil < 3mil) Via (6325mil,1619mil) from Top Layer to Bottom Layer (Annular Ring=1.968mil) On (Top Layer)
+   Violation between Minimum Annular Ring: (1.968mil < 3mil) Via (6340.512mil,1417.795mil) from Top Layer to Bottom Layer (Annular Ring=1.968mil) On (Top Layer)
+   Violation between Minimum Annular Ring: (1.968mil < 3mil) Via (6347.441mil,2250.984mil) from Top Layer to Bottom Layer (Annular Ring=1.968mil) On (Top Layer)
+   Violation between Minimum Annular Ring: (1.968mil < 3mil) Via (6351mil,1198mil) from Top Layer to Bottom Layer (Annular Ring=1.968mil) On (Top Layer)
+   Violation between Minimum Annular Ring: (1.968mil < 3mil) Via (6353mil,1673mil) from Top Layer to Bottom Layer (Annular Ring=1.968mil) On (Top Layer)
+   Violation between Minimum Annular Ring: (1.968mil < 3mil) Via (6356mil,1280mil) from Top Layer to Bottom Layer (Annular Ring=1.968mil) On (Top Layer)
+   Violation between Minimum Annular Ring: (1.968mil < 3mil) Via (6357mil,1431mil) from Top Layer to Bottom Layer (Annular Ring=1.968mil) On (Top Layer)
+   Violation between Minimum Annular Ring: (1.968mil < 3mil) Via (6357mil,1450mil) from Top Layer to Bottom Layer (Annular Ring=1.968mil) On (Top Layer)
+   Violation between Minimum Annular Ring: (1.968mil < 3mil) Via (6359mil,1321mil) from Top Layer to Bottom Layer (Annular Ring=1.968mil) On (Top Layer)
+   Violation between Minimum Annular Ring: (1.968mil < 3mil) Via (6372mil,1673mil) from Top Layer to Bottom Layer (Annular Ring=1.968mil) On (Top Layer)
+   Violation between Minimum Annular Ring: (1.968mil < 3mil) Via (6383mil,1142mil) from Top Layer to Bottom Layer (Annular Ring=1.968mil) On (Top Layer)
+   Violation between Minimum Annular Ring: (1.968mil < 3mil) Via (6392mil,1674mil) from Top Layer to Bottom Layer (Annular Ring=1.968mil) On (Top Layer)
+   Violation between Minimum Annular Ring: (1.968mil < 3mil) Via (6405.256mil,1141.744mil) from Top Layer to Bottom Layer (Annular Ring=1.968mil) On (Top Layer)
+   Violation between Minimum Annular Ring: (1.968mil < 3mil) Via (6412mil,1673mil) from Top Layer to Bottom Layer (Annular Ring=1.968mil) On (Top Layer)
+   Violation between Minimum Annular Ring: (1.968mil < 3mil) Via (6421.362mil,2147.882mil) from Top Layer to Bottom Layer (Annular Ring=1.968mil) On (Top Layer)
+   Violation between Minimum Annular Ring: (1.968mil < 3mil) Via (6427.331mil,1295.032mil) from Top Layer to Bottom Layer (Annular Ring=1.968mil) On (Top Layer)
+   Violation between Minimum Annular Ring: (1.968mil < 3mil) Via (6429mil,1313mil) from Top Layer to Bottom Layer (Annular Ring=1.968mil) On (Top Layer)
+   Violation between Minimum Annular Ring: (1.968mil < 3mil) Via (6429mil,1529mil) from Top Layer to Bottom Layer (Annular Ring=1.968mil) On (Top Layer)
+   Violation between Minimum Annular Ring: (1.968mil < 3mil) Via (6430mil,1142mil) from Top Layer to Bottom Layer (Annular Ring=1.968mil) On (Top Layer)
+   Violation between Minimum Annular Ring: (1.968mil < 3mil) Via (6436mil,1331mil) from Top Layer to Bottom Layer (Annular Ring=1.968mil) On (Top Layer)
+   Violation between Minimum Annular Ring: (1.968mil < 3mil) Via (6438.342mil,1269.591mil) from Top Layer to Bottom Layer (Annular Ring=1.968mil) On (Top Layer)
+   Violation between Minimum Annular Ring: (1.968mil < 3mil) Via (6461mil,1577mil) from Top Layer to Bottom Layer (Annular Ring=1.968mil) On (Top Layer)
+   Violation between Minimum Annular Ring: (1.968mil < 3mil) Via (6464mil,1161mil) from Top Layer to Bottom Layer (Annular Ring=1.968mil) On (Top Layer)
+   Violation between Minimum Annular Ring: (1.968mil < 3mil) Via (6470mil,2185mil) from Top Layer to Bottom Layer (Annular Ring=1.968mil) On (Top Layer)
+   Violation between Minimum Annular Ring: (1.968mil < 3mil) Via (6470mil,2185mil) from Top Layer to Bottom Layer (Annular Ring=1.968mil) On (Top Layer)
+   Violation between Minimum Annular Ring: (1.968mil < 3mil) Via (6509.842mil,2168.307mil) from Top Layer to Bottom Layer (Annular Ring=1.968mil) On (Top Layer)
+   Violation between Minimum Annular Ring: (1.968mil < 3mil) Via (6510mil,1296mil) from Top Layer to Bottom Layer (Annular Ring=1.968mil) On (Top Layer)
+   Violation between Minimum Annular Ring: (1.968mil < 3mil) Via (6529mil,1220mil) from Top Layer to Bottom Layer (Annular Ring=1.968mil) On (Top Layer)
+   Violation between Minimum Annular Ring: (1.968mil < 3mil) Via (6533mil,1450mil) from Top Layer to Bottom Layer (Annular Ring=1.968mil) On (Top Layer)
+   Violation between Minimum Annular Ring: (1.968mil < 3mil) Via (6552.938mil,1363.779mil) from Top Layer to Bottom Layer (Annular Ring=1.968mil) On (Top Layer)
+   Violation between Minimum Annular Ring: (1.968mil < 3mil) Via (6567.637mil,1352.826mil) from Top Layer to Bottom Layer (Annular Ring=1.968mil) On (Top Layer)
+   Violation between Minimum Annular Ring: (1.968mil < 3mil) Via (6570mil,2231mil) from Top Layer to Bottom Layer (Annular Ring=1.968mil) On (Top Layer)
+   Violation between Minimum Annular Ring: (1.968mil < 3mil) Via (6586mil,1746mil) from Top Layer to Bottom Layer (Annular Ring=1.968mil) On (Top Layer)
+   Violation between Minimum Annular Ring: (1.968mil < 3mil) Via (6588.213mil,1774.339mil) from Top Layer to Bottom Layer (Annular Ring=1.968mil) On (Top Layer)
+   Violation between Minimum Annular Ring: (1.968mil < 3mil) Via (6588.213mil,1794.024mil) from Top Layer to Bottom Layer (Annular Ring=1.968mil) On (Top Layer)
+   Violation between Minimum Annular Ring: (1.968mil < 3mil) Via (6604mil,1380mil) from Top Layer to Bottom Layer (Annular Ring=1.968mil) On (Top Layer)
+   Violation between Minimum Annular Ring: (1.968mil < 3mil) Via (6609.81mil,2010.89mil) from Top Layer to Bottom Layer (Annular Ring=1.968mil) On (Top Layer)
+   Violation between Minimum Annular Ring: (1.968mil < 3mil) Via (6610.236mil,1813.976mil) from Top Layer to Bottom Layer (Annular Ring=1.968mil) On (Top Layer)
+   Violation between Minimum Annular Ring: (1.968mil < 3mil) Via (6610mil,1833mil) from Top Layer to Bottom Layer (Annular Ring=1.968mil) On (Top Layer)
+   Violation between Minimum Annular Ring: (1.968mil < 3mil) Via (6610mil,1853mil) from Top Layer to Bottom Layer (Annular Ring=1.968mil) On (Top Layer)
+   Violation between Minimum Annular Ring: (1.968mil < 3mil) Via (6611.213mil,1893.189mil) from Top Layer to Bottom Layer (Annular Ring=1.968mil) On (Top Layer)
+   Violation between Minimum Annular Ring: (1.968mil < 3mil) Via (6611.213mil,1932.189mil) from Top Layer to Bottom Layer (Annular Ring=1.968mil) On (Top Layer)
+   Violation between Minimum Annular Ring: (1.968mil < 3mil) Via (6611.213mil,1971.189mil) from Top Layer to Bottom Layer (Annular Ring=1.968mil) On (Top Layer)
+   Violation between Minimum Annular Ring: (1.968mil < 3mil) Via (6611.213mil,2050.189mil) from Top Layer to Bottom Layer (Annular Ring=1.968mil) On (Top Layer)
+   Violation between Minimum Annular Ring: (1.968mil < 3mil) Via (6622.995mil,1590.827mil) from Top Layer to Bottom Layer (Annular Ring=1.968mil) On (Top Layer)
+   Violation between Minimum Annular Ring: (1.968mil < 3mil) Via (6622mil,1358mil) from Top Layer to Bottom Layer (Annular Ring=1.968mil) On (Top Layer)
+   Violation between Minimum Annular Ring: (1.968mil < 3mil) Via (6623.463mil,1608.537mil) from Top Layer to Bottom Layer (Annular Ring=1.968mil) On (Top Layer)
+   Violation between Minimum Annular Ring: (1.968mil < 3mil) Via (6624mil,1690mil) from Top Layer to Bottom Layer (Annular Ring=1.968mil) On (Top Layer)
+   Violation between Minimum Annular Ring: (1.968mil < 3mil) Via (6624mil,1719mil) from Top Layer to Bottom Layer (Annular Ring=1.968mil) On (Top Layer)
+   Violation between Minimum Annular Ring: (1.968mil < 3mil) Via (6624mil,1737mil) from Top Layer to Bottom Layer (Annular Ring=1.968mil) On (Top Layer)
+   Violation between Minimum Annular Ring: (1.968mil < 3mil) Via (6624mil,1755mil) from Top Layer to Bottom Layer (Annular Ring=1.968mil) On (Top Layer)
+   Violation between Minimum Annular Ring: (1.968mil < 3mil) Via (6636mil,1380mil) from Top Layer to Bottom Layer (Annular Ring=1.968mil) On (Top Layer)
+   Violation between Minimum Annular Ring: (1.968mil < 3mil) Via (6643.213mil,1868.189mil) from Top Layer to Bottom Layer (Annular Ring=1.968mil) On (Top Layer)
+   Violation between Minimum Annular Ring: (1.968mil < 3mil) Via (6643.213mil,1972.189mil) from Top Layer to Bottom Layer (Annular Ring=1.968mil) On (Top Layer)
+   Violation between Minimum Annular Ring: (1.968mil < 3mil) Via (6643.213mil,2075.189mil) from Top Layer to Bottom Layer (Annular Ring=1.968mil) On (Top Layer)
+   Violation between Minimum Annular Ring: (1.968mil < 3mil) Via (6655mil,1357mil) from Top Layer to Bottom Layer (Annular Ring=1.968mil) On (Top Layer)
+   Violation between Minimum Annular Ring: (1.968mil < 3mil) Via (6661mil,1550mil) from Top Layer to Bottom Layer (Annular Ring=1.968mil) On (Top Layer)
+   Violation between Minimum Annular Ring: (1.968mil < 3mil) Via (6670mil,1381mil) from Top Layer to Bottom Layer (Annular Ring=1.968mil) On (Top Layer)
+   Violation between Minimum Annular Ring: (1.968mil < 3mil) Via (6671mil,1532mil) from Top Layer to Bottom Layer (Annular Ring=1.968mil) On (Top Layer)
+   Violation between Minimum Annular Ring: (1.968mil < 3mil) Via (6689mil,1522mil) from Top Layer to Bottom Layer (Annular Ring=1.968mil) On (Top Layer)
+   Violation between Minimum Annular Ring: (1.968mil < 3mil) Via (6707.606mil,1514.958mil) from Top Layer to Bottom Layer (Annular Ring=1.968mil) On (Top Layer)
+   Violation between Minimum Annular Ring: (1.968mil < 3mil) Via (6707mil,1486mil) from Top Layer to Bottom Layer (Annular Ring=1.968mil) On (Top Layer)
+   Violation between Minimum Annular Ring: (1.968mil < 3mil) Via (6710.63mil,1855.515mil) from Top Layer to Bottom Layer (Annular Ring=1.968mil) On (Top Layer)
+   Violation between Minimum Annular Ring: (1.968mil < 3mil) Via (6737mil,1835mil) from Top Layer to Bottom Layer (Annular Ring=1.968mil) On (Top Layer)
+   Violation between Minimum Annular Ring: (1.968mil < 3mil) Via (6739mil,2232mil) from Top Layer to Bottom Layer (Annular Ring=1.968mil) On (Top Layer)
+   Violation between Minimum Annular Ring: (1.968mil < 3mil) Via (6758.425mil,2099.575mil) from Top Layer to Bottom Layer (Annular Ring=1.968mil) On (Top Layer)
+   Violation between Minimum Annular Ring: (1.968mil < 3mil) Via (6759mil,1832mil) from Top Layer to Bottom Layer (Annular Ring=1.968mil) On (Top Layer)
+   Violation between Minimum Annular Ring: (1.968mil < 3mil) Via (6780mil,1832mil) from Top Layer to Bottom Layer (Annular Ring=1.968mil) On (Top Layer)
+   Violation between Minimum Annular Ring: (1.968mil < 3mil) Via (6806mil,1831mil) from Top Layer to Bottom Layer (Annular Ring=1.968mil) On (Top Layer)
+   Violation between Minimum Annular Ring: (1.968mil < 3mil) Via (6807.164mil,1948.502mil) from Top Layer to Bottom Layer (Annular Ring=1.968mil) On (Top Layer)
+   Violation between Minimum Annular Ring: (1.968mil < 3mil) Via (6828mil,1831mil) from Top Layer to Bottom Layer (Annular Ring=1.968mil) On (Top Layer)
+   Violation between Minimum Annular Ring: (1.968mil < 3mil) Via (6831.693mil,1514.252mil) from Top Layer to Bottom Layer (Annular Ring=1.968mil) On (Top Layer)
+   Violation between Minimum Annular Ring: (1.968mil < 3mil) Via (6880.953mil,2187.945mil) from Top Layer to Bottom Layer (Annular Ring=1.968mil) On (Top Layer)
+   Violation between Minimum Annular Ring: (1.968mil < 3mil) Via (6898mil,1577mil) from Top Layer to Bottom Layer (Annular Ring=1.968mil) On (Top Layer)
+   Violation between Minimum Annular Ring: (1.968mil < 3mil) Via (6907.48mil,1689.961mil) from Top Layer to Bottom Layer (Annular Ring=1.968mil) On (Top Layer)
+   Violation between Minimum Annular Ring: (1.968mil < 3mil) Via (6907mil,2004mil) from Top Layer to Bottom Layer (Annular Ring=1.968mil) On (Top Layer)
+   Violation between Minimum Annular Ring: (1.968mil < 3mil) Via (6960.63mil,1537.402mil) from Top Layer to Bottom Layer (Annular Ring=1.968mil) On (Top Layer)
+   Violation between Minimum Annular Ring: (1.968mil < 3mil) Via (6985.236mil,1612.205mil) from Top Layer to Bottom Layer (Annular Ring=1.968mil) On (Top Layer)
+Rule Violations :118
+
+Processing Rule : Hole Size Constraint (Min=11.811mil) (Max=248.031mil) (All)
+   Violation between Hole Size Constraint: (5.906mil < 11.811mil) Via (5891mil,1601mil) from Top Layer to Bottom Layer Actual Hole Size = 5.906mil
+   Violation between Hole Size Constraint: (5.906mil < 11.811mil) Via (5891mil,1624mil) from Top Layer to Bottom Layer Actual Hole Size = 5.906mil
+   Violation between Hole Size Constraint: (5.906mil < 11.811mil) Via (5892mil,1523mil) from Top Layer to Bottom Layer Actual Hole Size = 5.906mil
+   Violation between Hole Size Constraint: (5.906mil < 11.811mil) Via (5892mil,1546mil) from Top Layer to Bottom Layer Actual Hole Size = 5.906mil
+   Violation between Hole Size Constraint: (5.906mil < 11.811mil) Via (5911mil,1601mil) from Top Layer to Bottom Layer Actual Hole Size = 5.906mil
+   Violation between Hole Size Constraint: (5.906mil < 11.811mil) Via (5911mil,1624mil) from Top Layer to Bottom Layer Actual Hole Size = 5.906mil
+   Violation between Hole Size Constraint: (5.906mil < 11.811mil) Via (5912mil,1523mil) from Top Layer to Bottom Layer Actual Hole Size = 5.906mil
+   Violation between Hole Size Constraint: (5.906mil < 11.811mil) Via (5912mil,1546mil) from Top Layer to Bottom Layer Actual Hole Size = 5.906mil
+   Violation between Hole Size Constraint: (5.906mil < 11.811mil) Via (5926mil,1579mil) from Top Layer to Bottom Layer Actual Hole Size = 5.906mil
+   Violation between Hole Size Constraint: (5.906mil < 11.811mil) Via (5964.891mil,1646.255mil) from Top Layer to Bottom Layer Actual Hole Size = 5.906mil
+   Violation between Hole Size Constraint: (5.906mil < 11.811mil) Via (5984.891mil,1646.255mil) from Top Layer to Bottom Layer Actual Hole Size = 5.906mil
+   Violation between Hole Size Constraint: (5.906mil < 11.811mil) Via (6014.891mil,1646.255mil) from Top Layer to Bottom Layer Actual Hole Size = 5.906mil
+   Violation between Hole Size Constraint: (5.906mil < 11.811mil) Via (6027mil,2085mil) from Top Layer to Bottom Layer Actual Hole Size = 5.906mil
+   Violation between Hole Size Constraint: (5.906mil < 11.811mil) Via (6027mil,2114mil) from Top Layer to Bottom Layer Actual Hole Size = 5.906mil
+   Violation between Hole Size Constraint: (5.906mil < 11.811mil) Via (6034.891mil,1646.255mil) from Top Layer to Bottom Layer Actual Hole Size = 5.906mil
+   Violation between Hole Size Constraint: (5.906mil < 11.811mil) Via (6054mil,2085mil) from Top Layer to Bottom Layer Actual Hole Size = 5.906mil
+   Violation between Hole Size Constraint: (5.906mil < 11.811mil) Via (6054mil,2113mil) from Top Layer to Bottom Layer Actual Hole Size = 5.906mil
+   Violation between Hole Size Constraint: (5.906mil < 11.811mil) Via (6071mil,2201mil) from Top Layer to Bottom Layer Actual Hole Size = 5.906mil
+   Violation between Hole Size Constraint: (5.906mil < 11.811mil) Via (6072mil,1526mil) from Top Layer to Bottom Layer Actual Hole Size = 5.906mil
+   Violation between Hole Size Constraint: (5.906mil < 11.811mil) Via (6078mil,1559mil) from Top Layer to Bottom Layer Actual Hole Size = 5.906mil
+   Violation between Hole Size Constraint: (5.906mil < 11.811mil) Via (6083mil,1541mil) from Top Layer to Bottom Layer Actual Hole Size = 5.906mil
+   Violation between Hole Size Constraint: (5.906mil < 11.811mil) Via (6096mil,1526mil) from Top Layer to Bottom Layer Actual Hole Size = 5.906mil
+   Violation between Hole Size Constraint: (5.906mil < 11.811mil) Via (6111mil,1540mil) from Top Layer to Bottom Layer Actual Hole Size = 5.906mil
+   Violation between Hole Size Constraint: (5.906mil < 11.811mil) Via (6130mil,1464mil) from Top Layer to Bottom Layer Actual Hole Size = 5.906mil
+   Violation between Hole Size Constraint: (5.906mil < 11.811mil) Via (6130mil,1492mil) from Top Layer to Bottom Layer Actual Hole Size = 5.906mil
+   Violation between Hole Size Constraint: (5.906mil < 11.811mil) Via (6163mil,1508mil) from Top Layer to Bottom Layer Actual Hole Size = 5.906mil
+   Violation between Hole Size Constraint: (5.906mil < 11.811mil) Via (6164mil,1437mil) from Top Layer to Bottom Layer Actual Hole Size = 5.906mil
+   Violation between Hole Size Constraint: (5.906mil < 11.811mil) Via (6193.898mil,1549.213mil) from Top Layer to Bottom Layer Actual Hole Size = 5.906mil
+   Violation between Hole Size Constraint: (5.906mil < 11.811mil) Via (6194.163mil,1588.806mil) from Top Layer to Bottom Layer Actual Hole Size = 5.906mil
+   Violation between Hole Size Constraint: (5.906mil < 11.811mil) Via (6202.524mil,1427.168mil) from Top Layer to Bottom Layer Actual Hole Size = 5.906mil
+   Violation between Hole Size Constraint: (5.906mil < 11.811mil) Via (6234.291mil,1395.4mil) from Top Layer to Bottom Layer Actual Hole Size = 5.906mil
+   Violation between Hole Size Constraint: (5.906mil < 11.811mil) Via (6261mil,1494mil) from Top Layer to Bottom Layer Actual Hole Size = 5.906mil
+   Violation between Hole Size Constraint: (5.906mil < 11.811mil) Via (6266mil,1325mil) from Top Layer to Bottom Layer Actual Hole Size = 5.906mil
+   Violation between Hole Size Constraint: (5.906mil < 11.811mil) Via (6283.795mil,1299mil) from Top Layer to Bottom Layer Actual Hole Size = 5.906mil
+   Violation between Hole Size Constraint: (5.906mil < 11.811mil) Via (6290.024mil,1642.189mil) from Top Layer to Bottom Layer Actual Hole Size = 5.906mil
+   Violation between Hole Size Constraint: (5.906mil < 11.811mil) Via (6304mil,1619mil) from Top Layer to Bottom Layer Actual Hole Size = 5.906mil
+   Violation between Hole Size Constraint: (5.906mil < 11.811mil) Via (6314.079mil,1671.921mil) from Top Layer to Bottom Layer Actual Hole Size = 5.906mil
+   Violation between Hole Size Constraint: (5.906mil < 11.811mil) Via (6322mil,1421mil) from Top Layer to Bottom Layer Actual Hole Size = 5.906mil
+   Violation between Hole Size Constraint: (5.906mil < 11.811mil) Via (6322mil,1444mil) from Top Layer to Bottom Layer Actual Hole Size = 5.906mil
+   Violation between Hole Size Constraint: (5.906mil < 11.811mil) Via (6322mil,1467mil) from Top Layer to Bottom Layer Actual Hole Size = 5.906mil
+   Violation between Hole Size Constraint: (5.906mil < 11.811mil) Via (6325mil,1619mil) from Top Layer to Bottom Layer Actual Hole Size = 5.906mil
+   Violation between Hole Size Constraint: (5.906mil < 11.811mil) Via (6340.512mil,1417.795mil) from Top Layer to Bottom Layer Actual Hole Size = 5.906mil
+   Violation between Hole Size Constraint: (5.906mil < 11.811mil) Via (6347.441mil,2250.984mil) from Top Layer to Bottom Layer Actual Hole Size = 5.906mil
+   Violation between Hole Size Constraint: (5.906mil < 11.811mil) Via (6351mil,1198mil) from Top Layer to Bottom Layer Actual Hole Size = 5.906mil
+   Violation between Hole Size Constraint: (5.906mil < 11.811mil) Via (6353mil,1673mil) from Top Layer to Bottom Layer Actual Hole Size = 5.906mil
+   Violation between Hole Size Constraint: (5.906mil < 11.811mil) Via (6356mil,1280mil) from Top Layer to Bottom Layer Actual Hole Size = 5.906mil
+   Violation between Hole Size Constraint: (5.906mil < 11.811mil) Via (6357mil,1431mil) from Top Layer to Bottom Layer Actual Hole Size = 5.906mil
+   Violation between Hole Size Constraint: (5.906mil < 11.811mil) Via (6357mil,1450mil) from Top Layer to Bottom Layer Actual Hole Size = 5.906mil
+   Violation between Hole Size Constraint: (5.906mil < 11.811mil) Via (6359mil,1321mil) from Top Layer to Bottom Layer Actual Hole Size = 5.906mil
+   Violation between Hole Size Constraint: (5.906mil < 11.811mil) Via (6372mil,1673mil) from Top Layer to Bottom Layer Actual Hole Size = 5.906mil
+   Violation between Hole Size Constraint: (5.906mil < 11.811mil) Via (6383mil,1142mil) from Top Layer to Bottom Layer Actual Hole Size = 5.906mil
+   Violation between Hole Size Constraint: (5.906mil < 11.811mil) Via (6392mil,1674mil) from Top Layer to Bottom Layer Actual Hole Size = 5.906mil
+   Violation between Hole Size Constraint: (5.906mil < 11.811mil) Via (6405.256mil,1141.744mil) from Top Layer to Bottom Layer Actual Hole Size = 5.906mil
+   Violation between Hole Size Constraint: (5.906mil < 11.811mil) Via (6412mil,1673mil) from Top Layer to Bottom Layer Actual Hole Size = 5.906mil
+   Violation between Hole Size Constraint: (5.906mil < 11.811mil) Via (6421.362mil,2147.882mil) from Top Layer to Bottom Layer Actual Hole Size = 5.906mil
+   Violation between Hole Size Constraint: (5.906mil < 11.811mil) Via (6427.331mil,1295.032mil) from Top Layer to Bottom Layer Actual Hole Size = 5.906mil
+   Violation between Hole Size Constraint: (5.906mil < 11.811mil) Via (6429mil,1313mil) from Top Layer to Bottom Layer Actual Hole Size = 5.906mil
+   Violation between Hole Size Constraint: (5.906mil < 11.811mil) Via (6429mil,1529mil) from Top Layer to Bottom Layer Actual Hole Size = 5.906mil
+   Violation between Hole Size Constraint: (5.906mil < 11.811mil) Via (6430mil,1142mil) from Top Layer to Bottom Layer Actual Hole Size = 5.906mil
+   Violation between Hole Size Constraint: (5.906mil < 11.811mil) Via (6436mil,1331mil) from Top Layer to Bottom Layer Actual Hole Size = 5.906mil
+   Violation between Hole Size Constraint: (5.906mil < 11.811mil) Via (6438.342mil,1269.591mil) from Top Layer to Bottom Layer Actual Hole Size = 5.906mil
+   Violation between Hole Size Constraint: (5.906mil < 11.811mil) Via (6461mil,1577mil) from Top Layer to Bottom Layer Actual Hole Size = 5.906mil
+   Violation between Hole Size Constraint: (5.906mil < 11.811mil) Via (6464mil,1161mil) from Top Layer to Bottom Layer Actual Hole Size = 5.906mil
+   Violation between Hole Size Constraint: (5.906mil < 11.811mil) Via (6470mil,2185mil) from Top Layer to Bottom Layer Actual Hole Size = 5.906mil
+   Violation between Hole Size Constraint: (5.906mil < 11.811mil) Via (6470mil,2185mil) from Top Layer to Bottom Layer Actual Hole Size = 5.906mil
+   Violation between Hole Size Constraint: (5.906mil < 11.811mil) Via (6509.842mil,2168.307mil) from Top Layer to Bottom Layer Actual Hole Size = 5.906mil
+   Violation between Hole Size Constraint: (5.906mil < 11.811mil) Via (6510mil,1296mil) from Top Layer to Bottom Layer Actual Hole Size = 5.906mil
+   Violation between Hole Size Constraint: (5.906mil < 11.811mil) Via (6529mil,1220mil) from Top Layer to Bottom Layer Actual Hole Size = 5.906mil
+   Violation between Hole Size Constraint: (5.906mil < 11.811mil) Via (6533mil,1450mil) from Top Layer to Bottom Layer Actual Hole Size = 5.906mil
+   Violation between Hole Size Constraint: (5.906mil < 11.811mil) Via (6552.938mil,1363.779mil) from Top Layer to Bottom Layer Actual Hole Size = 5.906mil
+   Violation between Hole Size Constraint: (5.906mil < 11.811mil) Via (6567.637mil,1352.826mil) from Top Layer to Bottom Layer Actual Hole Size = 5.906mil
+   Violation between Hole Size Constraint: (5.906mil < 11.811mil) Via (6570mil,2231mil) from Top Layer to Bottom Layer Actual Hole Size = 5.906mil
+   Violation between Hole Size Constraint: (5.906mil < 11.811mil) Via (6586mil,1746mil) from Top Layer to Bottom Layer Actual Hole Size = 5.906mil
+   Violation between Hole Size Constraint: (5.906mil < 11.811mil) Via (6588.213mil,1774.339mil) from Top Layer to Bottom Layer Actual Hole Size = 5.906mil
+   Violation between Hole Size Constraint: (5.906mil < 11.811mil) Via (6588.213mil,1794.024mil) from Top Layer to Bottom Layer Actual Hole Size = 5.906mil
+   Violation between Hole Size Constraint: (5.906mil < 11.811mil) Via (6604mil,1380mil) from Top Layer to Bottom Layer Actual Hole Size = 5.906mil
+   Violation between Hole Size Constraint: (5.906mil < 11.811mil) Via (6609.81mil,2010.89mil) from Top Layer to Bottom Layer Actual Hole Size = 5.906mil
+   Violation between Hole Size Constraint: (5.906mil < 11.811mil) Via (6610.236mil,1813.976mil) from Top Layer to Bottom Layer Actual Hole Size = 5.906mil
+   Violation between Hole Size Constraint: (5.906mil < 11.811mil) Via (6610mil,1833mil) from Top Layer to Bottom Layer Actual Hole Size = 5.906mil
+   Violation between Hole Size Constraint: (5.906mil < 11.811mil) Via (6610mil,1853mil) from Top Layer to Bottom Layer Actual Hole Size = 5.906mil
+   Violation between Hole Size Constraint: (5.906mil < 11.811mil) Via (6611.213mil,1893.189mil) from Top Layer to Bottom Layer Actual Hole Size = 5.906mil
+   Violation between Hole Size Constraint: (5.906mil < 11.811mil) Via (6611.213mil,1932.189mil) from Top Layer to Bottom Layer Actual Hole Size = 5.906mil
+   Violation between Hole Size Constraint: (5.906mil < 11.811mil) Via (6611.213mil,1971.189mil) from Top Layer to Bottom Layer Actual Hole Size = 5.906mil
+   Violation between Hole Size Constraint: (5.906mil < 11.811mil) Via (6611.213mil,2050.189mil) from Top Layer to Bottom Layer Actual Hole Size = 5.906mil
+   Violation between Hole Size Constraint: (5.906mil < 11.811mil) Via (6622.995mil,1590.827mil) from Top Layer to Bottom Layer Actual Hole Size = 5.906mil
+   Violation between Hole Size Constraint: (5.906mil < 11.811mil) Via (6622mil,1358mil) from Top Layer to Bottom Layer Actual Hole Size = 5.906mil
+   Violation between Hole Size Constraint: (5.906mil < 11.811mil) Via (6623.463mil,1608.537mil) from Top Layer to Bottom Layer Actual Hole Size = 5.906mil
+   Violation between Hole Size Constraint: (5.906mil < 11.811mil) Via (6624mil,1690mil) from Top Layer to Bottom Layer Actual Hole Size = 5.906mil
+   Violation between Hole Size Constraint: (5.906mil < 11.811mil) Via (6624mil,1719mil) from Top Layer to Bottom Layer Actual Hole Size = 5.906mil
+   Violation between Hole Size Constraint: (5.906mil < 11.811mil) Via (6624mil,1737mil) from Top Layer to Bottom Layer Actual Hole Size = 5.906mil
+   Violation between Hole Size Constraint: (5.906mil < 11.811mil) Via (6624mil,1755mil) from Top Layer to Bottom Layer Actual Hole Size = 5.906mil
+   Violation between Hole Size Constraint: (5.906mil < 11.811mil) Via (6636mil,1380mil) from Top Layer to Bottom Layer Actual Hole Size = 5.906mil
+   Violation between Hole Size Constraint: (5.906mil < 11.811mil) Via (6643.213mil,1868.189mil) from Top Layer to Bottom Layer Actual Hole Size = 5.906mil
+   Violation between Hole Size Constraint: (5.906mil < 11.811mil) Via (6643.213mil,1972.189mil) from Top Layer to Bottom Layer Actual Hole Size = 5.906mil
+   Violation between Hole Size Constraint: (5.906mil < 11.811mil) Via (6643.213mil,2075.189mil) from Top Layer to Bottom Layer Actual Hole Size = 5.906mil
+   Violation between Hole Size Constraint: (5.906mil < 11.811mil) Via (6655mil,1357mil) from Top Layer to Bottom Layer Actual Hole Size = 5.906mil
+   Violation between Hole Size Constraint: (5.906mil < 11.811mil) Via (6661mil,1550mil) from Top Layer to Bottom Layer Actual Hole Size = 5.906mil
+   Violation between Hole Size Constraint: (5.906mil < 11.811mil) Via (6670mil,1381mil) from Top Layer to Bottom Layer Actual Hole Size = 5.906mil
+   Violation between Hole Size Constraint: (5.906mil < 11.811mil) Via (6671mil,1532mil) from Top Layer to Bottom Layer Actual Hole Size = 5.906mil
+   Violation between Hole Size Constraint: (5.906mil < 11.811mil) Via (6689mil,1522mil) from Top Layer to Bottom Layer Actual Hole Size = 5.906mil
+   Violation between Hole Size Constraint: (5.906mil < 11.811mil) Via (6707.606mil,1514.958mil) from Top Layer to Bottom Layer Actual Hole Size = 5.906mil
+   Violation between Hole Size Constraint: (5.906mil < 11.811mil) Via (6707mil,1486mil) from Top Layer to Bottom Layer Actual Hole Size = 5.906mil
+   Violation between Hole Size Constraint: (5.906mil < 11.811mil) Via (6710.63mil,1855.515mil) from Top Layer to Bottom Layer Actual Hole Size = 5.906mil
+   Violation between Hole Size Constraint: (5.906mil < 11.811mil) Via (6737mil,1835mil) from Top Layer to Bottom Layer Actual Hole Size = 5.906mil
+   Violation between Hole Size Constraint: (5.906mil < 11.811mil) Via (6739mil,2232mil) from Top Layer to Bottom Layer Actual Hole Size = 5.906mil
+   Violation between Hole Size Constraint: (5.906mil < 11.811mil) Via (6758.425mil,2099.575mil) from Top Layer to Bottom Layer Actual Hole Size = 5.906mil
+   Violation between Hole Size Constraint: (5.906mil < 11.811mil) Via (6759mil,1832mil) from Top Layer to Bottom Layer Actual Hole Size = 5.906mil
+   Violation between Hole Size Constraint: (5.906mil < 11.811mil) Via (6780mil,1832mil) from Top Layer to Bottom Layer Actual Hole Size = 5.906mil
+   Violation between Hole Size Constraint: (5.906mil < 11.811mil) Via (6806mil,1831mil) from Top Layer to Bottom Layer Actual Hole Size = 5.906mil
+   Violation between Hole Size Constraint: (5.906mil < 11.811mil) Via (6807.164mil,1948.502mil) from Top Layer to Bottom Layer Actual Hole Size = 5.906mil
+   Violation between Hole Size Constraint: (5.906mil < 11.811mil) Via (6828mil,1831mil) from Top Layer to Bottom Layer Actual Hole Size = 5.906mil
+   Violation between Hole Size Constraint: (5.906mil < 11.811mil) Via (6831.693mil,1514.252mil) from Top Layer to Bottom Layer Actual Hole Size = 5.906mil
+   Violation between Hole Size Constraint: (5.906mil < 11.811mil) Via (6880.953mil,2187.945mil) from Top Layer to Bottom Layer Actual Hole Size = 5.906mil
+   Violation between Hole Size Constraint: (5.906mil < 11.811mil) Via (6898mil,1577mil) from Top Layer to Bottom Layer Actual Hole Size = 5.906mil
+   Violation between Hole Size Constraint: (5.906mil < 11.811mil) Via (6907.48mil,1689.961mil) from Top Layer to Bottom Layer Actual Hole Size = 5.906mil
+   Violation between Hole Size Constraint: (5.906mil < 11.811mil) Via (6907mil,2004mil) from Top Layer to Bottom Layer Actual Hole Size = 5.906mil
+   Violation between Hole Size Constraint: (5.906mil < 11.811mil) Via (6960.63mil,1537.402mil) from Top Layer to Bottom Layer Actual Hole Size = 5.906mil
+   Violation between Hole Size Constraint: (5.906mil < 11.811mil) Via (6985.236mil,1612.205mil) from Top Layer to Bottom Layer Actual Hole Size = 5.906mil
+Rule Violations :118
+
+Processing Rule : Hole To Hole Clearance (Gap=9.842mil) (All),(All)
+   Violation between Hole To Hole Clearance Constraint: (Collision < 9.842mil) Between Via (6470mil,2185mil) from Top Layer to Bottom Layer And Via (6470mil,2185mil) from Top Layer to Bottom Layer Pad/Via Touching Holes
+Rule Violations :1
+
+Processing Rule : Minimum Solder Mask Sliver (Gap=0mil) (All),(All)
+Rule Violations :0
+
+Processing Rule : Silk To Solder Mask (Clearance=5mil) (IsPad),(All)
+   Violation between Silk To Solder Mask Clearance Constraint: (3.937mil < 5mil) Between Arc (6040.724mil,1377.724mil) on Top Overlay And Pad J4-1(6046.63mil,1300.953mil) on Top Layer [Top Overlay] to [Top Solder] clearance [3.937mil]
+   Violation between Silk To Solder Mask Clearance Constraint: (3.937mil < 5mil) Between Arc (6150.63mil,1396mil) on Top Overlay And Pad F2-1(6170.315mil,1396mil) on Top Layer [Top Overlay] to [Top Solder] clearance [3.937mil]
+   Violation between Silk To Solder Mask Clearance Constraint: (Collision < 5mil) Between Arc (6289.795mil,1455.653mil) on Top Overlay And Pad C45-1(6291.189mil,1462mil) on Top Layer [Top Overlay] to [Top Solder] clearance [0mil]
+   Violation between Silk To Solder Mask Clearance Constraint: (3.937mil < 5mil) Between Arc (6634.37mil,1324mil) on Top Overlay And Pad F1-1(6614.685mil,1324mil) on Top Layer [Top Overlay] to [Top Solder] clearance [3.937mil]
+   Violation between Silk To Solder Mask Clearance Constraint: (3.937mil < 5mil) Between Pad F1-1(6614.685mil,1324mil) on Top Layer And Track (6595mil,1318.094mil)(6595mil,1329.906mil) on Top Overlay [Top Overlay] to [Top Solder] clearance [3.937mil]
+   Violation between Silk To Solder Mask Clearance Constraint: (3.937mil < 5mil) Between Pad F1-2(6575.315mil,1324mil) on Top Layer And Track (6595mil,1318.094mil)(6595mil,1329.906mil) on Top Overlay [Top Overlay] to [Top Solder] clearance [3.937mil]
+   Violation between Silk To Solder Mask Clearance Constraint: (3.937mil < 5mil) Between Pad F2-1(6170.315mil,1396mil) on Top Layer And Track (6190mil,1390.094mil)(6190mil,1401.906mil) on Top Overlay [Top Overlay] to [Top Solder] clearance [3.937mil]
+   Violation between Silk To Solder Mask Clearance Constraint: (3.937mil < 5mil) Between Pad F2-2(6209.685mil,1396mil) on Top Layer And Track (6190mil,1390.094mil)(6190mil,1401.906mil) on Top Overlay [Top Overlay] to [Top Solder] clearance [3.937mil]
+   Violation between Silk To Solder Mask Clearance Constraint: (3.957mil < 5mil) Between Pad FB1-1(6983.071mil,1664.583mil) on Top Layer And Track (6979.134mil,1654.228mil)(6987.008mil,1654.228mil) on Top Overlay [Top Overlay] to [Top Solder] clearance [3.957mil]
+   Violation between Silk To Solder Mask Clearance Constraint: (3.957mil < 5mil) Between Pad FB1-2(6983.071mil,1643.874mil) on Top Layer And Track (6979.134mil,1654.228mil)(6987.008mil,1654.228mil) on Top Overlay [Top Overlay] to [Top Solder] clearance [3.957mil]
+   Violation between Silk To Solder Mask Clearance Constraint: (3.937mil < 5mil) Between Pad L1-1(6581.693mil,1506.89mil) on Top Layer And Track (6565.945mil,1474.409mil)(6565.945mil,1490.158mil) on Top Overlay [Top Overlay] to [Top Solder] clearance [3.937mil]
+   Violation between Silk To Solder Mask Clearance Constraint: (3.937mil < 5mil) Between Pad L1-1(6581.693mil,1506.89mil) on Top Layer And Track (6597.441mil,1474.409mil)(6597.441mil,1490.158mil) on Top Overlay [Top Overlay] to [Top Solder] clearance [3.937mil]
+   Violation between Silk To Solder Mask Clearance Constraint: (3.937mil < 5mil) Between Pad L1-2(6581.693mil,1457.677mil) on Top Layer And Track (6565.945mil,1474.409mil)(6565.945mil,1490.158mil) on Top Overlay [Top Overlay] to [Top Solder] clearance [3.937mil]
+   Violation between Silk To Solder Mask Clearance Constraint: (3.937mil < 5mil) Between Pad L1-2(6581.693mil,1457.677mil) on Top Layer And Track (6597.441mil,1474.409mil)(6597.441mil,1490.158mil) on Top Overlay [Top Overlay] to [Top Solder] clearance [3.937mil]
+Rule Violations :14
+
+Processing Rule : Silk to Silk (Clearance=0mil) (All),(All)
+Rule Violations :0
+
+Processing Rule : Net Antennae (Tolerance=0mil) (All)
+   Violation between Net Antennae: Track (6084.401mil,2169.284mil)(6443.395mil,1810.29mil) on Top Layer 
+   Violation between Net Antennae: Track (6089.786mil,2182.284mil)(6447.439mil,1824.63mil) on Top Layer 
+   Violation between Net Antennae: Track (6169.19mil,2009.81mil)(6396mil,1783mil) on Top Layer 
+   Violation between Net Antennae: Track (6172.505mil,2029.495mil)(6410mil,1792mil) on Top Layer 
+   Violation between Net Antennae: Track (6178.071mil,2049.929mil)(6425mil,1803mil) on Top Layer 
+   Violation between Net Antennae: Track (6182.218mil,1931.819mil)(6353.518mil,1760.518mil) on Top Layer 
+   Violation between Net Antennae: Track (6184.187mil,1951.504mil)(6368.846mil,1766.845mil) on Top Layer 
+   Violation between Net Antennae: Track (6186.157mil,1971.189mil)(6382.173mil,1775.173mil) on Top Layer 
+   Violation between Net Antennae: Track (6205.154mil,2109.846mil)(6468.867mil,1846.133mil) on Top Layer 
+   Violation between Net Antennae: Track (6219.618mil,1872.764mil)(6338.191mil,1754.191mil) on Top Layer 
+   Violation between Net Antennae: Track (6276.704mil,1794.024mil)(6320.864mil,1749.864mil) on Top Layer 
+   Violation between Net Antennae: Track (6463mil,1833mil)(6474.358mil,1833mil) on Top Layer 
+   Violation between Net Antennae: Via (6071mil,2201mil) from Top Layer to Bottom Layer 
+   Violation between Net Antennae: Via (6164mil,1437mil) from Top Layer to Bottom Layer 
+   Violation between Net Antennae: Via (6202.524mil,1427.168mil) from Top Layer to Bottom Layer 
+   Violation between Net Antennae: Via (6234.291mil,1395.4mil) from Top Layer to Bottom Layer 
+   Violation between Net Antennae: Via (6261mil,1494mil) from Top Layer to Bottom Layer 
+   Violation between Net Antennae: Via (6290.024mil,1642.189mil) from Top Layer to Bottom Layer 
+   Violation between Net Antennae: Via (6340.512mil,1417.795mil) from Top Layer to Bottom Layer 
+   Violation between Net Antennae: Via (6347.441mil,2250.984mil) from Top Layer to Bottom Layer 
+   Violation between Net Antennae: Via (6357mil,1431mil) from Top Layer to Bottom Layer 
+   Violation between Net Antennae: Via (6357mil,1450mil) from Top Layer to Bottom Layer 
+   Violation between Net Antennae: Via (6359mil,1321mil) from Top Layer to Bottom Layer 
+   Violation between Net Antennae: Via (6372mil,1673mil) from Top Layer to Bottom Layer 
+   Violation between Net Antennae: Via (6392mil,1674mil) from Top Layer to Bottom Layer 
+   Violation between Net Antennae: Via (6464mil,1161mil) from Top Layer to Bottom Layer 
+   Violation between Net Antennae: Via (6510mil,1296mil) from Top Layer to Bottom Layer 
+   Violation between Net Antennae: Via (6529mil,1220mil) from Top Layer to Bottom Layer 
+   Violation between Net Antennae: Via (6533mil,1450mil) from Top Layer to Bottom Layer 
+   Violation between Net Antennae: Via (6604mil,1380mil) from Top Layer to Bottom Layer 
+   Violation between Net Antennae: Via (6622mil,1358mil) from Top Layer to Bottom Layer 
+   Violation between Net Antennae: Via (6624mil,1690mil) from Top Layer to Bottom Layer 
+   Violation between Net Antennae: Via (6624mil,1719mil) from Top Layer to Bottom Layer 
+   Violation between Net Antennae: Via (6624mil,1737mil) from Top Layer to Bottom Layer 
+   Violation between Net Antennae: Via (6636mil,1380mil) from Top Layer to Bottom Layer 
+   Violation between Net Antennae: Via (6655mil,1357mil) from Top Layer to Bottom Layer 
+   Violation between Net Antennae: Via (6670mil,1381mil) from Top Layer to Bottom Layer 
+   Violation between Net Antennae: Via (6707mil,1486mil) from Top Layer to Bottom Layer 
+   Violation between Net Antennae: Via (6737mil,1835mil) from Top Layer to Bottom Layer 
+   Violation between Net Antennae: Via (6807.164mil,1948.502mil) from Top Layer to Bottom Layer 
+Rule Violations :40
+
+Processing Rule : Board Clearance Constraint (Gap=0mil) (All)
+   Violation between Board Outline Clearance(Outline Edge): (Collision < 7.874mil) Between Arc (5994.512mil,2263.819mil) on Top Overlay And Board Edge 
+   Violation between Board Outline Clearance(Outline Edge): (Collision < 7.874mil) Between Arc (7011.024mil,1966.535mil) on Top Overlay And Board Edge 
+   Violation between Board Outline Clearance(Outline Edge): (Collision < 7.874mil) Between Arc (7011.024mil,1966.535mil) on Top Overlay And Board Edge 
+   Violation between Board Outline Clearance(Outline Edge): (5.512mil < 7.874mil) Between Board Edge And Pad C13-1(6308.268mil,2226.378mil) on Top Layer 
+   Violation between Board Outline Clearance(Outline Edge): (5.512mil < 7.874mil) Between Board Edge And Pad C13-2(6242.913mil,2226.378mil) on Top Layer 
+   Violation between Board Outline Clearance(Outline Edge): (7.662mil < 7.874mil) Between Board Edge And Pad J4-MP1(5954.11mil,1074.575mil) on Top Layer 
+   Violation between Board Outline Clearance(Outline Edge): (7.725mil < 7.874mil) Between Board Edge And Pad J4-MP2(6217.89mil,1074.575mil) on Top Layer 
+   Violation between Board Outline Clearance(Outline Edge): (Collision < 7.874mil) Between Board Edge And Track (6448.819mil,962.008mil)(6448.819mil,1013.189mil) on Top Overlay 
+   Violation between Board Outline Clearance(Outline Edge): (Collision < 7.874mil) Between Board Edge And Track (6448.819mil,962.008mil)(6496.063mil,962.008mil) on Top Overlay 
+   Violation between Board Outline Clearance(Outline Edge): (Collision < 7.874mil) Between Board Edge And Track (6496.063mil,962.008mil)(6496.063mil,1013.189mil) on Top Overlay 
+   Violation between Board Outline Clearance(Outline Edge): (7.234mil < 7.874mil) Between Board Edge And Track (6800.394mil,1885.827mil)(6989.37mil,1885.827mil) on Top Overlay 
+   Violation between Board Outline Clearance(Outline Edge): (7.234mil < 7.874mil) Between Board Edge And Track (6808.268mil,2224.409mil)(6989.37mil,2224.409mil) on Top Overlay 
+   Violation between Board Outline Clearance(Outline Edge): (7.234mil < 7.874mil) Between Board Edge And Track (6950mil,1944.882mil)(6989.37mil,1944.882mil) on Top Overlay 
+   Violation between Board Outline Clearance(Outline Edge): (7.234mil < 7.874mil) Between Board Edge And Track (6950mil,2165.354mil)(6989.37mil,2165.354mil) on Top Overlay 
+   Violation between Board Outline Clearance(Outline Edge): (7.234mil < 7.874mil) Between Board Edge And Track (6989.37mil,1885.827mil)(6989.37mil,1944.882mil) on Top Overlay 
+   Violation between Board Outline Clearance(Outline Edge): (7.234mil < 7.874mil) Between Board Edge And Track (6989.37mil,2165.354mil)(6989.37mil,2224.409mil) on Top Overlay 
+   Violation between Board Outline Clearance(Outline Edge): (4.922mil < 7.874mil) Between Board Edge And Via (6347.441mil,2250.984mil) from Top Layer to Bottom Layer 
+Rule Violations :17
+
+Processing Rule : Matched Lengths(Tolerance=1000mil) (InDifferentialPair ('D'))
+Rule Violations :0
+
+Processing Rule : Height Constraint (Min=0mil) (Max=71497.938mil) (Prefered=500mil) (All)
+Rule Violations :0
+
+
+Violations Detected : 493
+Waived Violations : 0
+Time Elapsed        : 00:00:01

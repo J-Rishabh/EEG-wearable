@@ -1,0 +1,16 @@
+Output: Gerber Files
+Type  : Gerber
+From  : Variant [[No Variations]] of Project [EEG_Mainboard.PrjPcb]
+   Generated File[backup.GTL]
+   Generated File[backup.G1]
+   Generated File[backup.G2]
+   Generated File[backup.GBL]
+   Generated File[backup.GM]
+   Generated File[backup.EXTREP]
+   Generated File[backup.REP]
+
+
+Files Generated   : 7
+Documents Printed : 0
+
+Finished Output Generation At 3:23:29 PM On 4/13/2026

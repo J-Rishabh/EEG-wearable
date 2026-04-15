@@ -1,0 +1,5 @@
+Removed Pin From Net: NetName=GND Pin=J1-
+Removed Pin From Net: NetName=GND Pin=J1-
+Change Component Footprint: Designator=J1 Old Footprint=10FHHSM1GANTFLFSN New Footprint=10FHH-SM1-GAN-TF FPC
+Change Component Comment : Designator=J1 Old Comment=10FHH-SM1-GAN-TF_LF__SN_ New Comment=10FHH-SM1-GAN-TF FPC
+Change component parameters: Designator = "J1" ("J1"); Footprint = "10FHHSM1GANTFLFSN"; UniqueID = "\AKZOPLEZ" ("\AKZOPLEZ")

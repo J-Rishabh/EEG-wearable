@@ -52,6 +52,7 @@ Usage
 import asyncio
 import struct
 import threading
+import time
 import numpy as np
 
 # ── Wire constants ─────────────────────────────────────────────────────────────
@@ -217,6 +218,7 @@ class BleEEGClient:
     # ── Notification handlers ──────────────────────────────────────────────────
 
     def _notify_eeg(self, sender, data: bytearray):
+        t_pkt = time.time()   # wall-clock arrival time of this BLE notification
         self._first_pkt_flag = True
         self._pkt_count += 1
         n = self._pkt_count
@@ -246,7 +248,7 @@ class BleEEGClient:
         self._last_idx = idx
 
         if self.sample_callback:
-            self.sample_callback(uv, gains, rails)
+            self.sample_callback(uv, gains, rails, t_pkt)
 
     def _notify_imu(self, sender, data: bytearray):
         if len(data) < 8:
@@ -256,18 +258,24 @@ class BleEEGClient:
             self.imu_callback(x, y, z, t)
 
     def _notify_status(self, sender, data: bytearray):
-        """Parse the 4-byte Device Status characteristic packet from firmware."""
+        """Parse the Device Status characteristic packet from firmware.
+        5-byte format: [vbat_lo, vbat_hi, pct, flags, rssi_int8]
+        Byte 4 (rssi) is optional for backward compatibility with old firmware.
+        """
         if len(data) < 4:
             return
         vbat_mv  = struct.unpack_from("<H", data, 0)[0]
         pct      = data[2]
         flags    = data[3]
+        # rssi: int8 cast from uint8; 127 = unavailable sentinel
+        rssi = struct.unpack_from("b", data, 4)[0] if len(data) >= 5 else 127
         if self.pmic_callback:
             self.pmic_callback(
                 vbat_mv,
                 pct,
                 bool(flags & 0x01),   # charging
                 bool(flags & 0x02),   # error
+                rssi,
             )
 
     # ── GATT write helpers (must be called from BLE loop) ─────────────────────
@@ -310,17 +318,34 @@ class BleEEGClient:
         # Store loop so send_* methods can post coroutines from the Qt thread
         self._loop = asyncio.get_event_loop()
 
-        self._log(f"[BLE] Scanning for '{DEVICE_NAME}' …")
-        dev = await BleakScanner.find_device_by_name(DEVICE_NAME, timeout=20.0)
-        if dev is None:
-            self._log("[BLE] Not found.")
-            return
+        # Initial scan — keep retrying until found (or stopped).
+        dev = None
+        while dev is None:
+            if self._stop:
+                return
+            self._log(f"[BLE] Scanning for '{DEVICE_NAME}' …")
+            dev = await BleakScanner.find_device_by_name(DEVICE_NAME, timeout=10.0)
+            if dev is None:
+                self._log("[BLE] Not found — retrying scan")
 
-        self._log(f"[BLE] Connecting to {dev.address} …")
+        self._log(f"[BLE] Found {dev.address} — connecting")
 
-        for conn_attempt in range(20):
+        conn_attempt = 0
+        while True:
             if self._stop:
                 break
+
+            # Rescan every 5 failures — Windows BLE cache can go stale after
+            # rapid connect/disconnect cycles, making the device "invisible"
+            # even though it's advertising.  A fresh scan refreshes the reference.
+            if conn_attempt > 0 and conn_attempt % 5 == 0:
+                self._log(f"[BLE] Rescanning after {conn_attempt} failures …")
+                found = await BleakScanner.find_device_by_name(DEVICE_NAME, timeout=10.0)
+                if found is not None:
+                    dev = found
+                    self._log(f"[BLE] Refreshed device reference: {dev.address}")
+                else:
+                    self._log("[BLE] Rescan found nothing — retrying with cached address")
 
             # Reset data-arrival flag for this connection attempt
             self._first_pkt_flag = False
@@ -431,9 +456,10 @@ class BleEEGClient:
             except Exception as e:
                 self._client   = None
                 self.connected = False
-                self._log(f"[BLE] conn {conn_attempt+1}/20 exception: {e}")
+                self._log(f"[BLE] conn {conn_attempt+1} exception: {e}")
 
             await asyncio.sleep(0.5)
+            conn_attempt += 1
 
         self._client   = None
         self.connected = False

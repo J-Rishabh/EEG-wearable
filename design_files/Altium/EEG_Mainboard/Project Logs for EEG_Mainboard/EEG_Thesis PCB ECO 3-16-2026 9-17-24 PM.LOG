@@ -1,0 +1,96 @@
+Added Component: Designator=U1(nRF54L15 CUSTOM)
+Add component (AddParameter): Name = "Artikkelnr Noca"; Value = "N.A."; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Assembly"; Value = ""; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Author"; Value = "stl1"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Component Class"; Value = "Nordic_Devices"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Component Status"; Value = "Active"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "ComponentLink1Description"; Value = "Datasheet"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "ComponentLink1URL"; Value = "N.A."; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "ComponentLink2Description"; Value = "Supplier link"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "ComponentLink2URL"; Value = "N.A."; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Footprint Doc"; Value = "QFN-48"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "HelpURL"; Value = "N.A."; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "LatestRevisionDate"; Value = "2025-01-30"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Manufacturer"; Value = "Nordic Semiconductor"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Manufacturer Part Number"; Value = "nRF54L15-QFAAC00"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Note"; Value = "N.A."; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Pad Count"; Value = "49"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Part Number"; Value = "nRF54L15-QFAAC00"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Part number IPS"; Value = "N.A."; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Part number NEMS"; Value = "102000382"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Part number Norautron"; Value = "N.A."; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "PartId"; Value = "102000382"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Published"; Value = "2025-01-30"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Supplier 1"; Value = "Nordic Semiconductor"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Supplier 2"; Value = "N.A."; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Supplier Part Number 1"; Value = "nRF54L15-QFAAC00"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Supplier Part Number 2"; Value = "N.A."; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Value"; Value = "nRF54L15-QFAA"; VariantName = "[No Variations]"
+Add Pin To Net: Unknown Pin: Pin TP1-1
+Add Pin To Net: Unknown Pin: Pin TP2-1
+Add Pin To Net: Unknown Pin: Pin TP3-1
+Add Pin To Net: Unknown Pin: Pin TP4-1
+Add Pin To Net: Unknown Pin: Pin TP5-1
+Add Pin To Net: Unknown Pin: Pin TP6-1
+Add Pin To Net: Unknown Pin: Pin TP7-1
+Add Pin To Net: Unknown Pin: Pin TP8-1
+Add Pin To Net: Unknown Pin: Pin TP9-1
+Add Pin To Net: Unknown Pin: Pin TP10-1
+Add Pin To Net: Unknown Pin: Pin TP11-1
+Add Pin To Net: Unknown Pin: Pin TP12-1
+Add Pin To Net: Unknown Pin: Pin TP13-1
+Add Pin To Net: Unknown Pin: Pin TP14-1
+Add Pin To Net: Unknown Pin: Pin TP15-1
+Add Pin To Net: Unknown Pin: Pin TP16-1
+Add Pin To Net: Unknown Pin: Pin TP17-1
+Add Pin To Net: Unknown Pin: Pin TP?-1
+Add Pin To Net: Unknown Pin: Pin TP?-1
+Add Pin To Net: Unknown Pin: Pin TP?-1
+Add Pin To Net: Unknown Pin: Pin TP?-1
+Add Pin To Net: Unknown Pin: Pin TP?-1
+Add Pin To Net: Unknown Pin: Pin TP?-1
+Add Pin To Net: Unknown Pin: Pin TP?-1
+Added Pin To Net: NetName=NRF_IMU_SDA Pin=U1-3
+Added Pin To Net: NetName=NRF_IMU_SCL Pin=U1-4
+Added Pin To Net: NetName=NRF_UART_TX Pin=U1-6
+Added Pin To Net: NetName=NRF_UART_RX Pin=U1-7
+Added Pin To Net: NetName=NRF_ADS_START Pin=U1-9
+Added Pin To Net: NetName=+1.8V Pin=U1-10
+Added Pin To Net: NetName=NRF_ADS_SCLK Pin=U1-12
+Added Pin To Net: NetName=NRF_ADS_DIN Pin=U1-13
+Added Pin To Net: NetName=NRF_ADS_DOUT Pin=U1-15
+Added Pin To Net: NetName=NRF_ADS_CS Pin=U1-16
+Added Pin To Net: NetName=SWO Pin=U1-18
+Added Pin To Net: NetName=+1.8V Pin=U1-22
+Added Pin To Net: NetName=NRF_IMU_INT1 Pin=U1-23
+Added Pin To Net: NetName=NRF_IMU_INT2 Pin=U1-24
+Added Pin To Net: NetName=SWDIO Pin=U1-25
+Added Pin To Net: NetName=SWDCLK Pin=U1-26
+Added Pin To Net: NetName=NRF_PMIC_ERR Pin=U1-27
+Added Pin To Net: NetName=NRF_PMIC_CHG Pin=U1-28
+Added Pin To Net: NetName=NetC31_2 Pin=U1-30
+Added Pin To Net: NetName=NetL3_1 Pin=U1-31
+Added Pin To Net: NetName=GND Pin=U1-32
+Added Pin To Net: NetName=DECA Pin=U1-33
+Added Pin To Net: NetName=XC1 Pin=U1-34
+Added Pin To Net: NetName=XC2 Pin=U1-35
+Added Pin To Net: NetName=+1.8V Pin=U1-36
+Added Pin To Net: NetName=NRF_ADS_DRDY Pin=U1-37
+Added Pin To Net: NetName=NRF_ADS_PWDN Pin=U1-38
+Added Pin To Net: NetName=NRF_ADS_RESET Pin=U1-39
+Added Pin To Net: NetName=NRF_VBAT Pin=U1-41
+Added Pin To Net: NetName=NRF_LED_PWM Pin=U1-42
+Added Pin To Net: NetName=DECA Pin=U1-43
+Added Pin To Net: NetName=GND Pin=U1-44
+Added Pin To Net: NetName=DECD Pin=U1-45
+Added Pin To Net: NetName=DCC Pin=U1-46
+Added Pin To Net: NetName=+1.8V Pin=U1-47
+Added Pin To Net: NetName=+1.8V Pin=U1-48
+Added Pin To Net: NetName=GND Pin=U1-49
+Added Member To Class: ClassName=EEG_Thesis Member=Component TP? TP
+Added Member To Class: ClassName=EEG_Thesis Member=Component TP? TP
+Added Member To Class: ClassName=EEG_Thesis Member=Component TP? TP
+Added Member To Class: ClassName=EEG_Thesis Member=Component TP? TP
+Added Member To Class: ClassName=EEG_Thesis Member=Component TP? TP
+Added Member To Class: ClassName=EEG_Thesis Member=Component TP? TP
+Added Member To Class: ClassName=EEG_Thesis Member=Component U1 nRF54L15-QFAA

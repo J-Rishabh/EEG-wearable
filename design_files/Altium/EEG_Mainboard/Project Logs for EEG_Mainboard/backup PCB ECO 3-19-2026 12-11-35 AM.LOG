@@ -1,0 +1,4 @@
+Added Pin To Net: NetName=NRF_ADS_DIN Pin=TP5-1
+Added Pin To Net: NetName=NRF_ADS_PWDN Pin=U1-14
+Added Pin To Net: NetName=NRF_ADS_RESET Pin=U1-15
+Added Member To Class: ClassName=EEG_Thesis Member=Component TP5 TP

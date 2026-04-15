@@ -1,0 +1,1962 @@
+UNITS=MM
+#
+#Component attribute names
+#
+@0 .comp_mount_type
+@1 .comp_height
+@2 .no_pop
+@3 .comp_ignore
+@4 .comp_variant_list
+
+#
+#Component attribute text strings
+#
+
+# CMP 0
+CMP 32 168.6814 29.972 90 N J2 TC2030-MCP ;0=2,1=0.0000
+PRP Arrow_Part_Number ''
+PRP Arrow_Price/Stock ''
+PRP Datasheet_Link 'https://datasheet.datasheetarchive.com/originals/distributors/Datasheets_SAMA/eee374929cd7518d6d3464b8148cd1bf.pdf'
+PRP Height '18.669mm'
+PRP Manufacturer_Name 'Tag Connect'
+PRP Manufacturer_Part_Number 'TC2030-MCP'
+PRP Mouser_Part_Number ''
+PRP Mouser_Price/Stock ''
+TOP 0 168.6814 29.972 90 N 83 7 1
+TOP 1 169.9514 29.972 90 N 11 0 2
+TOP 2 168.6814 28.702 90 N 40 0 3
+TOP 3 169.9514 28.702 90 N 12 0 4
+TOP 4 168.6814 27.432 90 N 73 37 5
+TOP 5 169.9514 27.432 90 N 10 0 6
+TOP 6 169.3164 31.242 90 N 0 8 MH1
+TOP 7 170.3324 26.162 90 N 0 7 MH2
+TOP 8 168.3004 26.162 90 N 0 6 MH3
+#
+# CMP 1
+CMP 33 150.0378 46.0756 270 N TP15 TP ;0=1,1=3.1600
+TOP 0 150.0378 46.0756 270 N 73 131 1
+#
+# CMP 2
+CMP 33 151.0538 51.1556 270 N TP3 TP ;0=1,1=3.1600
+TOP 0 151.0538 51.1556 270 N 83 19 1
+#
+# CMP 3
+CMP 34 174.625 47.0916 270 N TP7 TP ;0=1,1=3.1600
+TOP 0 174.625 47.0916 270 N 29 0 1
+#
+# CMP 4
+CMP 34 175.895 47.117 270 N TP4 TP ;0=1,1=3.1600
+TOP 0 175.895 47.117 270 N 28 0 1
+#
+# CMP 5
+CMP 34 172.48608124 47.25138124 270 N TP2 TP ;0=1,1=3.1600
+TOP 0 172.48608124 47.25138124 270 N 23 0 1
+#
+# CMP 6
+CMP 19 152.41500124 39.87500026 270 N J3 GT-USB-7055BB ;0=1,1=0.0000
+PRP Arrow_Part_Number ''
+PRP Arrow_Price/Stock ''
+PRP Datasheet_Link 'https://www.dg-switch.com/uploads/soft/231230/GT-USB-7055BB.pdf'
+PRP Height '6.6mm'
+PRP Manufacturer_Name 'G-Switch Electronic'
+PRP Manufacturer_Part_Number 'GT-USB-7055BB'
+PRP Mouser_Part_Number ''
+PRP Mouser_Price/Stock ''
+TOP 0 151.58000164 37.12500068 180 N 73 148 A1
+TOP 1 151.58000164 38.62500022 180 N 6 15 A4
+TOP 2 151.58000164 39.12499922 180 N 81 2 A5
+TOP 3 151.58000164 39.62500076 180 N 78 3 A6
+TOP 4 151.58000164 40.12499976 180 N 79 3 A7
+TOP 5 151.58000164 40.6250013 180 N 0 32 A8
+TOP 6 151.58000164 41.1250003 180 N 6 14 A9
+TOP 7 151.58000164 42.62499984 180 N 73 147 A12
+TOP 8 153.25000084 42.62499984 180 N 73 146 B1
+TOP 9 153.25000084 41.1250003 180 N 6 13 B4
+TOP 10 153.25000084 40.6250013 180 N 80 2 B5
+TOP 11 153.25000084 40.12499976 180 N 78 2 B6
+TOP 12 153.25000084 39.62500076 180 N 79 2 B7
+TOP 13 153.25000084 39.12499922 180 N 0 31 B8
+TOP 14 153.25000084 38.62500022 180 N 6 12 B9
+TOP 15 153.25000084 37.12500068 180 N 73 145 B12
+TOP 16 152.41500124 36.12500014 270 N 0 5 MH1
+TOP 17 152.41500124 43.62500038 270 N 0 4 MH2
+TOP 18 150.26500046 37.47499998 270 N 73 45 S1
+TOP 19 150.26500046 42.27500054 270 N 73 44 S2
+TOP 20 154.56500202 42.27500054 270 N 73 43 S3
+TOP 21 154.56500202 37.47499998 270 N 73 42 S4
+#
+# CMP 7
+CMP 36 159.4358 35.687 90 N U3 NCP163AMX500TBG ;0=1,1=0.0000
+PRP Copyright 'Copyright (C) 2025 Ultra Librarian. All rights reserved.'
+PRP Manufacturer_Name 'onsemi'
+PRP Manufacturer_Part_Number 'NCP163AMX180TBG'
+PRP RefDes 'RefDes'
+PRP Type 'Type'
+TOP 0 159.76080062 36.15699906 90 N 82 7 1
+TOP 1 159.11079938 36.15699906 90 N 73 46 2
+TOP 2 159.11079938 35.21700094 270 N 7 8 3
+TOP 3 159.76080062 35.21700094 270 N 7 9 4
+TOP 4 159.4358 35.687 45 N 73 55 5
+#
+# CMP 8
+CMP 26 171.95000154 42.72499964 90 N U1 nRF54L15-QFAA ;0=1,1=0.0000
+PRP Artikkelnr_Noca 'N.A.'
+PRP Assembly ''
+PRP Author 'stl1'
+PRP Component_Class 'Nordic_Devices'
+PRP Component_Status 'Active'
+PRP ComponentLink1Description 'Datasheet'
+PRP ComponentLink1URL 'N.A.'
+PRP ComponentLink2Description 'Supplier link'
+PRP ComponentLink2URL 'N.A.'
+PRP Footprint_Doc 'QFN-48'
+PRP HelpURL 'N.A.'
+PRP LatestRevisionDate '2025-01-30'
+PRP Manufacturer 'Nordic Semiconductor'
+PRP Manufacturer_Part_Number 'nRF54L15-QFAAC00'
+PRP Note 'N.A.'
+PRP Pad_Count '49'
+PRP Part_Number 'nRF54L15-QFAAC00'
+PRP Part_number_IPS 'N.A.'
+PRP Part_number_NEMS '102000382'
+PRP Part_number_Norautron 'N.A.'
+PRP PartId '102000382'
+PRP Published '2025-01-30'
+PRP Supplier_1 'Nordic Semiconductor'
+PRP Supplier_2 'N.A.'
+PRP Supplier_Part_Number_1 'nRF54L15-QFAAC00'
+PRP Supplier_Part_Number_2 'N.A.'
+PRP Value 'nRF54L15-QFAA'
+TOP 0 174.15000222 45.67499882 90 N 0 25 1
+TOP 1 173.75000048 45.67499882 90 N 0 24 2
+TOP 2 173.35000128 45.67499882 90 N 28 2 3
+TOP 3 172.95000208 45.67499882 90 N 29 2 4
+TOP 4 172.55000034 45.67499882 90 N 0 23 5
+TOP 5 172.15000114 45.67499882 90 N 23 1 6
+TOP 6 171.75000194 45.67499882 90 N 24 1 7
+TOP 7 171.35000274 45.67499882 90 N 31 0 8
+TOP 8 170.950001 45.67499882 90 N 30 0 9
+TOP 9 170.5500018 45.67499882 90 N 83 25 10
+TOP 10 170.1500026 45.67499882 90 N 0 22 11
+TOP 11 169.75000086 45.67499882 90 N 0 21 12
+TOP 12 169.00000236 44.92500032 0 N 0 20 13
+TOP 13 169.00000236 44.52499858 0 N 35 0 14
+TOP 14 169.00000236 44.12499938 0 N 34 0 15
+TOP 15 169.00000236 43.72500018 0 N 0 19 16
+TOP 16 169.00000236 43.32499844 0 N 33 1 17
+TOP 17 169.00000236 42.92499924 0 N 10 1 18
+TOP 18 169.00000236 42.52500004 0 N 38 1 19
+TOP 19 169.00000236 42.12500084 0 N 37 1 20
+TOP 20 169.00000236 41.7249991 0 N 39 1 21
+TOP 21 169.00000236 41.3249999 0 N 83 24 22
+TOP 22 169.00000236 40.9250007 0 N 32 0 23
+TOP 23 169.00000236 40.52499896 0 N 36 1 24
+TOP 24 169.75000086 39.77500046 90 N 11 1 25
+TOP 25 170.1500026 39.77500046 90 N 12 1 26
+TOP 26 170.5500018 39.77500046 90 N 25 2 27
+TOP 27 170.950001 39.77500046 90 N 26 2 28
+TOP 28 171.35000274 39.77500046 90 N 0 18 29
+TOP 29 171.75000194 39.77500046 90 N 62 2 30
+TOP 30 172.15000114 39.77500046 90 N 44 1 31
+TOP 31 172.55000034 39.77500046 90 N 73 97 32
+TOP 32 172.95000208 39.77500046 90 N 76 5 33
+TOP 33 173.35000128 39.77500046 90 N 3 1 34
+TOP 34 173.75000048 39.77500046 90 N 2 1 35
+TOP 35 174.15000222 39.77500046 90 N 83 23 36
+TOP 36 174.90000072 40.52499896 0 N 27 1 37
+TOP 37 174.90000072 40.9250007 0 N 0 17 38
+TOP 38 174.90000072 41.3249999 0 N 0 16 39
+TOP 39 174.90000072 41.7249991 0 N 0 15 40
+TOP 40 174.90000072 42.12500084 0 N 22 2 41
+TOP 41 174.90000072 42.52500004 0 N 0 14 42
+TOP 42 174.90000072 42.92499924 0 N 76 4 43
+TOP 43 174.90000072 43.32499844 0 N 73 98 44
+TOP 44 174.90000072 43.72500018 0 N 75 3 45
+TOP 45 174.90000072 44.12499938 0 N 77 1 46
+TOP 46 174.90000072 44.52499858 0 N 83 22 47
+TOP 47 174.90000072 44.92500032 0 N 83 21 48
+TOP 48 171.95000154 42.72499964 0 N 73 99 49
+#
+# CMP 9
+CMP 13 175.32500114 37.37500018 180 N Y1 ECS-320-8-37B2-CTN-TR ;0=1,1=0.0000
+PRP Arrow_Part_Number ''
+PRP Arrow_Price/Stock ''
+PRP Datasheet_Link 'https://ecsxtal.com/store/pdf/ECX-1637B2.pdf'
+PRP Height '0.5mm'
+PRP Manufacturer_Name 'ECS'
+PRP Manufacturer_Part_Number 'ECS-320-8-37B2-CTN-TR'
+PRP Mouser_Part_Number '520-320-8-37B2-CTNTR'
+PRP Mouser_Price/Stock 'https://www.mouser.co.uk/ProductDetail/ECS/ECS-320-8-37B2-CTN-TR?qs=aP1CjGhiNiHdeKDzQVYpfg%3D%3D'
+TOP 0 176.00000106 37.9000004 180 N 2 0 1
+TOP 1 174.65000122 37.9000004 180 N 73 84 2
+TOP 2 174.65000122 36.84999996 180 N 3 0 3
+TOP 3 176.00000106 36.84999996 180 N 73 83 4
+#
+# CMP 10
+CMP 16 151.4856 55.626 90 N U2 LIS2DW12TR ;0=1,1=3.1600
+PRP Accel_Range '2/4/8/16g'
+PRP Accel_Resolution '14bits'
+PRP Automotive 'No'
+PRP Category 'IC'
+PRP ComponentLink2Description 'Datasheet'
+PRP ComponentLink2URL 'https://www.st.com/resource/en/datasheet/lis2dw12.pdf'
+PRP Device_Class_L1 'Sensors'
+PRP Device_Class_L2 'Motion Sensors'
+PRP Device_Class_L3 'Accelerometers'
+PRP Digikey_Description 'ACCEL 2-16G I2C/SPI 12LGA'
+PRP Footprint_Url 'https://www.st.com/content/ccc/resource/technical/document/technical_note/73/17/9c/16/dd/96/4a/01/CD00134799.pdf/files/CD00134799.pdf/jcr:content/translations/en.CD00134799.pdf'
+PRP Height '0.7mm'
+PRP Lead_Free 'Yes'
+PRP Manufacturer 'STMicroelectronics'
+PRP Manufacturer_Part_Number 'LIS2DW12TR'
+PRP Max_Supply_Voltage '3.6V'
+PRP Min_Supply_Voltage '1.62V'
+PRP Mouser_Description 'Accelerometer Triple ±2g/±4g/±8g/±16g 1.62V to 3.6V 0.244mg/digit/0.488mg/digit/0.976mg/digit/1.952mg/digit 12-Pin LG...'
+PRP Octopart 'https://octopart.com/lis2dw12tr-stmicroelectronics-77080925'
+PRP Operating_Supply_Current '0.38-90uA'
+PRP Package 'LGA12-DM00170568'
+PRP RoHS 'TRUE'
+PRP Sensor_Output 'I2C,SPI'
+PRP Temperature '-40°C to +85°C'
+PRP Temperature_Range_High '+85°C'
+PRP Temperature_Range_Low '-40°C'
+TOP 0 152.23560104 56.38850038 90 N 29 3 1
+TOP 1 151.7355995 56.38850038 90 N 83 35 2
+TOP 2 151.2356005 56.38850038 90 N 73 132 3
+TOP 3 150.73559896 56.38850038 90 N 28 3 4
+TOP 4 150.72309962 55.8759995 90 N 73 136 5
+TOP 5 150.72309962 55.3760005 90 N 73 135 6
+TOP 6 150.73559896 54.86349962 90 N 73 134 7
+TOP 7 151.2356005 54.86349962 90 N 73 133 8
+TOP 8 151.7355995 54.86349962 90 N 83 37 9
+TOP 9 152.23560104 54.86349962 90 N 83 36 10
+TOP 10 152.24810038 55.3760005 90 N 30 1 11
+TOP 11 152.24810038 55.8759995 90 N 31 1 12
+#
+# CMP 11
+CMP 24 163.06660046 26.3906 0 N S1 MK-11C04-G013 ;0=1,1=0.0000
+PRP Arrow_Part_Number ''
+PRP Arrow_Price/Stock ''
+PRP Datasheet_Link 'https://www.dg-switch.com/uploads/soft/200615/%E5%93%81%E8%B5%9EMK-11C04-G013.pdf?fbclid=IwZXh0bgNhZW0CMTEAAR0AJCzNXSbXm6tv7QD29iqmkU7HUOTzQEjSSoqvyCwOAtUnKQu-KuAmiDE_aem_1ELsU2yAje-H6Aq4_4J2tg'
+PRP Height '0.9mm'
+PRP Manufacturer_Name 'G-Switch Electronic'
+PRP Manufacturer_Part_Number 'MK-11C04-G013'
+PRP Mouser_Part_Number ''
+PRP Mouser_Price/Stock ''
+TOP 0 162.06659992 28.30559998 0 N 8 6 1
+TOP 1 164.066601 28.30559998 0 N 0 30 2
+TOP 2 163.06660046 28.30559998 0 N 9 2 3
+TOP 3 160.06660138 26.95059888 0 N 73 143 4
+TOP 4 166.06659954 26.95059888 0 N 73 144 5
+TOP 5 161.56660092 27.0256 0 N 0 2 6
+TOP 6 164.5666 27.0256 0 N 0 3 7
+#
+# CMP 12
+CMP 14 163.9062 30.0228 0 N R29 ERA1AEB103C ;0=1,1=0.0000
+PRP Arrow_Part_Number ''
+PRP Arrow_Price/Stock ''
+PRP Datasheet_Link 'http://industrial.panasonic.com/cdbs/www-data/pdf/RDM0000/AOA0000C307.pdf'
+PRP Height '0.26mm'
+PRP Manufacturer_Name 'Panasonic'
+PRP Manufacturer_Part_Number 'ERA1AEB103C'
+PRP Mouser_Part_Number ''
+PRP Mouser_Price/Stock ''
+TOP 0 163.6062006 30.0228 0 N 74 1 1
+TOP 1 164.2061994 30.0228 0 N 73 65 2
+#
+# CMP 13
+CMP 29 162.2806 30.0482 180 N R28 AC0201FR-0776K8L ;0=1,1=0.0000
+PRP Arrow_Part_Number 'RC0201FR-0773K2L'
+PRP Arrow_Price/Stock 'https://www.arrow.com/en/products/rc0201fr-0773k2l/yageo?region=nac'
+PRP Datasheet_Link 'http://www.yageo.com/documents/recent/PYu-RC0201_51_RoHS_L_8.pdf'
+PRP Height '0.26mm'
+PRP Manufacturer_Name 'Yageo Group'
+PRP Manufacturer_Part_Number 'RC0201FR-0773K2L'
+PRP Mouser_Part_Number ''
+PRP Mouser_Price/Stock ''
+TOP 0 162.6926007 30.0482 180 N 74 2 1
+TOP 1 161.8685993 30.0482 180 N 7 6 2
+#
+# CMP 14
+CMP 14 154.23420004 45.8010006 0 N R27 ERA1AEB103C ;0=1,1=0.0000
+PRP Arrow_Part_Number ''
+PRP Arrow_Price/Stock ''
+PRP Datasheet_Link 'http://industrial.panasonic.com/cdbs/www-data/pdf/RDM0000/AOA0000C307.pdf'
+PRP Height '0.26mm'
+PRP Manufacturer_Name 'Panasonic'
+PRP Manufacturer_Part_Number 'ERA1AEB103C'
+PRP Mouser_Part_Number ''
+PRP Mouser_Price/Stock ''
+TOP 0 153.93420064 45.8010006 0 N 73 129 1
+TOP 1 154.53419944 45.8010006 0 N 50 1 2
+#
+# CMP 15
+CMP 14 154.23420004 46.5630006 0 N R26 ERA1AEB103C ;0=1,1=0.0000
+PRP Arrow_Part_Number ''
+PRP Arrow_Price/Stock ''
+PRP Datasheet_Link 'http://industrial.panasonic.com/cdbs/www-data/pdf/RDM0000/AOA0000C307.pdf'
+PRP Height '0.26mm'
+PRP Manufacturer_Name 'Panasonic'
+PRP Manufacturer_Part_Number 'ERA1AEB103C'
+PRP Mouser_Part_Number ''
+PRP Mouser_Price/Stock ''
+TOP 0 153.93420064 46.5630006 0 N 73 128 1
+TOP 1 154.53419944 46.5630006 0 N 51 1 2
+#
+# CMP 16
+CMP 14 154.23420004 47.2996006 0 N R25 ERA1AEB103C ;0=1,1=0.0000
+PRP Arrow_Part_Number ''
+PRP Arrow_Price/Stock ''
+PRP Datasheet_Link 'http://industrial.panasonic.com/cdbs/www-data/pdf/RDM0000/AOA0000C307.pdf'
+PRP Height '0.26mm'
+PRP Manufacturer_Name 'Panasonic'
+PRP Manufacturer_Part_Number 'ERA1AEB103C'
+PRP Mouser_Part_Number ''
+PRP Mouser_Price/Stock ''
+TOP 0 153.93420064 47.2996006 0 N 73 127 1
+TOP 1 154.53419944 47.2996006 0 N 52 1 2
+#
+# CMP 17
+CMP 14 154.23420004 48.0616006 0 N R24 ERA1AEB103C ;0=1,1=0.0000
+PRP Arrow_Part_Number ''
+PRP Arrow_Price/Stock ''
+PRP Datasheet_Link 'http://industrial.panasonic.com/cdbs/www-data/pdf/RDM0000/AOA0000C307.pdf'
+PRP Height '0.26mm'
+PRP Manufacturer_Name 'Panasonic'
+PRP Manufacturer_Part_Number 'ERA1AEB103C'
+PRP Mouser_Part_Number ''
+PRP Mouser_Price/Stock ''
+TOP 0 153.93420064 48.0616006 0 N 73 126 1
+TOP 1 154.53419944 48.0616006 0 N 53 1 2
+#
+# CMP 18
+CMP 29 165.5826 30.0482 180 N R23 RC0201JR-07680RL ;0=1,1=0.0000
+PRP Arrow_Part_Number 'RC0201JR-07680RL'
+PRP Arrow_Price/Stock 'https://www.arrow.com/en/products/rc0201jr-07680rl/yageo'
+PRP Datasheet_Link 'http://www.yageo.com/documents/recent/PYu-RC0201_51_RoHS_L_8.pdf'
+PRP Height '0.26mm'
+PRP Manufacturer_Name 'Yageo Group'
+PRP Manufacturer_Part_Number 'RC0201JR-07680RL'
+PRP Mouser_Part_Number ''
+PRP Mouser_Price/Stock ''
+TOP 0 165.9946007 30.0482 180 N 42 0 1
+TOP 1 165.1705993 30.0482 180 N 4 10 2
+#
+# CMP 19
+CMP 14 154.23420004 50.7540006 180 N R22 ERA1AEB103C ;0=1,1=0.0000
+PRP Arrow_Part_Number ''
+PRP Arrow_Price/Stock ''
+PRP Datasheet_Link 'http://industrial.panasonic.com/cdbs/www-data/pdf/RDM0000/AOA0000C307.pdf'
+PRP Height '0.26mm'
+PRP Manufacturer_Name 'Panasonic'
+PRP Manufacturer_Part_Number 'ERA1AEB103C'
+PRP Mouser_Part_Number ''
+PRP Mouser_Price/Stock ''
+TOP 0 154.53419944 50.7540006 180 N 34 2 1
+TOP 1 153.93420064 50.7540006 180 N 83 33 2
+#
+# CMP 20
+CMP 14 154.23420004 51.5160006 180 N R21 ERA1AEB103C ;0=1,1=0.0000
+PRP Arrow_Part_Number ''
+PRP Arrow_Price/Stock ''
+PRP Datasheet_Link 'http://industrial.panasonic.com/cdbs/www-data/pdf/RDM0000/AOA0000C307.pdf'
+PRP Height '0.26mm'
+PRP Manufacturer_Name 'Panasonic'
+PRP Manufacturer_Part_Number 'ERA1AEB103C'
+PRP Mouser_Part_Number ''
+PRP Mouser_Price/Stock ''
+TOP 0 154.53419944 51.5160006 180 N 35 2 1
+TOP 1 153.93420064 51.5160006 180 N 83 32 2
+#
+# CMP 21
+CMP 14 159.00940004 41.4322006 90 N R20 ERA1AEB103C ;0=1,1=0.0000
+PRP Arrow_Part_Number ''
+PRP Arrow_Price/Stock ''
+PRP Datasheet_Link 'http://industrial.panasonic.com/cdbs/www-data/pdf/RDM0000/AOA0000C307.pdf'
+PRP Height '0.26mm'
+PRP Manufacturer_Name 'Panasonic'
+PRP Manufacturer_Part_Number 'ERA1AEB103C'
+PRP Mouser_Part_Number ''
+PRP Mouser_Price/Stock ''
+TOP 0 159.00940004 41.7322 90 N 49 1 1
+TOP 1 159.00940004 41.1322012 90 N 83 31 2
+#
+# CMP 22
+CMP 14 175.92220086 41.15379882 270 N R19 AF0201JR-071ML ;0=1,1=0.0000
+PRP Arrow_Part_Number 'ERA-1AEB101C'
+PRP Arrow_Price/Stock 'https://www.arrow.com/en/products/era-1aeb101c/panasonic?region=nac'
+PRP Datasheet_Link 'http://industrial.panasonic.com/cdbs/www-data/pdf/RDM0000/AOA0000C307.pdf'
+PRP Height '0.26mm'
+PRP Manufacturer_Name 'Panasonic'
+PRP Manufacturer_Part_Number 'ERA-1AEB101C'
+PRP Mouser_Part_Number '667-ERA-1AEB101C'
+PRP Mouser_Price/Stock 'https://www.mouser.co.uk/ProductDetail/Panasonic/ERA-1AEB101C?qs=6%252Bc%252B2ke79U4NC8Nf%252Bq1i6A%3D%3D'
+TOP 0 175.92220086 40.85379942 270 N 73 96 1
+TOP 1 175.92220086 41.45379822 270 N 22 1 2
+#
+# CMP 23
+CMP 29 159.57499962 40.42499916 0 N R18 RC0201JR-075K1L ;0=1,1=0.0000
+PRP Arrow_Part_Number ''
+PRP Arrow_Price/Stock ''
+PRP Datasheet_Link 'http://www.yageo.com/documents/recent/PYu-RC0201_51_RoHS_L_8.pdf'
+PRP Height '0.26mm'
+PRP Manufacturer_Name 'Yageo Group'
+PRP Manufacturer_Part_Number 'RC0201JR-075K1L'
+PRP Mouser_Part_Number '603-RC0201JR-075K1L'
+PRP Mouser_Price/Stock 'https://www.mouser.com/Search/Refine.aspx?Keyword=603-RC0201JR-075K1L'
+TOP 0 159.16299892 40.42499916 0 N 80 0 1
+TOP 1 159.98700032 40.42499916 0 N 73 58 2
+#
+# CMP 24
+CMP 14 154.23420004 49.5348006 180 N R16 ERA1AEB103C ;0=1,1=0.0000
+PRP Arrow_Part_Number ''
+PRP Arrow_Price/Stock ''
+PRP Datasheet_Link 'http://industrial.panasonic.com/cdbs/www-data/pdf/RDM0000/AOA0000C307.pdf'
+PRP Height '0.26mm'
+PRP Manufacturer_Name 'Panasonic'
+PRP Manufacturer_Part_Number 'ERA1AEB103C'
+PRP Mouser_Part_Number ''
+PRP Mouser_Price/Stock ''
+TOP 0 154.53419944 49.5348006 180 N 39 3 1
+TOP 1 153.93420064 49.5348006 180 N 83 30 2
+#
+# CMP 25
+CMP 29 159.57499962 39.35000004 0 N R17 RC0201JR-075K1L ;0=1,1=0.0000
+PRP Arrow_Part_Number ''
+PRP Arrow_Price/Stock ''
+PRP Datasheet_Link 'http://www.yageo.com/documents/recent/PYu-RC0201_51_RoHS_L_8.pdf'
+PRP Height '0.26mm'
+PRP Manufacturer_Name 'Yageo Group'
+PRP Manufacturer_Part_Number 'RC0201JR-075K1L'
+PRP Mouser_Part_Number '603-RC0201JR-075K1L'
+PRP Mouser_Price/Stock 'https://www.mouser.com/Search/Refine.aspx?Keyword=603-RC0201JR-075K1L'
+TOP 0 159.16299892 39.35000004 0 N 81 0 1
+TOP 1 159.98700032 39.35000004 0 N 73 57 2
+#
+# CMP 26
+CMP 14 176.65880086 41.15379882 90 N R15 AF0201JR-071ML ;0=1,1=0.0000
+PRP Arrow_Part_Number 'ERA-1AEB101C'
+PRP Arrow_Price/Stock 'https://www.arrow.com/en/products/era-1aeb101c/panasonic?region=nac'
+PRP Datasheet_Link 'http://industrial.panasonic.com/cdbs/www-data/pdf/RDM0000/AOA0000C307.pdf'
+PRP Height '0.26mm'
+PRP Manufacturer_Name 'Panasonic'
+PRP Manufacturer_Part_Number 'ERA-1AEB101C'
+PRP Mouser_Part_Number '667-ERA-1AEB101C'
+PRP Mouser_Price/Stock 'https://www.mouser.co.uk/ProductDetail/Panasonic/ERA-1AEB101C?qs=6%252Bc%252B2ke79U4NC8Nf%252Bq1i6A%3D%3D'
+TOP 0 176.65880086 41.45379822 90 N 22 0 1
+TOP 1 176.65880086 40.85379942 90 N 41 1 2
+#
+# CMP 27
+CMP 14 149.4536 56.007 90 N R14 ERA1AEB103C ;0=1,1=0.0000
+PRP Arrow_Part_Number ''
+PRP Arrow_Price/Stock ''
+PRP Datasheet_Link 'http://industrial.panasonic.com/cdbs/www-data/pdf/RDM0000/AOA0000C307.pdf'
+PRP Height '0.26mm'
+PRP Manufacturer_Name 'Panasonic'
+PRP Manufacturer_Part_Number 'ERA1AEB103C'
+PRP Mouser_Part_Number ''
+PRP Mouser_Price/Stock ''
+TOP 0 149.4536 56.3069994 90 N 28 1 1
+TOP 1 149.4536 55.7070006 90 N 83 11 2
+#
+# CMP 28
+CMP 14 153.543 56.1086 90 N R13 ERA1AEB103C ;0=1,1=0.0000
+PRP Arrow_Part_Number ''
+PRP Arrow_Price/Stock ''
+PRP Datasheet_Link 'http://industrial.panasonic.com/cdbs/www-data/pdf/RDM0000/AOA0000C307.pdf'
+PRP Height '0.26mm'
+PRP Manufacturer_Name 'Panasonic'
+PRP Manufacturer_Part_Number 'ERA1AEB103C'
+PRP Mouser_Part_Number ''
+PRP Mouser_Price/Stock ''
+TOP 0 153.543 56.4085994 90 N 29 1 1
+TOP 1 153.543 55.8086006 90 N 83 12 2
+#
+# CMP 29
+CMP 14 169.52500004 53.02920052 90 N R12 ERA1AEB103C ;0=1,1=0.0000
+PRP Arrow_Part_Number ''
+PRP Arrow_Price/Stock ''
+PRP Datasheet_Link 'http://industrial.panasonic.com/cdbs/www-data/pdf/RDM0000/AOA0000C307.pdf'
+PRP Height '0.26mm'
+PRP Manufacturer_Name 'Panasonic'
+PRP Manufacturer_Part_Number 'ERA1AEB103C'
+PRP Mouser_Part_Number ''
+PRP Mouser_Price/Stock ''
+TOP 0 169.52500004 53.32919992 90 N 15 1 1
+TOP 1 169.52500004 52.72920112 90 N 61 7 2
+#
+# CMP 30
+CMP 14 175.92220086 39.85839882 90 N R11 AF0201JR-071ML ;0=1,1=0.0000
+PRP Arrow_Part_Number 'ERA-1AEB101C'
+PRP Arrow_Price/Stock 'https://www.arrow.com/en/products/era-1aeb101c/panasonic?region=nac'
+PRP Datasheet_Link 'http://industrial.panasonic.com/cdbs/www-data/pdf/RDM0000/AOA0000C307.pdf'
+PRP Height '0.26mm'
+PRP Manufacturer_Name 'Panasonic'
+PRP Manufacturer_Part_Number 'ERA-1AEB101C'
+PRP Mouser_Part_Number '667-ERA-1AEB101C'
+PRP Mouser_Price/Stock 'https://www.mouser.co.uk/ProductDetail/Panasonic/ERA-1AEB101C?qs=6%252Bc%252B2ke79U4NC8Nf%252Bq1i6A%3D%3D'
+TOP 0 175.92220086 40.15839822 90 N 41 0 1
+TOP 1 175.92220086 39.55839942 90 N 8 5 2
+#
+# CMP 31
+CMP 14 169.55000126 46.80000038 90 N R10 ERA1AEB103C ;0=1,1=0.0000
+PRP Arrow_Part_Number ''
+PRP Arrow_Price/Stock ''
+PRP Datasheet_Link 'http://industrial.panasonic.com/cdbs/www-data/pdf/RDM0000/AOA0000C307.pdf'
+PRP Height '0.26mm'
+PRP Manufacturer_Name 'Panasonic'
+PRP Manufacturer_Part_Number 'ERA1AEB103C'
+PRP Mouser_Part_Number ''
+PRP Mouser_Price/Stock ''
+TOP 0 169.55000126 47.09999978 90 N 16 1 1
+TOP 1 169.55000126 46.50000098 90 N 60 0 2
+#
+# CMP 32
+CMP 14 169.52500004 48.0249992 270 N R9 ERA1AEB103C ;0=1,1=0.0000
+PRP Arrow_Part_Number ''
+PRP Arrow_Price/Stock ''
+PRP Datasheet_Link 'http://industrial.panasonic.com/cdbs/www-data/pdf/RDM0000/AOA0000C307.pdf'
+PRP Height '0.26mm'
+PRP Manufacturer_Name 'Panasonic'
+PRP Manufacturer_Part_Number 'ERA1AEB103C'
+PRP Mouser_Part_Number ''
+PRP Mouser_Price/Stock ''
+TOP 0 169.52500004 47.7249998 270 N 17 1 1
+TOP 1 169.52500004 48.3249986 270 N 59 0 2
+#
+# CMP 33
+CMP 14 169.52500004 49.27000052 90 N R8 ERA1AEB103C ;0=1,1=0.0000
+PRP Arrow_Part_Number ''
+PRP Arrow_Price/Stock ''
+PRP Datasheet_Link 'http://industrial.panasonic.com/cdbs/www-data/pdf/RDM0000/AOA0000C307.pdf'
+PRP Height '0.26mm'
+PRP Manufacturer_Name 'Panasonic'
+PRP Manufacturer_Part_Number 'ERA1AEB103C'
+PRP Mouser_Part_Number ''
+PRP Mouser_Price/Stock ''
+TOP 0 169.52500004 49.56999992 90 N 18 1 1
+TOP 1 169.52500004 48.97000112 90 N 58 2 2
+#
+# CMP 34
+CMP 14 169.52500004 50.54000052 270 N R7 ERA1AEB103C ;0=1,1=0.0000
+PRP Arrow_Part_Number ''
+PRP Arrow_Price/Stock ''
+PRP Datasheet_Link 'http://industrial.panasonic.com/cdbs/www-data/pdf/RDM0000/AOA0000C307.pdf'
+PRP Height '0.26mm'
+PRP Manufacturer_Name 'Panasonic'
+PRP Manufacturer_Part_Number 'ERA1AEB103C'
+PRP Mouser_Part_Number ''
+PRP Mouser_Price/Stock ''
+TOP 0 169.52500004 50.24000112 270 N 19 1 1
+TOP 1 169.52500004 50.83999992 270 N 57 2 2
+#
+# CMP 35
+CMP 1 171.17240086 37.77559882 180 N R6 RC0201FR-071K8L ;0=1,1=0.0000
+PRP Artikkelnr_Noca 'N.A.'
+PRP Assembly ''
+PRP Author 'rsk'
+PRP Component_Class 'Resistors'
+PRP Component_Status 'Active'
+PRP ComponentLink1Description 'Datasheet'
+PRP ComponentLink1URL 'N.A.'
+PRP ComponentLink2Description 'Supplier link'
+PRP ComponentLink2URL 'N.A.'
+PRP HelpURL 'N.A.'
+PRP LatestRevisionDate '2014-11-13'
+PRP Manufacturer 'N.A.'
+PRP Manufacturer_Part_Number 'N.A.'
+PRP Note 'Chip Res 1%'
+PRP Pad_Count '2'
+PRP Part_Number 'R0201-1k0'
+PRP Part_number_IPS '00000005786'
+PRP Part_number_NEMS '100100043'
+PRP Part_number_Norautron 'N.A.'
+PRP PartId '100100043'
+PRP Published '2014-11-13'
+PRP Supplier_1 'N.A.'
+PRP Supplier_2 'N.A.'
+PRP Supplier_Part_Number_1 'N.A.'
+PRP Supplier_Part_Number_2 'N.A.'
+PRP Value '1k'
+TOP 0 171.47240026 37.77559882 180 N 62 1 1
+TOP 1 170.87240146 37.77559882 180 N 40 1 2
+#
+# CMP 36
+CMP 14 164.39420004 40.8226006 0 N R5 AF0201JR-071ML ;0=1,1=0.0000
+PRP Arrow_Part_Number 'ERA-1AEB101C'
+PRP Arrow_Price/Stock 'https://www.arrow.com/en/products/era-1aeb101c/panasonic?region=nac'
+PRP Datasheet_Link 'http://industrial.panasonic.com/cdbs/www-data/pdf/RDM0000/AOA0000C307.pdf'
+PRP Height '0.26mm'
+PRP Manufacturer_Name 'Panasonic'
+PRP Manufacturer_Part_Number 'ERA-1AEB101C'
+PRP Mouser_Part_Number '667-ERA-1AEB101C'
+PRP Mouser_Price/Stock 'https://www.mouser.co.uk/ProductDetail/Panasonic/ERA-1AEB101C?qs=6%252Bc%252B2ke79U4NC8Nf%252Bq1i6A%3D%3D'
+TOP 0 164.09420064 40.8226006 0 N 63 2 1
+TOP 1 164.69419944 40.8226006 0 N 14 3 2
+#
+# CMP 37
+CMP 14 169.52500004 51.78460052 270 N R4 ERA1AEB103C ;0=1,1=0.0000
+PRP Arrow_Part_Number ''
+PRP Arrow_Price/Stock ''
+PRP Datasheet_Link 'http://industrial.panasonic.com/cdbs/www-data/pdf/RDM0000/AOA0000C307.pdf'
+PRP Height '0.26mm'
+PRP Manufacturer_Name 'Panasonic'
+PRP Manufacturer_Part_Number 'ERA1AEB103C'
+PRP Mouser_Part_Number ''
+PRP Mouser_Price/Stock ''
+TOP 0 169.52500004 51.48460112 270 N 20 1 1
+TOP 1 169.52500004 52.08459992 270 N 56 2 2
+#
+# CMP 38
+CMP 14 169.52500004 54.35000052 90 N R3 ERA1AEB103C ;0=1,1=0.0000
+PRP Arrow_Part_Number ''
+PRP Arrow_Price/Stock ''
+PRP Datasheet_Link 'http://industrial.panasonic.com/cdbs/www-data/pdf/RDM0000/AOA0000C307.pdf'
+PRP Height '0.26mm'
+PRP Manufacturer_Name 'Panasonic'
+PRP Manufacturer_Part_Number 'ERA1AEB103C'
+PRP Mouser_Part_Number ''
+PRP Mouser_Price/Stock ''
+TOP 0 169.52500004 54.64999992 90 N 21 1 1
+TOP 1 169.52500004 54.05000112 90 N 55 2 2
+#
+# CMP 39
+CMP 29 160.6804 34.7218 90 N R2 RC0201FR-071K8L ;0=1,1=0.0000
+PRP Arrow_Part_Number 'RC0201FR-071K8L'
+PRP Arrow_Price/Stock 'https://www.arrow.com/en/products/rc0201fr-071k8l/yageo?region=nac'
+PRP Datasheet_Link 'http://www.yageo.com/documents/recent/PYu-RC0201_51_RoHS_L_8.pdf'
+PRP Height '0.26mm'
+PRP Manufacturer_Name 'Yageo Group'
+PRP Manufacturer_Part_Number 'RC0201FR-071K8L'
+PRP Mouser_Part_Number '603-RC0201FR-071K8L'
+PRP Mouser_Price/Stock 'https://www.mouser.com/Search/Refine.aspx?Keyword=603-RC0201FR-071K8L'
+TOP 0 160.6804 35.1338007 90 N 48 1 1
+TOP 1 160.6804 34.3097993 90 N 73 59 2
+#
+# CMP 40
+CMP 14 161.798 33.02 0 N R1 ERA1AEB103C ;0=1,1=0.0000
+PRP Arrow_Part_Number ''
+PRP Arrow_Price/Stock ''
+PRP Datasheet_Link 'http://industrial.panasonic.com/cdbs/www-data/pdf/RDM0000/AOA0000C307.pdf'
+PRP Height '0.26mm'
+PRP Manufacturer_Name 'Panasonic'
+PRP Manufacturer_Part_Number 'ERA1AEB103C'
+PRP Mouser_Part_Number ''
+PRP Mouser_Price/Stock ''
+TOP 0 161.4980006 33.02 0 N 73 54 1
+TOP 1 162.0979994 33.02 0 N 47 0 2
+#
+# CMP 41
+CMP 35 167.0558 32.4358 90 N Q1 DMN31D5UFZ-7B ;0=1,1=0.0000
+PRP Arrow_Part_Number ''
+PRP Arrow_Price/Stock ''
+PRP Datasheet_Link 'https://www.diodes.com//assets/Datasheets/DMN31D5UFZ.pdf'
+PRP Manufacturer_Name 'Diodes Incorporated'
+PRP Manufacturer_Part_Number 'DMN31D5UFZ-7B'
+PRP Mouser_Part_Number '621-DMN31D5UFZ-7B'
+PRP Mouser_Price/Stock 'https://www.mouser.co.uk/ProductDetail/Diodes-Incorporated/DMN31D5UFZ-7B?qs=IvkZ4pJZlB3BAtMzN9vISA%3D%3D'
+TOP 0 167.0558 32.28079904 0 N 43 0 1
+TOP 1 167.23080092 32.72579942 90 N 27 0 2
+TOP 2 166.88079908 32.72579942 90 N 73 77 3
+#
+# CMP 42
+CMP 6 166.7002 30.8388004 90 N LED1 APG0603SEC-E-TT ;0=1,1=0.0000
+PRP Arrow_Part_Number 'APG0603SEC-E-TT'
+PRP Arrow_Price/Stock 'https://www.arrow.com/en/products/apg0603sec-e-tt/kingbright?region=nac'
+PRP Datasheet_Link 'https://www.digikey.ph/en/products/detail/kingbright/APG0603SEC-E-TT/6072767'
+PRP Height '0.2mm'
+PRP Manufacturer_Name 'Kingbright'
+PRP Manufacturer_Part_Number 'APG0603SEC-E-TT'
+PRP Mouser_Part_Number '604-APG0603SECETT'
+PRP Mouser_Price/Stock 'https://www.mouser.co.uk/ProductDetail/Kingbright/APG0603SEC-E-TT?qs=cRhdKgsiOJrYr%252BYSvKe71Q%3D%3D'
+TOP 0 166.7002 31.0388 0 N 43 1 1
+TOP 1 166.7002 30.6388008 0 N 42 1 2
+#
+# CMP 43
+CMP 21 160.3248 32.2072 270 N L8 DFE18SAN1R0MG0L ;0=1,1=0.0000
+PRP Arrow_Part_Number 'DFE18SAN1R0MG0L'
+PRP Arrow_Price/Stock 'https://www.arrow.com/en/products/dfe18san1r0mg0l/murata-manufacturing?region=nac'
+PRP Datasheet_Link 'https://search.murata.co.jp/Ceramy/image/img/P02/JETE243A-0036.pdf'
+PRP Height '1mm'
+PRP Manufacturer_Name 'Murata Electronics'
+PRP Manufacturer_Part_Number 'DFE18SAN1R0MG0L'
+PRP Mouser_Part_Number '81-DFE18SAN1R0MG0L'
+PRP Mouser_Price/Stock 'https://www.mouser.co.uk/ProductDetail/Murata-Electronics/DFE18SAN1R0MG0L?qs=EU6FO9ffTwdBzqsLsYlEDA%3D%3D'
+TOP 0 160.3248 31.40719906 180 N 45 1 1
+TOP 1 160.3248 33.00720094 180 N 4 9 2
+#
+# CMP 44
+CMP 20 175.74999902 32.3499988 0 N L7 L-07C2N7SV6T ;0=1,1=0.0000
+PRP Arrow_Part_Number ''
+PRP Arrow_Price/Stock ''
+PRP Datasheet_Link 'https://www.johansontechnology.com/docs/4510/ceramic-inductors-datasheet.pdf'
+PRP Height '0.6mm'
+PRP Manufacturer_Name 'JOHANSON TECHNOLOGY'
+PRP Manufacturer_Part_Number 'LRC0402CS3N3GV001T'
+PRP Mouser_Part_Number ''
+PRP Mouser_Price/Stock ''
+TOP 0 175.34359902 32.3499988 0 N 73 78 1
+TOP 1 176.15639902 32.3499988 0 N 1 2 2
+#
+# CMP 45
+CMP 20 176.10000086 31.14999866 90 N L6 L-07C3N3SV6T ;0=1,1=0.0000
+PRP Arrow_Part_Number ''
+PRP Arrow_Price/Stock ''
+PRP Datasheet_Link 'https://www.johansontechnology.com/docs/4510/ceramic-inductors-datasheet.pdf'
+PRP Height '0.6mm'
+PRP Manufacturer_Name 'JOHANSON TECHNOLOGY'
+PRP Manufacturer_Part_Number 'LRC0402CS3N3GV001T'
+PRP Mouser_Part_Number ''
+PRP Mouser_Price/Stock ''
+TOP 0 176.10000086 31.55639866 90 N 1 0 1
+TOP 1 176.10000086 30.74359866 90 N 72 0 2
+#
+# CMP 46
+CMP 22 172.15000368 35.3749991 90 N L5 LQP03HQ3N5B02 ;0=1,1=0.0000
+PRP Artikkelnr_Noca 'N.A.'
+PRP Assembly ''
+PRP Author 'rsk'
+PRP Component_Class 'Inductors'
+PRP Component_Status 'Active'
+PRP ComponentLink1Description 'Datasheet'
+PRP ComponentLink1URL 'https://search.murata.co.jp/Ceramy/image/img/P02/JELF243C-0021.pdf'
+PRP ComponentLink2Description 'Supplier link'
+PRP ComponentLink2URL 'N.A.'
+PRP HelpURL 'https://psearch.en.murata.com/inductor/product/LQP03HQ3N5B02%23.html'
+PRP LatestRevisionDate '2018-10-23'
+PRP Manufacturer 'Murata'
+PRP Manufacturer_Part_Number 'LQP03HQ3N5B02'
+PRP Note '-55°C ~ 125°C'
+PRP Pad_Count '2'
+PRP Part_Number 'L0201-3n5-HQ-Murata'
+PRP Part_number_IPS 'N.A.'
+PRP Part_number_NEMS '100300222'
+PRP Part_number_Norautron 'N.A.'
+PRP PartId '100300222'
+PRP Published '2018-10-23'
+PRP Supplier_1 'Digi-Key'
+PRP Supplier_2 'N.A.'
+PRP Supplier_Part_Number_1 '490-13925-1-ND'
+PRP Supplier_Part_Number_2 'N.A.'
+PRP Value '3.5nH'
+TOP 0 172.15000368 35.6749985 0 N 64 2 1
+TOP 1 172.15000368 35.0749997 0 N 13 2 2
+#
+# CMP 47
+CMP 22 172.15000368 37.22500048 90 N L4 LQP03HQ3N5B02 ;0=1,1=0.0000
+PRP Artikkelnr_Noca 'N.A.'
+PRP Assembly ''
+PRP Author 'rsk'
+PRP Component_Class 'Inductors'
+PRP Component_Status 'Active'
+PRP ComponentLink1Description 'Datasheet'
+PRP ComponentLink1URL 'https://search.murata.co.jp/Ceramy/image/img/P02/JELF243C-0021.pdf'
+PRP ComponentLink2Description 'Supplier link'
+PRP ComponentLink2URL 'N.A.'
+PRP HelpURL 'https://psearch.en.murata.com/inductor/product/LQP03HQ3N5B02%23.html'
+PRP LatestRevisionDate '2018-10-23'
+PRP Manufacturer 'Murata'
+PRP Manufacturer_Part_Number 'LQP03HQ3N5B02'
+PRP Note '-55°C ~ 125°C'
+PRP Pad_Count '2'
+PRP Part_Number 'L0201-3n5-HQ-Murata'
+PRP Part_number_IPS 'N.A.'
+PRP Part_number_NEMS '100300222'
+PRP Part_number_Norautron 'N.A.'
+PRP PartId '100300222'
+PRP Published '2018-10-23'
+PRP Supplier_1 'Digi-Key'
+PRP Supplier_2 'N.A.'
+PRP Supplier_Part_Number_1 '490-13925-1-ND'
+PRP Supplier_Part_Number_2 'N.A.'
+PRP Value '3.5nH'
+TOP 0 172.15000368 37.52499988 0 N 65 2 1
+TOP 1 172.15000368 36.92500108 0 N 64 1 2
+#
+# CMP 48
+CMP 22 172.15000368 38.4499993 90 N L3 LQP03HQ2N7B02 ;0=1,1=0.0000
+PRP Artikkelnr_Noca 'N.A.'
+PRP Assembly ''
+PRP Author 'rsk'
+PRP Component_Class 'Inductors'
+PRP Component_Status 'Active'
+PRP ComponentLink1Description 'Datasheet'
+PRP ComponentLink1URL 'https://search.murata.co.jp/Ceramy/image/img/P02/JELF243C-0021.pdf'
+PRP ComponentLink2Description 'Supplier link'
+PRP ComponentLink2URL 'N.A.'
+PRP HelpURL 'https://psearch.en.murata.com/inductor/product/LQP03HQ2N7B02%23.html'
+PRP LatestRevisionDate '2018-10-23'
+PRP Manufacturer 'Murata'
+PRP Manufacturer_Part_Number 'LQP03HQ2N7B02'
+PRP Note '-55°C ~ 125°C'
+PRP Pad_Count '2'
+PRP Part_Number 'L0201-2n7-HQ-Murata'
+PRP Part_number_IPS '00000001753'
+PRP Part_number_NEMS '100300214'
+PRP Part_number_Norautron 'N.A.'
+PRP PartId '100300214'
+PRP Published '2018-10-23'
+PRP Supplier_1 'Digi-Key'
+PRP Supplier_2 'N.A.'
+PRP Supplier_Part_Number_1 '490-13909-1-ND'
+PRP Supplier_Part_Number_2 'N.A.'
+PRP Value '2.7nH'
+TOP 0 172.15000368 38.7499987 0 N 44 0 1
+TOP 1 172.15000368 38.1499999 0 N 65 1 2
+#
+# CMP 49
+CMP 25 176.4538 43.434 90 N L2 MLZ1608M4R7WT000 ;0=1,1=0.0000
+PRP Artikkelnr_Noca 'N.A.'
+PRP Assembly ''
+PRP Author 'stl1'
+PRP Component_Class 'Inductors'
+PRP Component_Status 'Active'
+PRP ComponentLink1Description 'Datasheet'
+PRP ComponentLink1URL 'https://product.tdk.com/en/search/inductor/inductor/smd/info?part_no=MLZ1608M4R7WT000'
+PRP ComponentLink2Description 'Supplier link'
+PRP ComponentLink2URL 'N.A.'
+PRP HelpURL 'N.A.'
+PRP LatestRevisionDate '2023-05-10'
+PRP Manufacturer 'TDK Corporation'
+PRP Manufacturer_Part_Number 'MLZ1608M4R7WT000'
+PRP Note 'Power Inductor ±20%'
+PRP Pad_Count '2'
+PRP Part_Number 'L0603-4µ7-MLZ1608M4R7WT000'
+PRP Part_number_IPS 'N.A.'
+PRP Part_number_NEMS '100300440'
+PRP Part_number_Norautron 'N.A.'
+PRP PartId '100300440'
+PRP Published '2023-05-10'
+PRP Supplier_1 'Digi-Key'
+PRP Supplier_2 'Mouser'
+PRP Supplier_Part_Number_1 '445-6390-2-ND'
+PRP Supplier_Part_Number_2 '810-MLZ1608M4R7WT000'
+PRP Value '4.7µH'
+TOP 0 176.4538 44.23400094 0 N 77 0 1
+TOP 1 176.4538 42.63399906 0 N 75 0 2
+#
+# CMP 50
+CMP 23 167.17499966 37.6500009 90 N L1 MBKK1608T2R2M ;0=1,1=0.0000
+PRP Arrow_Part_Number 'MBKK1608T2R2M'
+PRP Arrow_Price/Stock 'https://www.arrow.com/en/products/mbkk1608t2r2m/taiyo-yuden?region=nac'
+PRP Datasheet_Link 'https://ds.yuden.co.jp/TYCOMPAS/ut/detail?pn=MBKK1608T2R2M%20%20&u=M'
+PRP Height '1mm'
+PRP Manufacturer_Name 'TAIYO YUDEN'
+PRP Manufacturer_Part_Number 'MBKK1608T2R2M'
+PRP Mouser_Part_Number '963-MBKK1608T2R2M'
+PRP Mouser_Price/Stock 'https://www.mouser.co.uk/ProductDetail/TAIYO-YUDEN/MBKK1608T2R2M?qs=DdDyqbI1VsjL85dwAH0aww%3D%3D'
+TOP 0 167.17499966 38.27500092 0 N 83 15 1
+TOP 1 167.17499966 37.02500088 0 N 46 1 2
+#
+# CMP 51
+CMP 30 154.5844 29.8196 180 N J4 S2B-PH-SM4-TB_LF__SN_ ;0=1,1=0.0000
+PRP Arrow_Part_Number 'S2B-PH-SM4-TB(LF)(SN)'
+PRP Arrow_Price/Stock 'https://www.arrow.com/en/products/s2b-ph-sm4-tb-lf-sn/jst-manufacturing?utm_currency=USD&region=europe'
+PRP Datasheet_Link 'https://www.jst-mfg.com/product/pdf/eng/ePH.pdf'
+PRP Height '6.6mm'
+PRP Manufacturer_Name 'JST (JAPAN SOLDERLESS TERMINALS)'
+PRP Manufacturer_Part_Number 'S2B-PH-SM4-TB(LF)(SN)'
+PRP Mouser_Part_Number 'N/A'
+PRP Mouser_Price/Stock 'https://www.mouser.co.uk/ProductDetail/JST-Commercial/S2B-PH-SM4-TBLFSN?qs=QpmGXVUTftEA9IU90i0xlg%3D%3D'
+TOP 0 153.58439946 33.06960112 90 N 73 140 1
+TOP 1 155.58440054 33.06960112 90 N 54 2 2
+TOP 2 151.23439908 27.31959992 90 N 73 142 MP1
+TOP 3 157.93440092 27.31959992 90 N 73 141 MP2
+#
+# CMP 52
+CMP 4 173.93000012 52.19999974 270 N J1 10FHH-SM1-GAN-TF_LF__SN_ ;0=1,1=0.0000
+PRP Arrow_Part_Number ''
+PRP Arrow_Price/Stock ''
+PRP Datasheet_Link 'https://www.jst.com/wp-content/uploads/2021/03/eFHH.pdf'
+PRP Height '2mm'
+PRP Manufacturer_Name 'JST (JAPAN SOLDERLESS TERMINALS)'
+PRP Manufacturer_Part_Number '10FHH-SM1-GAN-TF(LF)(SN)'
+PRP Mouser_Part_Number ''
+PRP Mouser_Price/Stock ''
+TOP 0 176.6299998 49.94999916 180 N 15 2 1
+TOP 1 176.6299998 50.4500007 180 N 14 4 2
+TOP 2 176.6299998 50.9499997 180 N 16 2 3
+TOP 3 176.6299998 51.4499987 180 N 17 2 4
+TOP 4 176.6299998 51.95000024 180 N 18 2 5
+TOP 5 176.6299998 52.44999924 180 N 19 2 6
+TOP 6 176.6299998 52.95000078 180 N 20 2 7
+TOP 7 176.6299998 53.44999978 180 N 21 2 8
+TOP 8 176.6299998 53.94999878 180 N 82 27 9
+TOP 9 176.6299998 54.45000032 180 N 73 137 10
+TOP 10 171.6499996 48.47500084 180 N 73 138 11
+TOP 11 171.6499996 55.92499864 180 N 73 139 12
+#
+# CMP 53
+CMP 31 162.3314 31.4706 180 N IC4 TPS61023DRLR ;0=1,1=0.0000
+PRP Arrow_Part_Number 'TPS61023DRLR'
+PRP Arrow_Price/Stock 'https://www.arrow.com/en/products/tps61023drlr/texas-instruments?utm_currency=USD&region=nac'
+PRP Datasheet_Link 'http://www.ti.com/lit/ds/symlink/tps61023.pdf'
+PRP Height '0.6mm'
+PRP Manufacturer_Name 'Texas Instruments'
+PRP Manufacturer_Part_Number 'TPS61023DRLR'
+PRP Mouser_Part_Number '595-TPS61023DRLR'
+PRP Mouser_Price/Stock 'https://www.mouser.co.uk/ProductDetail/Texas-Instruments/TPS61023DRLR?qs=BJlw7L4Cy7%2FfEnwYuWeGOg%3D%3D'
+TOP 0 163.16939934 30.970601 180 N 74 0 1
+TOP 1 163.16939934 31.4706 180 N 4 7 2
+TOP 2 163.16939934 31.970599 180 N 4 6 3
+TOP 3 161.49340066 31.970599 180 N 73 53 4
+TOP 4 161.49340066 31.4706 180 N 45 0 5
+TOP 5 161.49340066 30.970601 180 N 7 4 6
+#
+# CMP 54
+CMP 31 157.35000026 39.87500026 180 N IC3 TPD4E1B06DRLR ;0=1,1=0.0000
+PRP Arrow_Part_Number 'TPD4E1B06DRLR'
+PRP Arrow_Price/Stock 'https://www.arrow.com/en/products/tpd4e1b06drlr/texas-instruments?utm_currency=USD&region=nac'
+PRP Datasheet_Link 'http://www.ti.com/lit/ds/symlink/tpd4e1b06.pdf'
+PRP Height '0.6mm'
+PRP Manufacturer_Name 'Texas Instruments'
+PRP Manufacturer_Part_Number 'TPD4E1B06DRLR'
+PRP Mouser_Part_Number '595-TPD4E1B06DRLR'
+PRP Mouser_Price/Stock 'https://www.mouser.co.uk/ProductDetail/Texas-Instruments/TPD4E1B06DRLR?qs=1MXlzafEN387aRSX0e2MEQ%3D%3D'
+TOP 0 158.1879996 39.37500126 180 N 81 1 1
+TOP 1 158.1879996 39.87500026 180 N 73 51 2
+TOP 2 158.1879996 40.37499926 180 N 80 1 3
+TOP 3 156.51200092 40.37499926 180 N 78 0 4
+TOP 4 156.51200092 39.87500026 180 N 0 9 5
+TOP 5 156.51200092 39.37500126 180 N 79 0 6
+#
+# CMP 55
+CMP 27 163.72299996 36.08680108 90 N IC2 NPM1100-QDAA-R7 ;0=1,1=0.0000
+PRP Arrow_Part_Number 'NPM1100-QDAA-R7'
+PRP Arrow_Price/Stock 'https://www.arrow.com/en/products/npm1100-qdaa-r7/nordic-semiconductor?utm_currency=USD&region=nac'
+PRP Datasheet_Link 'https://www.digikey.co.za/en/products/detail/nordic-semiconductor-asa/NPM1100-QDAA-R7/18069439?s=N4IgTCBcDaIHIAUCyBGFAGdBaAigEQEECsAlAdhAF0BfIA'
+PRP Height '0.9mm'
+PRP Manufacturer_Name 'Nordic Semiconductor'
+PRP Manufacturer_Part_Number 'NPM1100-QDAA-R7'
+PRP Mouser_Part_Number '949-NPM1100-QDAA-R7'
+PRP Mouser_Price/Stock 'https://www.mouser.co.uk/ProductDetail/Nordic-Semiconductor/NPM1100-QDAA-R7?qs=amGC7iS6iy8FBZdylLqz2Q%3D%3D'
+TOP 0 164.973 38.08680216 90 N 83 14 1
+TOP 1 164.473001 38.08680216 90 N 73 73 2
+TOP 2 163.97299946 38.08680216 90 N 73 74 3
+TOP 3 163.47300046 38.08680216 90 N 73 75 4
+TOP 4 162.97299892 38.08680216 90 N 73 72 5
+TOP 5 162.47299992 38.08680216 90 N 73 71 6
+TOP 6 161.72299888 37.33680112 0 N 73 61 7
+TOP 7 161.72299888 36.83680212 0 N 26 1 8
+TOP 8 161.72299888 36.33680058 0 N 4 5 9
+TOP 9 161.72299888 35.83680158 0 N 25 1 10
+TOP 10 161.72299888 35.33680004 0 N 73 60 11
+TOP 11 161.72299888 34.83680104 0 N 48 0 12
+TOP 12 162.47299992 34.0868 90 N 0 12 13
+TOP 13 162.97299892 34.0868 90 N 47 1 14
+TOP 14 163.47300046 34.0868 90 N 8 4 15
+TOP 15 163.97299946 34.0868 90 N 4 4 16
+TOP 16 164.473001 34.0868 90 N 5 2 17
+TOP 17 164.973 34.0868 90 N 0 11 18
+TOP 18 165.72300104 34.83680104 0 N 79 1 19
+TOP 19 165.72300104 35.33680004 0 N 78 1 20
+TOP 20 165.72300104 35.83680158 0 N 71 1 21
+TOP 21 165.72300104 36.33680058 0 N 46 0 22
+TOP 22 165.72300104 36.83680212 0 N 73 69 23
+TOP 23 165.72300104 37.33680112 0 N 0 10 24
+TOP 24 163.72299996 36.08680108 0 N 73 70 25
+#
+# CMP 56
+CMP 28 161.60260034 48.81820056 180 N IC1 ADS1299IPAG ;0=1,1=0.0000
+PRP Arrow_Part_Number 'ADS1299IPAG'
+PRP Arrow_Price/Stock 'https://www.arrow.com/en/products/ads1299ipag/texas-instruments?utm_currency=USD&region=nac'
+PRP Datasheet_Link 'http://www.ti.com/general/docs/lit/getliterature.tsp?genericPartNumber=ADS1299&&fileType=pdf'
+PRP Height '1.2mm'
+PRP Manufacturer_Name 'Texas Instruments'
+PRP Manufacturer_Part_Number 'ADS1299IPAG'
+PRP Mouser_Part_Number '595-ADS1299IPAG'
+PRP Mouser_Price/Stock 'https://www.mouser.co.uk/ProductDetail/Texas-Instruments/ADS1299IPAG?qs=g9Q%2FF7kJgMyNB%2Fl7Pgr%252B%252BA%3D%3D'
+TOP 0 167.34060004 45.06820044 180 N 82 26 1
+TOP 1 167.34060004 45.56819944 180 N 82 25 2
+TOP 2 167.34060004 46.06820098 180 N 82 24 3
+TOP 3 167.34060004 46.56819998 180 N 82 23 4
+TOP 4 167.34060004 47.06820152 180 N 82 22 5
+TOP 5 167.34060004 47.56820052 180 N 60 2 6
+TOP 6 167.34060004 48.06819952 180 N 82 21 7
+TOP 7 167.34060004 48.56820106 180 N 59 2 8
+TOP 8 167.34060004 49.06820006 180 N 82 20 9
+TOP 9 167.34060004 49.5682016 180 N 58 1 10
+TOP 10 167.34060004 50.0682006 180 N 82 19 11
+TOP 11 167.34060004 50.5681996 180 N 57 1 12
+TOP 12 167.34060004 51.06820114 180 N 82 18 13
+TOP 13 167.34060004 51.56820014 180 N 56 1 14
+TOP 14 167.34060004 52.06820168 180 N 82 17 15
+TOP 15 167.34060004 52.56820068 180 N 55 1 16
+TOP 16 165.35260046 54.55620026 90 N 61 6 17
+TOP 17 164.85260146 54.55620026 90 N 73 111 18
+TOP 18 164.35259992 54.55620026 90 N 82 16 19
+TOP 19 163.85260092 54.55620026 90 N 73 112 20
+TOP 20 163.35259938 54.55620026 90 N 82 15 21
+TOP 21 162.85260038 54.55620026 90 N 82 14 22
+TOP 22 162.35260138 54.55620026 90 N 73 113 23
+TOP 23 161.85259984 54.55620026 90 N 66 2 24
+TOP 24 161.35260084 54.55620026 90 N 73 118 25
+TOP 25 160.8525993 54.55620026 90 N 67 1 26
+TOP 26 160.3526003 54.55620026 90 N 0 29 27
+TOP 27 159.8526013 54.55620026 90 N 70 1 28
+TOP 28 159.35259976 54.55620026 90 N 0 28 29
+TOP 29 158.85260076 54.55620026 90 N 69 1 30
+TOP 30 158.35259922 54.55620026 90 N 73 119 31
+TOP 31 157.85260022 54.55620026 90 N 73 120 32
+TOP 32 155.86460064 52.56820068 180 N 73 125 33
+TOP 33 155.86460064 52.06820168 180 N 38 2 34
+TOP 34 155.86460064 51.56820014 180 N 35 1 35
+TOP 35 155.86460064 51.06820114 180 N 34 1 36
+TOP 36 155.86460064 50.5681996 180 N 0 27 37
+TOP 37 155.86460064 50.0682006 180 N 32 1 38
+TOP 38 155.86460064 49.5682016 180 N 39 2 39
+TOP 39 155.86460064 49.06820006 180 N 33 2 40
+TOP 40 155.86460064 48.56820106 180 N 73 124 41
+TOP 41 155.86460064 48.06819952 180 N 53 0 42
+TOP 42 155.86460064 47.56820052 180 N 37 2 43
+TOP 43 155.86460064 47.06820152 180 N 52 0 44
+TOP 44 155.86460064 46.56819998 180 N 51 0 45
+TOP 45 155.86460064 46.06820098 180 N 50 0 46
+TOP 46 155.86460064 45.56819944 180 N 36 2 47
+TOP 47 155.86460064 45.06820044 180 N 83 29 48
+TOP 48 157.85260022 43.08020086 90 N 73 123 49
+TOP 49 158.35259922 43.08020086 90 N 83 28 50
+TOP 50 158.85260076 43.08020086 90 N 73 121 51
+TOP 51 159.35259976 43.08020086 90 N 49 0 52
+TOP 52 159.8526013 43.08020086 90 N 73 122 53
+TOP 53 160.3526003 43.08020086 90 N 82 13 54
+TOP 54 160.8525993 43.08020086 90 N 68 2 55
+TOP 55 161.35260084 43.08020086 90 N 82 12 56
+TOP 56 161.85259984 43.08020086 90 N 73 116 57
+TOP 57 162.35260138 43.08020086 90 N 73 117 58
+TOP 58 162.85260038 43.08020086 90 N 82 11 59
+TOP 59 163.35259938 43.08020086 90 N 73 114 60
+TOP 60 163.85260092 43.08020086 90 N 63 1 61
+TOP 61 164.35259992 43.08020086 90 N 73 115 62
+TOP 62 164.85260146 43.08020086 90 N 14 2 63
+TOP 63 165.35260046 43.08020086 90 N 0 26 64
+#
+# CMP 57
+CMP 7 177.419 41.7322 90 N FB1 BLM03AX121SN1D ;0=1,1=0.0000
+PRP Artikkelnr_Noca 'N.A.'
+PRP Assembly ''
+PRP Author 'stl1'
+PRP Component_Class 'Inductors'
+PRP Component_Status 'Active'
+PRP ComponentLink1Description 'Datasheet'
+PRP ComponentLink1URL 'https://www.murata.com/en-eu/products/productdetail?partno=BLM03AG121SN1%23'
+PRP ComponentLink2Description 'Supplier link'
+PRP ComponentLink2URL 'N.A.'
+PRP HelpURL 'N.A.'
+PRP LatestRevisionDate '2022-02-27'
+PRP Manufacturer 'Murata'
+PRP Manufacturer_Part_Number 'BLM03AG121SN1D'
+PRP Note 'Ferrite Bead'
+PRP Pad_Count '2'
+PRP Part_Number 'FB0201-120R@100M-200mA-BLM03AG121SN1D'
+PRP Part_number_IPS 'N.A.'
+PRP Part_number_NEMS '100300419'
+PRP Part_number_Norautron 'N.A.'
+PRP PartId '100300419'
+PRP Published '2022-02-27'
+PRP Supplier_1 'Digi-Key'
+PRP Supplier_2 'Mouser'
+PRP Supplier_Part_Number_1 '490-5622-1-ND'
+PRP Supplier_Part_Number_2 '81-BLM03AX121SN1D'
+PRP Value '120R/0.2A'
+TOP 0 177.419 41.99519922 0 N 75 2 1
+TOP 1 177.419 41.46920078 0 N 76 1 2
+#
+# CMP 58
+CMP 3 157.226 35.4584 0 N F2 0402L050SL ;0=1,1=0.0000
+PRP Arrow_Part_Number ''
+PRP Arrow_Price/Stock ''
+PRP Datasheet_Link 'https://g.componentsearchengine.com/Datasheets/1/0402L010SLKR.pdf'
+PRP Height '0.6mm'
+PRP Manufacturer_Name 'LITTELFUSE'
+PRP Manufacturer_Part_Number '0402L050SL'
+PRP Mouser_Part_Number ''
+PRP Mouser_Price/Stock ''
+TOP 0 156.726001 35.4584 270 N 54 1 1
+TOP 1 157.725999 35.4584 270 N 9 1 2
+#
+# CMP 59
+CMP 3 167.513 33.6296 180 N F1 0402L050SL ;0=1,1=0.0000
+PRP Arrow_Part_Number ''
+PRP Arrow_Price/Stock ''
+PRP Datasheet_Link 'https://g.componentsearchengine.com/Datasheets/1/0402L010SLKR.pdf'
+PRP Height '0.6mm'
+PRP Manufacturer_Name 'LITTELFUSE'
+PRP Manufacturer_Part_Number '0402L050SL'
+PRP Mouser_Part_Number ''
+PRP Mouser_Price/Stock ''
+TOP 0 168.012999 33.6296 90 N 6 11 1
+TOP 1 167.013001 33.6296 90 N 5 3 2
+#
+# CMP 60
+CMP 15 158.2000011 37.37500018 90 N D1 ESDALC8-1BF4 ;0=1,1=0.0000
+PRP Arrow_Part_Number 'ESDALC8-1BF4'
+PRP Arrow_Price/Stock 'https://www.arrow.com/en/products/esdalc8-1bf4/stmicroelectronics'
+PRP Datasheet_Link 'https://www.st.com/resource/en/datasheet/esdalc8-1bf4.pdf'
+PRP Height '0.32mm'
+PRP Manufacturer_Name 'STMicroelectronics'
+PRP Manufacturer_Part_Number 'ESDALC8-1BF4'
+PRP Mouser_Part_Number '511-ESDALC8-1BF4'
+PRP Mouser_Price/Stock 'https://www.mouser.com/Search/Refine.aspx?Keyword=511-ESDALC8-1BF4'
+TOP 0 158.2000011 37.58200002 0 N 6 9 1
+TOP 1 158.2000011 37.16800034 0 N 73 50 2
+#
+# CMP 61
+CMP 18 160.3248 30.1752 0 N C47 GRM158R61A226ME15D ;0=1,1=0.0000
+PRP Arrow_Part_Number 'GRM158R61A226ME15D'
+PRP Arrow_Price/Stock 'https://www.arrow.com/en/products/grm158r61a226me15d/murata-manufacturing?utm_currency=USD&region=nac'
+PRP Datasheet_Link 'https://search.murata.co.jp/Ceramy/image/img/A01X/G101/ENG/GRM158R61A226ME15-01A.pdf'
+PRP Height '0.33mm'
+PRP Manufacturer_Name 'Murata Electronics'
+PRP Manufacturer_Part_Number 'GRM158R61A226ME15D'
+PRP Mouser_Part_Number '81-GRM158R61A226ME5D'
+PRP Mouser_Price/Stock 'https://www.mouser.co.uk/ProductDetail/Murata-Electronics/GRM158R61A226ME15D?qs=hd1VzrDQEGg0KAVI30ga2w%3D%3D'
+TOP 0 159.84979968 30.1752 270 N 73 52 1
+TOP 1 160.79980032 30.1752 270 N 7 7 2
+#
+# CMP 62
+CMP 18 164.5412 30.9626 180 N C46 GRM158R61A226ME15D ;0=1,1=0.0000
+PRP Arrow_Part_Number 'GRM158R61A226ME15D'
+PRP Arrow_Price/Stock 'https://www.arrow.com/en/products/grm158r61a226me15d/murata-manufacturing?utm_currency=USD&region=nac'
+PRP Datasheet_Link 'https://search.murata.co.jp/Ceramy/image/img/A01X/G101/ENG/GRM158R61A226ME15-01A.pdf'
+PRP Height '0.33mm'
+PRP Manufacturer_Name 'Murata Electronics'
+PRP Manufacturer_Part_Number 'GRM158R61A226ME15D'
+PRP Mouser_Part_Number '81-GRM158R61A226ME5D'
+PRP Mouser_Price/Stock 'https://www.mouser.co.uk/ProductDetail/Murata-Electronics/GRM158R61A226ME15D?qs=hd1VzrDQEGg0KAVI30ga2w%3D%3D'
+TOP 0 165.01620032 30.9626 90 N 73 68 1
+TOP 1 164.06619968 30.9626 90 N 4 8 2
+#
+# CMP 63
+CMP 10 159.4612 37.1348 180 N C45 CL03A105MO3NRNH ;0=1,1=0.0000
+PRP Arrow_Part_Number 'CL03A105MO3NRNH'
+PRP Arrow_Price/Stock 'https://www.arrow.com/en/products/cl03a105mo3nrnh/samsung-electro-mechanics?region=europe'
+PRP Datasheet_Link 'https://static6.arrow.com/aropdfconversion/5520c68c9128c972ec6f0cbf09912ac8e6a87451/cl03a105mo3nrnh.pdf'
+PRP Height '0.39mm'
+PRP Manufacturer_Name 'SAMSUNG'
+PRP Manufacturer_Part_Number 'CL03A105MO3NRNH'
+PRP Mouser_Part_Number '187-CL03A105MO3NRNH'
+PRP Mouser_Price/Stock 'https://www.mouser.co.uk/ProductDetail/Samsung-Electro-Mechanics/CL03A105MO3NRNH?qs=%252B6g0mu59x7LEwOOdfYkIjw%3D%3D'
+TOP 0 159.7962006 37.1348 180 N 82 6 1
+TOP 1 159.1261994 37.1348 180 N 73 48 2
+#
+# CMP 64
+CMP 10 159.4358 34.3154 0 N C44 CL03A105MO3NRNH ;0=1,1=0.0000
+PRP Arrow_Part_Number 'CL03A105MO3NRNH'
+PRP Arrow_Price/Stock 'https://www.arrow.com/en/products/cl03a105mo3nrnh/samsung-electro-mechanics?region=europe'
+PRP Datasheet_Link 'https://static6.arrow.com/aropdfconversion/5520c68c9128c972ec6f0cbf09912ac8e6a87451/cl03a105mo3nrnh.pdf'
+PRP Height '0.39mm'
+PRP Manufacturer_Name 'SAMSUNG'
+PRP Manufacturer_Part_Number 'CL03A105MO3NRNH'
+PRP Mouser_Part_Number '187-CL03A105MO3NRNH'
+PRP Mouser_Price/Stock 'https://www.mouser.co.uk/ProductDetail/Samsung-Electro-Mechanics/CL03A105MO3NRNH?qs=%252B6g0mu59x7LEwOOdfYkIjw%3D%3D'
+TOP 0 159.1007994 34.3154 0 N 7 5 1
+TOP 1 159.7708006 34.3154 0 N 73 56 2
+#
+# CMP 65
+CMP 9 151.892 53.7464 180 N C43 GRM033R6YA104KE14D ;0=1,1=0.0000
+PRP Arrow_Part_Number 'GRM033R6YA104KE14D'
+PRP Arrow_Price/Stock 'https://www.arrow.com/en/products/grm033r6ya104ke14d/murata-manufacturing?utm_currency=USD&region=europe'
+PRP Datasheet_Link 'https://search.murata.co.jp/Ceramy/image/img/A01X/G101/ENG/GRM033R6YA104KE14-01A.pdf'
+PRP Height '0.33mm'
+PRP Manufacturer_Name 'Murata Electronics'
+PRP Manufacturer_Part_Number 'GRM033R6YA104KE14D'
+PRP Mouser_Part_Number '81-GRM33R6YA104KE14D'
+PRP Mouser_Price/Stock 'https://www.mouser.co.uk/ProductDetail/Murata-Electronics/GRM033R6YA104KE14D?qs=P%2FC4Eoq9CDwTt3wOuyKhXw%3D%3D'
+TOP 0 152.22199934 53.7464 180 N 83 9 1
+TOP 1 151.56200066 53.7464 180 N 73 62 2
+#
+# CMP 66
+CMP 11 151.7904 52.832 180 N C42 CL05A106MQ5NUNC ;0=1,1=0.0000
+PRP Arrow_Part_Number 'CL05A106MQ5NUNC'
+PRP Arrow_Price/Stock 'https://www.arrow.com/en/products/cl05a106mq5nunc/samsung-electro-mechanics.html?utm_currency=USD&region=europe'
+PRP Datasheet_Link 'https://datasheet.datasheetarchive.com/originals/distributors/Datasheets-DGA10/2406160.pdf'
+PRP Height '0.7mm'
+PRP Manufacturer_Name 'SAMSUNG'
+PRP Manufacturer_Part_Number 'CL05A106MQ5NUNC'
+PRP Mouser_Part_Number '187-CL05A106MQ5NUNC'
+PRP Mouser_Price/Stock 'https://www.mouser.co.uk/ProductDetail/Samsung-Electro-Mechanics/CL05A106MQ5NUNC?qs=X6jEic%2FHinDK8vVLi1zwpw%3D%3D'
+TOP 0 152.25039908 52.832 90 N 83 10 1
+TOP 1 151.33040092 52.832 90 N 73 64 2
+#
+# CMP 67
+CMP 17 168.73760004 53.38720082 270 N C41 GRM0335C1H221FA01D ;0=1,1=0.0000
+PRP Arrow_Part_Number ''
+PRP Arrow_Price/Stock ''
+PRP Datasheet_Link 'https://search.murata.co.jp/Ceramy/image/img/A01X/G101/ENG/GRM0335C1H221FA01-01A.pdf'
+PRP Height '0.33mm'
+PRP Manufacturer_Name 'Murata Electronics'
+PRP Manufacturer_Part_Number 'GRM0335C1H221FA01D'
+PRP Mouser_Part_Number '81-GRM0335C1H221FA1D'
+PRP Mouser_Price/Stock 'https://www.mouser.co.uk/ProductDetail/Murata-Electronics/GRM0335C1H221FA01D/?qs=rrS6PyfT74d6B87t4Yhwdg%3D%3D'
+TOP 0 168.73760004 53.15020104 180 N 61 5 1
+TOP 1 168.73760004 53.6242006 180 N 55 0 2
+#
+# CMP 68
+CMP 17 168.73760004 52.0240006 90 N C40 GRM0335C1H221FA01D ;0=1,1=0.0000
+PRP Arrow_Part_Number ''
+PRP Arrow_Price/Stock ''
+PRP Datasheet_Link 'https://search.murata.co.jp/Ceramy/image/img/A01X/G101/ENG/GRM0335C1H221FA01-01A.pdf'
+PRP Height '0.33mm'
+PRP Manufacturer_Name 'Murata Electronics'
+PRP Manufacturer_Part_Number 'GRM0335C1H221FA01D'
+PRP Mouser_Part_Number '81-GRM0335C1H221FA1D'
+PRP Mouser_Price/Stock 'https://www.mouser.co.uk/ProductDetail/Murata-Electronics/GRM0335C1H221FA01D/?qs=rrS6PyfT74d6B87t4Yhwdg%3D%3D'
+TOP 0 168.73760004 52.26100038 0 N 61 4 1
+TOP 1 168.73760004 51.78700082 0 N 56 0 2
+#
+# CMP 69
+CMP 17 168.73760004 50.7540006 270 N C39 GRM0335C1H221FA01D ;0=1,1=0.0000
+PRP Arrow_Part_Number ''
+PRP Arrow_Price/Stock ''
+PRP Datasheet_Link 'https://search.murata.co.jp/Ceramy/image/img/A01X/G101/ENG/GRM0335C1H221FA01-01A.pdf'
+PRP Height '0.33mm'
+PRP Manufacturer_Name 'Murata Electronics'
+PRP Manufacturer_Part_Number 'GRM0335C1H221FA01D'
+PRP Mouser_Part_Number '81-GRM0335C1H221FA1D'
+PRP Mouser_Price/Stock 'https://www.mouser.co.uk/ProductDetail/Murata-Electronics/GRM0335C1H221FA01D/?qs=rrS6PyfT74d6B87t4Yhwdg%3D%3D'
+TOP 0 168.73760004 50.51700082 180 N 61 3 1
+TOP 1 168.73760004 50.99100038 180 N 57 0 2
+#
+# CMP 70
+CMP 17 168.73760004 49.4332006 90 N C38 GRM0335C1H221FA01D ;0=1,1=0.0000
+PRP Arrow_Part_Number ''
+PRP Arrow_Price/Stock ''
+PRP Datasheet_Link 'https://search.murata.co.jp/Ceramy/image/img/A01X/G101/ENG/GRM0335C1H221FA01-01A.pdf'
+PRP Height '0.33mm'
+PRP Manufacturer_Name 'Murata Electronics'
+PRP Manufacturer_Part_Number 'GRM0335C1H221FA01D'
+PRP Mouser_Part_Number '81-GRM0335C1H221FA1D'
+PRP Mouser_Price/Stock 'https://www.mouser.co.uk/ProductDetail/Murata-Electronics/GRM0335C1H221FA01D/?qs=rrS6PyfT74d6B87t4Yhwdg%3D%3D'
+TOP 0 168.73760004 49.67020038 0 N 61 2 1
+TOP 1 168.73760004 49.19620082 0 N 58 0 2
+#
+# CMP 71
+CMP 17 168.73760004 48.1124006 270 N C37 GRM0335C1H221FA01D ;0=1,1=0.0000
+PRP Arrow_Part_Number ''
+PRP Arrow_Price/Stock ''
+PRP Datasheet_Link 'https://search.murata.co.jp/Ceramy/image/img/A01X/G101/ENG/GRM0335C1H221FA01-01A.pdf'
+PRP Height '0.33mm'
+PRP Manufacturer_Name 'Murata Electronics'
+PRP Manufacturer_Part_Number 'GRM0335C1H221FA01D'
+PRP Mouser_Part_Number '81-GRM0335C1H221FA1D'
+PRP Mouser_Price/Stock 'https://www.mouser.co.uk/ProductDetail/Murata-Electronics/GRM0335C1H221FA01D/?qs=rrS6PyfT74d6B87t4Yhwdg%3D%3D'
+TOP 0 168.73760004 47.87540082 180 N 61 1 1
+TOP 1 168.73760004 48.34940038 180 N 59 1 2
+#
+# CMP 72
+CMP 17 168.75000032 46.68799908 90 N C36 GRM0335C1H221FA01D ;0=1,1=0.0000
+PRP Arrow_Part_Number ''
+PRP Arrow_Price/Stock ''
+PRP Datasheet_Link 'https://search.murata.co.jp/Ceramy/image/img/A01X/G101/ENG/GRM0335C1H221FA01-01A.pdf'
+PRP Height '0.33mm'
+PRP Manufacturer_Name 'Murata Electronics'
+PRP Manufacturer_Part_Number 'GRM0335C1H221FA01D'
+PRP Mouser_Part_Number '81-GRM0335C1H221FA1D'
+PRP Mouser_Price/Stock 'https://www.mouser.co.uk/ProductDetail/Murata-Electronics/GRM0335C1H221FA01D/?qs=rrS6PyfT74d6B87t4Yhwdg%3D%3D'
+TOP 0 168.75000032 46.92499886 0 N 61 0 1
+TOP 1 168.75000032 46.4509993 0 N 60 1 2
+#
+# CMP 73
+CMP 9 154.18340004 45.05360052 180 N C35 GRM033R6YA104KE14D ;0=1,1=0.0000
+PRP Arrow_Part_Number 'GRM033R6YA104KE14D'
+PRP Arrow_Price/Stock 'https://www.arrow.com/en/products/grm033r6ya104ke14d/murata-manufacturing?utm_currency=USD&region=europe'
+PRP Datasheet_Link 'https://search.murata.co.jp/Ceramy/image/img/A01X/G101/ENG/GRM033R6YA104KE14-01A.pdf'
+PRP Height '0.33mm'
+PRP Manufacturer_Name 'Murata Electronics'
+PRP Manufacturer_Part_Number 'GRM033R6YA104KE14D'
+PRP Mouser_Part_Number '81-GRM33R6YA104KE14D'
+PRP Mouser_Price/Stock 'https://www.mouser.co.uk/ProductDetail/Murata-Electronics/GRM033R6YA104KE14D?qs=P%2FC4Eoq9CDwTt3wOuyKhXw%3D%3D'
+TOP 0 154.51339938 45.05360052 180 N 83 27 1
+TOP 1 153.8534007 45.05360052 180 N 73 110 2
+#
+# CMP 74
+CMP 10 157.89180004 41.67540052 180 N C34 CL03A105MO3NRNH ;0=1,1=0.0000
+PRP Arrow_Part_Number 'CL03A105MO3NRNH'
+PRP Arrow_Price/Stock 'https://www.arrow.com/en/products/cl03a105mo3nrnh/samsung-electro-mechanics?region=europe'
+PRP Datasheet_Link 'https://static6.arrow.com/aropdfconversion/5520c68c9128c972ec6f0cbf09912ac8e6a87451/cl03a105mo3nrnh.pdf'
+PRP Height '0.39mm'
+PRP Manufacturer_Name 'SAMSUNG'
+PRP Manufacturer_Part_Number 'CL03A105MO3NRNH'
+PRP Mouser_Part_Number '187-CL03A105MO3NRNH'
+PRP Mouser_Price/Stock 'https://www.mouser.co.uk/ProductDetail/Samsung-Electro-Mechanics/CL03A105MO3NRNH?qs=%252B6g0mu59x7LEwOOdfYkIjw%3D%3D'
+TOP 0 158.22680064 41.67540052 180 N 83 26 1
+TOP 1 157.55679944 41.67540052 180 N 73 109 2
+#
+# CMP 75
+CMP 9 157.37499894 37.39999886 90 N C33 GRM033R6YA104KE14D ;0=1,1=0.0000
+PRP Arrow_Part_Number 'GRM033R6YA104KE14D'
+PRP Arrow_Price/Stock 'https://www.arrow.com/en/products/grm033r6ya104ke14d/murata-manufacturing?utm_currency=USD&region=europe'
+PRP Datasheet_Link 'https://search.murata.co.jp/Ceramy/image/img/A01X/G101/ENG/GRM033R6YA104KE14-01A.pdf'
+PRP Height '0.33mm'
+PRP Manufacturer_Name 'Murata Electronics'
+PRP Manufacturer_Part_Number 'GRM033R6YA104KE14D'
+PRP Mouser_Part_Number '81-GRM33R6YA104KE14D'
+PRP Mouser_Price/Stock 'https://www.mouser.co.uk/ProductDetail/Murata-Electronics/GRM033R6YA104KE14D?qs=P%2FC4Eoq9CDwTt3wOuyKhXw%3D%3D'
+TOP 0 157.37499894 37.7299982 90 N 6 10 1
+TOP 1 157.37499894 37.06999952 90 N 73 47 2
+#
+# CMP 76
+CMP 17 156.54999932 37.37500018 90 N C32 GRM035R61C225ME01D ;0=1,1=0.0000
+PRP Arrow_Part_Number ''
+PRP Arrow_Price/Stock ''
+PRP Datasheet_Link 'https://search.murata.co.jp/Ceramy/image/img/A01X/G101/ENG/GRM035R61C225ME01-01A.pdf'
+PRP Height '0.33mm'
+PRP Manufacturer_Name 'Murata Electronics'
+PRP Manufacturer_Part_Number 'GRM035R61C225ME01D'
+PRP Mouser_Part_Number '81-GRM035R61C225ME1D'
+PRP Mouser_Price/Stock 'https://www.mouser.co.uk/ProductDetail/Murata-Electronics/GRM035R61C225ME01D?qs=DPoM0jnrROXTliYh3Jmu1A%3D%3D'
+TOP 0 156.54999932 37.61199996 0 N 6 8 1
+TOP 1 156.54999932 37.1380004 0 N 73 49 2
+#
+# CMP 77
+CMP 0 171.1706 38.4302 0 N C31 GRM0335C1H221FA01D ;0=1,1=0.0000
+PRP Artikkelnr_Noca 'N.A.'
+PRP Assembly ''
+PRP Author 'rsk'
+PRP Component_Class 'Capacitors'
+PRP Component_Status 'Active'
+PRP ComponentLink1Description 'Datasheet'
+PRP ComponentLink1URL 'N.A.'
+PRP ComponentLink2Description 'Supplier link'
+PRP ComponentLink2URL 'N.A.'
+PRP HelpURL 'N.A.'
+PRP LatestRevisionDate '2014-11-13'
+PRP Manufacturer 'N.A.'
+PRP Manufacturer_Part_Number 'N.A.'
+PRP Note 'Chip Cap 1%'
+PRP Pad_Count '2'
+PRP Part_Number 'C0201-3.9p'
+PRP Part_number_IPS 'N.A.'
+PRP Part_number_NEMS '100200024'
+PRP Part_number_Norautron 'N.A.'
+PRP PartId '100200024'
+PRP Published '2014-11-13'
+PRP Supplier_1 'N.A.'
+PRP Supplier_2 'N.A.'
+PRP Supplier_Part_Number_1 'N.A.'
+PRP Supplier_Part_Number_2 'N.A.'
+PRP Value '3.9pF'
+TOP 0 170.93360022 38.4302 270 N 73 81 1
+TOP 1 171.40759978 38.4302 270 N 62 0 2
+#
+# CMP 78
+CMP 0 173.52499966 38.22500102 270 N C30 GRM033R71A222KA01D ;0=1,1=0.0000
+PRP Artikkelnr_Noca 'N.A.'
+PRP Assembly ''
+PRP Author 'rsk'
+PRP Component_Class 'Capacitors'
+PRP Component_Status 'Active'
+PRP ComponentLink1Description 'Datasheet'
+PRP ComponentLink1URL 'N.A.'
+PRP ComponentLink2Description 'Supplier link'
+PRP ComponentLink2URL 'N.A.'
+PRP HelpURL 'N.A.'
+PRP LatestRevisionDate '2014-11-13'
+PRP Manufacturer 'N.A.'
+PRP Manufacturer_Part_Number 'N.A.'
+PRP Note '10V'
+PRP Pad_Count '2'
+PRP Part_Number 'C0201-2n2'
+PRP Part_number_IPS '00000001778'
+PRP Part_number_NEMS '100200060'
+PRP Part_number_Norautron '26470002'
+PRP PartId '100200060'
+PRP Published '2014-11-13'
+PRP Supplier_1 'N.A.'
+PRP Supplier_2 'N.A.'
+PRP Supplier_Part_Number_1 'N.A.'
+PRP Supplier_Part_Number_2 'N.A.'
+PRP Value '2.2nF'
+TOP 0 173.52499966 37.98800124 180 N 73 80 1
+TOP 1 173.52499966 38.4620008 180 N 76 0 2
+#
+# CMP 79
+CMP 0 177.39540086 39.85839882 270 N C29 GRM033R70J103KA01D ;0=1,1=0.0000
+PRP Artikkelnr_Noca 'N.A.'
+PRP Assembly ''
+PRP Author 'rsk'
+PRP Component_Class 'Capacitors'
+PRP Component_Status 'Active'
+PRP ComponentLink1Description 'Datasheet'
+PRP ComponentLink1URL 'http://search.murata.co.jp/Ceramy/image/img/A01X/G101/ENG/GRM033R70J103KA01-01.pdf'
+PRP ComponentLink2Description 'Supplier link'
+PRP ComponentLink2URL 'N.A.'
+PRP HelpURL 'N.A.'
+PRP LatestRevisionDate '2020-10-13'
+PRP Manufacturer 'Murata'
+PRP Manufacturer_Part_Number 'GRM033R70J103KA01D'
+PRP Note '6.3V'
+PRP Pad_Count '2'
+PRP Part_Number 'C0201-10n-6.3V-X7R'
+PRP Part_number_IPS 'N.A.'
+PRP Part_number_NEMS '100200407'
+PRP Part_number_Norautron 'N.A.'
+PRP PartId '100200407'
+PRP Published '2018-05-07'
+PRP Supplier_1 'Digi-Key'
+PRP Supplier_2 'N.A.'
+PRP Supplier_Part_Number_1 '490-1262-1-ND'
+PRP Supplier_Part_Number_2 'N.A.'
+PRP Value '10nF'
+TOP 0 177.39540086 39.62139904 180 N 73 95 1
+TOP 1 177.39540086 40.0953986 180 N 76 3 2
+#
+# CMP 80
+CMP 0 176.68420086 39.85839882 270 N C28 GRM035R61C225ME01D ;0=1,1=0.0000
+PRP Artikkelnr_Noca 'N.A.'
+PRP Assembly ''
+PRP Author 'stl1'
+PRP Component_Class 'Capacitors'
+PRP Component_Status 'Active'
+PRP ComponentLink1Description 'Datasheet'
+PRP ComponentLink1URL 'https://www.murata.com/products/productdetail?partno=GRM033D80E225ME47%23'
+PRP ComponentLink2Description 'Supplier link'
+PRP ComponentLink2URL 'N.A.'
+PRP HelpURL 'N.A.'
+PRP LatestRevisionDate '2022-02-27'
+PRP Manufacturer 'Murata'
+PRP Manufacturer_Part_Number 'GRM033R61A225KE47'
+PRP Note '2.5V, 20%, X6T'
+PRP Pad_Count '2'
+PRP Part_Number 'C0201-2µ2-2.5V-X6T-GRM033D80E225ME47D'
+PRP Part_number_IPS 'N.A.'
+PRP Part_number_NEMS '100200527'
+PRP Part_number_Norautron 'N.A.'
+PRP PartId '100200527'
+PRP Published '2022-02-27'
+PRP Supplier_1 'Mouser'
+PRP Supplier_2 'Digi-Key'
+PRP Supplier_Part_Number_1 '81-GRM033D80E225ME7D'
+PRP Supplier_Part_Number_2 '490-18653-1-ND'
+PRP Value '2.2µF'
+TOP 0 176.68420086 39.62139904 180 N 73 94 1
+TOP 1 176.68420086 40.0953986 180 N 76 2 2
+#
+# CMP 81
+CMP 10 160.10160004 41.7116006 180 N C27 CL03A105MO3NRNH ;0=1,1=0.0000
+PRP Arrow_Part_Number 'CL03A105MO3NRNH'
+PRP Arrow_Price/Stock 'https://www.arrow.com/en/products/cl03a105mo3nrnh/samsung-electro-mechanics?region=europe'
+PRP Datasheet_Link 'https://static6.arrow.com/aropdfconversion/5520c68c9128c972ec6f0cbf09912ac8e6a87451/cl03a105mo3nrnh.pdf'
+PRP Height '0.39mm'
+PRP Manufacturer_Name 'SAMSUNG'
+PRP Manufacturer_Part_Number 'CL03A105MO3NRNH'
+PRP Mouser_Part_Number '187-CL03A105MO3NRNH'
+PRP Mouser_Price/Stock 'https://www.mouser.co.uk/ProductDetail/Samsung-Electro-Mechanics/CL03A105MO3NRNH?qs=%252B6g0mu59x7LEwOOdfYkIjw%3D%3D'
+TOP 0 160.43660064 41.7116006 180 N 82 10 1
+TOP 1 159.76659944 41.7116006 180 N 73 108 2
+#
+# CMP 82
+CMP 17 164.41120026 41.6354006 180 N C26 GRM0335C1H102GE01D ;0=1,1=0.0000
+PRP Arrow_Part_Number ''
+PRP Arrow_Price/Stock ''
+PRP Datasheet_Link 'https://search.murata.co.jp/Ceramy/image/img/A01X/G101/ENG/GRM0335C1H102GE01-01A.pdf'
+PRP Height '0.33mm'
+PRP Manufacturer_Name 'Murata Electronics'
+PRP Manufacturer_Part_Number 'GRM0335C1H102GE01D'
+PRP Mouser_Part_Number '81-GRM0335C1H102GE1D'
+PRP Mouser_Price/Stock 'https://www.mouser.co.uk/ProductDetail/Murata-Electronics/GRM0335C1H102GE01D?qs=DPoM0jnrROXb%252BXi%252BdiEYKA%3D%3D'
+TOP 0 164.64820004 41.6354006 90 N 14 1 1
+TOP 1 164.17420048 41.6354006 90 N 63 0 2
+#
+# CMP 83
+CMP 8 176.02499974 33.44999914 270 N C21 500R07S1R2BV4T ;0=1,1=0.0000
+PRP Copyright 'Copyright (C) 2025 Ultra Librarian. All rights reserved.'
+PRP Manufacturer_Name 'Johanson Technology'
+PRP Manufacturer_Part_Number '500R07S1R2BV4T'
+PRP RefDes ''
+PRP Type ''
+TOP 0 176.02499974 33.05780028 270 N 1 1 1
+TOP 1 176.02499974 33.842198 270 N 13 0 2
+#
+# CMP 84
+CMP 0 171.90000164 34.44999968 0 N C25 GJM0335C1HR30WB01D ;0=1,1=0.0000
+PRP Artikkelnr_Noca 'N.A.'
+PRP Author 'masi'
+PRP Component_Class 'Capacitors'
+PRP Component_Status 'Active'
+PRP ComponentLink1Description 'Datasheet'
+PRP ComponentLink1URL 'https://www.murata.com/en-global/products/productdetail?partno=GRM0335C1HR30BA01%23'
+PRP ComponentLink2Description 'Supplier link'
+PRP ComponentLink2URL 'N.A.'
+PRP Footprint_Doc '0201'
+PRP HelpURL 'N.A.'
+PRP LatestRevisionDate '2024-01-10'
+PRP Manufacturer 'Murata'
+PRP Manufacturer_Part_Number 'GRM0335C1HR30BA01'
+PRP Note '50V'
+PRP Pad_Count '2'
+PRP Part_Number 'C0201-0.3p-50V-GRM0335C1HR30BA01'
+PRP Part_number_IPS 'N.A.'
+PRP Part_number_NEMS '100200650'
+PRP Part_number_Norautron 'N.A.'
+PRP PartId '100200650'
+PRP Published '2024-01-10'
+PRP Supplier_1 'Digi-Key'
+PRP Supplier_2 'Mouser'
+PRP Supplier_Part_Number_1 '490-6135-2-ND'
+PRP Supplier_Part_Number_2 '81-GRM0335C1HR30BA1D'
+PRP Value '0.3pF'
+TOP 0 171.66300186 34.44999968 270 N 73 93 1
+TOP 1 172.13700142 34.44999968 270 N 13 1 2
+#
+# CMP 85
+CMP 0 171.90000164 36.29999852 0 N C24 GJM0335C1E2R0WB01 ;0=1,1=0.0000
+PRP Artikkelnr_Noca 'N.A.'
+PRP Assembly ''
+PRP Author 'rsk'
+PRP Component_Class 'Capacitors'
+PRP Component_Status 'Active'
+PRP ComponentLink1Description 'Datasheet'
+PRP ComponentLink1URL 'N.A.'
+PRP ComponentLink2Description 'Supplier link'
+PRP ComponentLink2URL 'N.A.'
+PRP Footprint_Doc '0201'
+PRP HelpURL 'https://psearch.en.murata.com/capacitor/product/GJM0335C1E2R0WB01%23.html'
+PRP LatestRevisionDate '2018-10-25'
+PRP Manufacturer 'Murata'
+PRP Manufacturer_Part_Number 'GJM0335C1E2R0WB01'
+PRP Note '25V'
+PRP Pad_Count '2'
+PRP Part_Number 'C0201-2.0p-HQ-Murata'
+PRP Part_number_IPS '00000001775'
+PRP Part_number_NEMS '100200419'
+PRP Part_number_Norautron 'N.A.'
+PRP PartId '100200419'
+PRP Published '2018-10-25'
+PRP Supplier_1 'N.A.'
+PRP Supplier_2 'N.A.'
+PRP Supplier_Part_Number_1 'N.A.'
+PRP Supplier_Part_Number_2 'N.A.'
+PRP Value '2.0pF'
+TOP 0 171.66300186 36.29999852 270 N 73 92 1
+TOP 1 172.13700142 36.29999852 270 N 64 0 2
+#
+# CMP 86
+CMP 0 172.8216 38.4048 90 N C23 GJM0335C1E1R5WB01 ;0=1,1=0.0000
+PRP Artikkelnr_Noca 'N.A.'
+PRP Assembly ''
+PRP Author 'masi'
+PRP Component_Class 'Capacitors'
+PRP Component_Status 'Active'
+PRP ComponentLink1Description 'Datasheet'
+PRP ComponentLink1URL 'https://search.murata.co.jp/Ceramy/image/img/A01X/G101/ENG/GJM0335C1E1R5WB01-01.pdf'
+PRP ComponentLink2Description 'Supplier link'
+PRP ComponentLink2URL 'N.A.'
+PRP Footprint_Doc '0201'
+PRP HelpURL 'https://www.murata.com/products/productdetail?partno=GJM0335C1E1R5WB01%23'
+PRP LatestRevisionDate '2021-06-15'
+PRP Manufacturer 'Murata'
+PRP Manufacturer_Part_Number 'GJM0335C1E1R5WB01'
+PRP Note '25V'
+PRP Pad_Count '2'
+PRP Part_Number 'C0201-1.5p-25V-NP0-GJM0335C1E1R5WB01'
+PRP Part_number_IPS 'N.A.'
+PRP Part_number_NEMS '100200477'
+PRP Part_number_Norautron 'N.A.'
+PRP PartId '100200477'
+PRP Published '2021-06-15'
+PRP Supplier_1 'Digi-Key'
+PRP Supplier_2 'Mouser'
+PRP Supplier_Part_Number_1 '490-11176-2-ND'
+PRP Supplier_Part_Number_2 '81-GJM0335C1E1R5WB1D'
+PRP Value '1.5pF'
+TOP 0 172.8216 38.64179978 0 N 73 82 1
+TOP 1 172.8216 38.16780022 0 N 65 0 2
+#
+# CMP 87
+CMP 0 177.419 43.1038 90 N C22 GRM035R61C225ME01D ;0=1,1=0.0000
+PRP Artikkelnr_Noca 'N.A.'
+PRP Assembly ''
+PRP Author 'stl1'
+PRP Component_Class 'Capacitors'
+PRP Component_Status 'Active'
+PRP ComponentLink1Description 'Datasheet'
+PRP ComponentLink1URL 'https://www.murata.com/products/productdetail?partno=GRM033D80E225ME47%23'
+PRP ComponentLink2Description 'Supplier link'
+PRP ComponentLink2URL 'N.A.'
+PRP HelpURL 'N.A.'
+PRP LatestRevisionDate '2022-02-27'
+PRP Manufacturer 'Murata'
+PRP Manufacturer_Part_Number 'GRM033R61A225KE47'
+PRP Note '2.5V, 20%, X6T'
+PRP Pad_Count '2'
+PRP Part_Number 'C0201-2µ2-2.5V-X6T-GRM033D80E225ME47D'
+PRP Part_number_IPS 'N.A.'
+PRP Part_number_NEMS '100200527'
+PRP Part_number_Norautron 'N.A.'
+PRP PartId '100200527'
+PRP Published '2022-02-27'
+PRP Supplier_1 'Mouser'
+PRP Supplier_2 'Digi-Key'
+PRP Supplier_Part_Number_1 '81-GRM033D80E225ME7D'
+PRP Supplier_Part_Number_2 '490-18653-1-ND'
+PRP Value '2.2µF'
+TOP 0 177.419 43.34079978 0 N 73 90 1
+TOP 1 177.419 42.86680022 0 N 75 1 2
+#
+# CMP 88
+CMP 11 162.59080004 56.8500006 0 N C20 CL05A106MQ5NUNC ;0=1,1=0.0000
+PRP Arrow_Part_Number 'CL05A106MQ5NUNC'
+PRP Arrow_Price/Stock 'https://www.arrow.com/en/products/cl05a106mq5nunc/samsung-electro-mechanics.html?utm_currency=USD&region=europe'
+PRP Datasheet_Link 'https://datasheet.datasheetarchive.com/originals/distributors/Datasheets-DGA10/2406160.pdf'
+PRP Height '0.7mm'
+PRP Manufacturer_Name 'SAMSUNG'
+PRP Manufacturer_Part_Number 'CL05A106MQ5NUNC'
+PRP Mouser_Part_Number '187-CL05A106MQ5NUNC'
+PRP Mouser_Price/Stock 'https://www.mouser.co.uk/ProductDetail/Samsung-Electro-Mechanics/CL05A106MQ5NUNC?qs=X6jEic%2FHinDK8vVLi1zwpw%3D%3D'
+TOP 0 162.13080096 56.8500006 270 N 66 1 1
+TOP 1 163.05079912 56.8500006 270 N 73 107 2
+#
+# CMP 89
+CMP 9 162.36220004 55.9102006 0 N C19 GRM033R6YA104KE14D ;0=1,1=0.0000
+PRP Arrow_Part_Number 'GRM033R6YA104KE14D'
+PRP Arrow_Price/Stock 'https://www.arrow.com/en/products/grm033r6ya104ke14d/murata-manufacturing?utm_currency=USD&region=europe'
+PRP Datasheet_Link 'https://search.murata.co.jp/Ceramy/image/img/A01X/G101/ENG/GRM033R6YA104KE14-01A.pdf'
+PRP Height '0.33mm'
+PRP Manufacturer_Name 'Murata Electronics'
+PRP Manufacturer_Part_Number 'GRM033R6YA104KE14D'
+PRP Mouser_Part_Number '81-GRM33R6YA104KE14D'
+PRP Mouser_Price/Stock 'https://www.mouser.co.uk/ProductDetail/Murata-Electronics/GRM033R6YA104KE14D?qs=P%2FC4Eoq9CDwTt3wOuyKhXw%3D%3D'
+TOP 0 162.0322007 55.9102006 0 N 66 0 1
+TOP 1 162.69219938 55.9102006 0 N 73 106 2
+#
+# CMP 90
+CMP 17 163.0172 32.9438 180 N C18 GRM035R61C225ME01D ;0=1,1=0.0000
+PRP Arrow_Part_Number ''
+PRP Arrow_Price/Stock ''
+PRP Datasheet_Link 'https://search.murata.co.jp/Ceramy/image/img/A01X/G101/ENG/GRM035R61C225ME01-01A.pdf'
+PRP Height '0.33mm'
+PRP Manufacturer_Name 'Murata Electronics'
+PRP Manufacturer_Part_Number 'GRM035R61C225ME01D'
+PRP Mouser_Part_Number '81-GRM035R61C225ME1D'
+PRP Mouser_Price/Stock 'https://www.mouser.co.uk/ProductDetail/Murata-Electronics/GRM035R61C225ME01D?qs=DPoM0jnrROXTliYh3Jmu1A%3D%3D'
+TOP 0 163.25419978 32.9438 90 N 8 3 1
+TOP 1 162.78020022 32.9438 90 N 73 66 2
+#
+# CMP 91
+CMP 10 161.21920004 56.2658006 270 N C17 CL03A105MO3NRNH ;0=1,1=0.0000
+PRP Arrow_Part_Number 'CL03A105MO3NRNH'
+PRP Arrow_Price/Stock 'https://www.arrow.com/en/products/cl03a105mo3nrnh/samsung-electro-mechanics?region=europe'
+PRP Datasheet_Link 'https://static6.arrow.com/aropdfconversion/5520c68c9128c972ec6f0cbf09912ac8e6a87451/cl03a105mo3nrnh.pdf'
+PRP Height '0.39mm'
+PRP Manufacturer_Name 'SAMSUNG'
+PRP Manufacturer_Part_Number 'CL03A105MO3NRNH'
+PRP Mouser_Part_Number '187-CL03A105MO3NRNH'
+PRP Mouser_Price/Stock 'https://www.mouser.co.uk/ProductDetail/Samsung-Electro-Mechanics/CL03A105MO3NRNH?qs=%252B6g0mu59x7LEwOOdfYkIjw%3D%3D'
+TOP 0 161.21920004 55.9308 270 N 67 0 1
+TOP 1 161.21920004 56.6008012 270 N 73 105 2
+#
+# CMP 92
+CMP 10 161.57480004 40.9750006 0 N C16 CL03A105MO3NRNH ;0=1,1=0.0000
+PRP Arrow_Part_Number 'CL03A105MO3NRNH'
+PRP Arrow_Price/Stock 'https://www.arrow.com/en/products/cl03a105mo3nrnh/samsung-electro-mechanics?region=europe'
+PRP Datasheet_Link 'https://static6.arrow.com/aropdfconversion/5520c68c9128c972ec6f0cbf09912ac8e6a87451/cl03a105mo3nrnh.pdf'
+PRP Height '0.39mm'
+PRP Manufacturer_Name 'SAMSUNG'
+PRP Manufacturer_Part_Number 'CL03A105MO3NRNH'
+PRP Mouser_Part_Number '187-CL03A105MO3NRNH'
+PRP Mouser_Price/Stock 'https://www.mouser.co.uk/ProductDetail/Samsung-Electro-Mechanics/CL03A105MO3NRNH?qs=%252B6g0mu59x7LEwOOdfYkIjw%3D%3D'
+TOP 0 161.23979944 40.9750006 0 N 68 1 1
+TOP 1 161.90980064 40.9750006 0 N 73 104 2
+#
+# CMP 93
+CMP 9 161.57480004 41.7116006 0 N C15 GRM033R6YA104KE14D ;0=1,1=0.0000
+PRP Arrow_Part_Number 'GRM033R6YA104KE14D'
+PRP Arrow_Price/Stock 'https://www.arrow.com/en/products/grm033r6ya104ke14d/murata-manufacturing?utm_currency=USD&region=europe'
+PRP Datasheet_Link 'https://search.murata.co.jp/Ceramy/image/img/A01X/G101/ENG/GRM033R6YA104KE14-01A.pdf'
+PRP Height '0.33mm'
+PRP Manufacturer_Name 'Murata Electronics'
+PRP Manufacturer_Part_Number 'GRM033R6YA104KE14D'
+PRP Mouser_Part_Number '81-GRM33R6YA104KE14D'
+PRP Mouser_Price/Stock 'https://www.mouser.co.uk/ProductDetail/Murata-Electronics/GRM033R6YA104KE14D?qs=P%2FC4Eoq9CDwTt3wOuyKhXw%3D%3D'
+TOP 0 161.2448007 41.7116006 0 N 68 0 1
+TOP 1 161.90479938 41.7116006 0 N 73 103 2
+#
+# CMP 94
+CMP 10 157.53620004 56.28040052 270 N C14 CL03A105MO3NRNH ;0=1,1=0.0000
+PRP Arrow_Part_Number 'CL03A105MO3NRNH'
+PRP Arrow_Price/Stock 'https://www.arrow.com/en/products/cl03a105mo3nrnh/samsung-electro-mechanics?region=europe'
+PRP Datasheet_Link 'https://static6.arrow.com/aropdfconversion/5520c68c9128c972ec6f0cbf09912ac8e6a87451/cl03a105mo3nrnh.pdf'
+PRP Height '0.39mm'
+PRP Manufacturer_Name 'SAMSUNG'
+PRP Manufacturer_Part_Number 'CL03A105MO3NRNH'
+PRP Mouser_Part_Number '187-CL03A105MO3NRNH'
+PRP Mouser_Price/Stock 'https://www.mouser.co.uk/ProductDetail/Samsung-Electro-Mechanics/CL03A105MO3NRNH?qs=%252B6g0mu59x7LEwOOdfYkIjw%3D%3D'
+TOP 0 157.53620004 55.94539992 270 N 69 0 1
+TOP 1 157.53620004 56.61540112 270 N 73 100 2
+#
+# CMP 95
+CMP 12 159.4104 56.4896 180 N C13 CL21A107MQYNNWE ;0=1,1=0.0000
+PRP Arrow_Part_Number 'CL21A107MQYNNWE'
+PRP Arrow_Price/Stock 'https://www.arrow.com/en/products/cl21a107mqynnwe/samsung-electro-mechanics?utm_currency=USD&region=nac'
+PRP Datasheet_Link 'https://www.mouser.jp/datasheet/2/585/Samsung_7_14_2022_CL21A107MQYNNW_Specsheet-3000071.pdf'
+PRP Height '1.45mm'
+PRP Manufacturer_Name 'SAMSUNG'
+PRP Manufacturer_Part_Number 'CL21A107MQYNNWE'
+PRP Mouser_Part_Number '187-CL21A107MQYNNWE'
+PRP Mouser_Price/Stock 'https://www.mouser.co.uk/ProductDetail/Samsung-Electro-Mechanics/CL21A107MQYNNWE?qs=81r%252BiQLm7BSNi6fWCnDBNQ%3D%3D'
+TOP 0 160.24040088 56.4896 90 N 70 0 1
+TOP 1 158.58039912 56.4896 90 N 73 63 2
+#
+# CMP 96
+CMP 18 164.4904 39.2938 0 N C12 GRM158R61A226ME15D ;0=1,1=0.0000
+PRP Arrow_Part_Number 'GRM158R61A226ME15D'
+PRP Arrow_Price/Stock 'https://www.arrow.com/en/products/grm158r61a226me15d/murata-manufacturing?utm_currency=USD&region=nac'
+PRP Datasheet_Link 'https://search.murata.co.jp/Ceramy/image/img/A01X/G101/ENG/GRM158R61A226ME15-01A.pdf'
+PRP Height '0.33mm'
+PRP Manufacturer_Name 'Murata Electronics'
+PRP Manufacturer_Part_Number 'GRM158R61A226ME15D'
+PRP Mouser_Part_Number '81-GRM158R61A226ME5D'
+PRP Mouser_Price/Stock 'https://www.mouser.co.uk/ProductDetail/Murata-Electronics/GRM158R61A226ME15D?qs=hd1VzrDQEGg0KAVI30ga2w%3D%3D'
+TOP 0 164.01539968 39.2938 270 N 73 86 1
+TOP 1 164.96540032 39.2938 270 N 83 13 2
+#
+# CMP 97
+CMP 0 175.89680086 45.57339882 270 N C11 GRM033R6YA104KE14D ;0=1,1=0.0000
+PRP Artikkelnr_Noca 'N.A.'
+PRP Assembly ''
+PRP Author 'getr'
+PRP Component_Class 'Capacitors'
+PRP Component_Status 'Active'
+PRP ComponentLink1Description 'Datasheet'
+PRP ComponentLink1URL 'N.A.'
+PRP ComponentLink2Description 'Supplier link'
+PRP ComponentLink2URL 'N.A.'
+PRP Footprint_Doc '0201'
+PRP HelpURL 'N.A.'
+PRP LatestRevisionDate '2021-04-12'
+PRP Manufacturer 'N.A.'
+PRP Manufacturer_Part_Number 'N.A.'
+PRP Note '10V'
+PRP Pad_Count '2'
+PRP Part_Number 'C0201-100n-10V-X7R'
+PRP Part_number_IPS 'N.A.'
+PRP Part_number_NEMS '100200469'
+PRP Part_number_Norautron 'N.A.'
+PRP PartId '100200469'
+PRP Published '2021-04-12'
+PRP Supplier_1 'N.A.'
+PRP Supplier_2 'N.A.'
+PRP Supplier_Part_Number_1 'N.A.'
+PRP Supplier_Part_Number_2 'N.A.'
+PRP Value '100nF'
+TOP 0 175.89680086 45.33639904 180 N 83 17 1
+TOP 1 175.89680086 45.8103986 180 N 73 88 2
+#
+# CMP 98
+CMP 2 176.76040086 45.97979882 90 N C10 CL05A106MQ5NUNC ;0=1,1=0.0000
+PRP Artikkelnr_Noca 'N.A.'
+PRP Assembly ''
+PRP Author 'getr'
+PRP Component_Class 'Capacitors'
+PRP Component_Status 'Active'
+PRP ComponentLink1Description 'Datasheet'
+PRP ComponentLink1URL 'N.A.'
+PRP ComponentLink2Description 'Supplier link'
+PRP ComponentLink2URL 'N.A.'
+PRP Footprint_Doc '0402'
+PRP HelpURL 'N.A.'
+PRP LatestRevisionDate '2021-06-25'
+PRP Manufacturer 'N.A.'
+PRP Manufacturer_Part_Number 'N.A.'
+PRP Note '6.3V'
+PRP Pad_Count '2'
+PRP Part_Number 'C0402-10µF-6.3V-X6S'
+PRP Part_number_IPS 'N.A.'
+PRP Part_number_NEMS '100200478'
+PRP Part_number_Norautron 'N.A.'
+PRP PartId '100200478'
+PRP Published '2021-06-25'
+PRP Supplier_1 'N.A.'
+PRP Supplier_2 'N.A.'
+PRP Supplier_Part_Number_1 'N.A.'
+PRP Supplier_Part_Number_2 'N.A.'
+PRP Value '10µF'
+TOP 0 176.76040086 46.4397979 0 N 73 89 1
+TOP 1 176.76040086 45.51979974 0 N 83 18 2
+#
+# CMP 99
+CMP 0 170.3578 46.6344 180 N C9 GRM033R6YA104KE14D ;0=1,1=0.0000
+PRP Artikkelnr_Noca 'N.A.'
+PRP Assembly ''
+PRP Author 'getr'
+PRP Component_Class 'Capacitors'
+PRP Component_Status 'Active'
+PRP ComponentLink1Description 'Datasheet'
+PRP ComponentLink1URL 'N.A.'
+PRP ComponentLink2Description 'Supplier link'
+PRP ComponentLink2URL 'N.A.'
+PRP HelpURL 'N.A.'
+PRP LatestRevisionDate '2021-04-12'
+PRP Manufacturer 'N.A.'
+PRP Manufacturer_Part_Number 'N.A.'
+PRP Note '10V'
+PRP Pad_Count '2'
+PRP Part_Number 'C0201-100n-10V-X7R'
+PRP Part_number_IPS 'N.A.'
+PRP Part_number_NEMS '100200469'
+PRP Part_number_Norautron 'N.A.'
+PRP PartId '100200469'
+PRP Published '2021-04-12'
+PRP Supplier_1 'N.A.'
+PRP Supplier_2 'N.A.'
+PRP Supplier_Part_Number_1 'N.A.'
+PRP Supplier_Part_Number_2 'N.A.'
+PRP Value '100nF'
+TOP 0 170.59479978 46.6344 90 N 83 20 1
+TOP 1 170.12080022 46.6344 90 N 73 91 2
+#
+# CMP 100
+CMP 0 175.95000116 38.82499982 0 N C8 GRM033R6YA104KE14D ;0=1,1=0.0000
+PRP Artikkelnr_Noca 'N.A.'
+PRP Assembly ''
+PRP Author 'getr'
+PRP Component_Class 'Capacitors'
+PRP Component_Status 'Active'
+PRP ComponentLink1Description 'Datasheet'
+PRP ComponentLink1URL 'N.A.'
+PRP ComponentLink2Description 'Supplier link'
+PRP ComponentLink2URL 'N.A.'
+PRP HelpURL 'N.A.'
+PRP LatestRevisionDate '2021-04-12'
+PRP Manufacturer 'N.A.'
+PRP Manufacturer_Part_Number 'N.A.'
+PRP Note '10V'
+PRP Pad_Count '2'
+PRP Part_Number 'C0201-100n-10V-X7R'
+PRP Part_number_IPS 'N.A.'
+PRP Part_number_NEMS '100200469'
+PRP Part_number_Norautron 'N.A.'
+PRP PartId '100200469'
+PRP Published '2021-04-12'
+PRP Supplier_1 'N.A.'
+PRP Supplier_2 'N.A.'
+PRP Supplier_Part_Number_1 'N.A.'
+PRP Supplier_Part_Number_2 'N.A.'
+PRP Value '100nF'
+TOP 0 175.71300138 38.82499982 270 N 83 16 1
+TOP 1 176.18700094 38.82499982 270 N 73 85 2
+#
+# CMP 101
+CMP 0 167.8686 41.0718 90 N C7 GRM033R6YA104KE14D ;0=1,1=0.0000
+PRP Artikkelnr_Noca 'N.A.'
+PRP Assembly ''
+PRP Author 'getr'
+PRP Component_Class 'Capacitors'
+PRP Component_Status 'Active'
+PRP ComponentLink1Description 'Datasheet'
+PRP ComponentLink1URL 'N.A.'
+PRP ComponentLink2Description 'Supplier link'
+PRP ComponentLink2URL 'N.A.'
+PRP HelpURL 'N.A.'
+PRP LatestRevisionDate '2021-04-12'
+PRP Manufacturer 'N.A.'
+PRP Manufacturer_Part_Number 'N.A.'
+PRP Note '10V'
+PRP Pad_Count '2'
+PRP Part_Number 'C0201-100n-10V-X7R'
+PRP Part_number_IPS 'N.A.'
+PRP Part_number_NEMS '100200469'
+PRP Part_number_Norautron 'N.A.'
+PRP PartId '100200469'
+PRP Published '2021-04-12'
+PRP Supplier_1 'N.A.'
+PRP Supplier_2 'N.A.'
+PRP Supplier_Part_Number_1 'N.A.'
+PRP Supplier_Part_Number_2 'N.A.'
+PRP Value '100nF'
+TOP 0 167.8686 41.30879978 0 N 83 34 1
+TOP 1 167.8686 40.83480022 0 N 73 130 2
+#
+# CMP 102
+CMP 11 167.32499936 35.84999942 0 N C6 CL05A106MQ5NUNC ;0=1,1=0.0000
+PRP Arrow_Part_Number 'CL05A106MQ5NUNC'
+PRP Arrow_Price/Stock 'https://www.arrow.com/en/products/cl05a106mq5nunc/samsung-electro-mechanics.html?utm_currency=USD&region=europe'
+PRP Datasheet_Link 'https://datasheet.datasheetarchive.com/originals/distributors/Datasheets-DGA10/2406160.pdf'
+PRP Height '0.7mm'
+PRP Manufacturer_Name 'SAMSUNG'
+PRP Manufacturer_Part_Number 'CL05A106MQ5NUNC'
+PRP Mouser_Part_Number '187-CL05A106MQ5NUNC'
+PRP Mouser_Price/Stock 'https://www.mouser.co.uk/ProductDetail/Samsung-Electro-Mechanics/CL05A106MQ5NUNC?qs=X6jEic%2FHinDK8vVLi1zwpw%3D%3D'
+TOP 0 166.86500028 35.84999942 270 N 71 0 1
+TOP 1 167.78499844 35.84999942 270 N 73 79 2
+#
+# CMP 103
+CMP 11 164.592 32.0548 0 N C5 CL05A106MQ5NUNC ;0=1,1=0.0000
+PRP Arrow_Part_Number 'CL05A106MQ5NUNC'
+PRP Arrow_Price/Stock 'https://www.arrow.com/en/products/cl05a106mq5nunc/samsung-electro-mechanics.html?utm_currency=USD&region=europe'
+PRP Datasheet_Link 'https://datasheet.datasheetarchive.com/originals/distributors/Datasheets-DGA10/2406160.pdf'
+PRP Height '0.7mm'
+PRP Manufacturer_Name 'SAMSUNG'
+PRP Manufacturer_Part_Number 'CL05A106MQ5NUNC'
+PRP Mouser_Part_Number '187-CL05A106MQ5NUNC'
+PRP Mouser_Price/Stock 'https://www.mouser.co.uk/ProductDetail/Samsung-Electro-Mechanics/CL05A106MQ5NUNC?qs=X6jEic%2FHinDK8vVLi1zwpw%3D%3D'
+TOP 0 164.13200092 32.0548 270 N 4 11 1
+TOP 1 165.05199908 32.0548 270 N 73 87 2
+#
+# CMP 104
+CMP 9 164.4396 32.9184 0 N C4 GRM033R6YA104KE14D ;0=1,1=0.0000
+PRP Arrow_Part_Number 'GRM033R6YA104KE14D'
+PRP Arrow_Price/Stock 'https://www.arrow.com/en/products/grm033r6ya104ke14d/murata-manufacturing?utm_currency=USD&region=europe'
+PRP Datasheet_Link 'https://search.murata.co.jp/Ceramy/image/img/A01X/G101/ENG/GRM033R6YA104KE14-01A.pdf'
+PRP Height '0.33mm'
+PRP Manufacturer_Name 'Murata Electronics'
+PRP Manufacturer_Part_Number 'GRM033R6YA104KE14D'
+PRP Mouser_Part_Number '81-GRM33R6YA104KE14D'
+PRP Mouser_Price/Stock 'https://www.mouser.co.uk/ProductDetail/Murata-Electronics/GRM033R6YA104KE14D?qs=P%2FC4Eoq9CDwTt3wOuyKhXw%3D%3D'
+TOP 0 164.10960066 32.9184 0 N 4 3 1
+TOP 1 164.76959934 32.9184 0 N 73 67 2
+#
+# CMP 105
+CMP 17 165.9382 32.7152 90 N C3 GRM035R61C225ME01D ;0=1,1=0.0000
+PRP Arrow_Part_Number ''
+PRP Arrow_Price/Stock ''
+PRP Datasheet_Link 'https://search.murata.co.jp/Ceramy/image/img/A01X/G101/ENG/GRM035R61C225ME01-01A.pdf'
+PRP Height '0.33mm'
+PRP Manufacturer_Name 'Murata Electronics'
+PRP Manufacturer_Part_Number 'GRM035R61C225ME01D'
+PRP Mouser_Part_Number '81-GRM035R61C225ME1D'
+PRP Mouser_Price/Stock 'https://www.mouser.co.uk/ProductDetail/Murata-Electronics/GRM035R61C225ME01D?qs=DPoM0jnrROXTliYh3Jmu1A%3D%3D'
+TOP 0 165.9382 32.95219978 0 N 5 1 1
+TOP 1 165.9382 32.47820022 0 N 73 76 2
+#
+# CMP 106
+CMP 10 164.29260004 56.6976006 180 N C2 CL03A105MO3NRNH ;0=1,1=0.0000
+PRP Arrow_Part_Number 'CL03A105MO3NRNH'
+PRP Arrow_Price/Stock 'https://www.arrow.com/en/products/cl03a105mo3nrnh/samsung-electro-mechanics?region=europe'
+PRP Datasheet_Link 'https://static6.arrow.com/aropdfconversion/5520c68c9128c972ec6f0cbf09912ac8e6a87451/cl03a105mo3nrnh.pdf'
+PRP Height '0.39mm'
+PRP Manufacturer_Name 'SAMSUNG'
+PRP Manufacturer_Part_Number 'CL03A105MO3NRNH'
+PRP Mouser_Part_Number '187-CL03A105MO3NRNH'
+PRP Mouser_Price/Stock 'https://www.mouser.co.uk/ProductDetail/Samsung-Electro-Mechanics/CL03A105MO3NRNH?qs=%252B6g0mu59x7LEwOOdfYkIjw%3D%3D'
+TOP 0 164.62760064 56.6976006 180 N 82 9 1
+TOP 1 163.95759944 56.6976006 180 N 73 102 2
+#
+# CMP 107
+CMP 9 163.86080004 55.9102006 180 N C1 GRM033R6YA104KE14D ;0=1,1=0.0000
+PRP Arrow_Part_Number 'GRM033R6YA104KE14D'
+PRP Arrow_Price/Stock 'https://www.arrow.com/en/products/grm033r6ya104ke14d/murata-manufacturing?utm_currency=USD&region=europe'
+PRP Datasheet_Link 'https://search.murata.co.jp/Ceramy/image/img/A01X/G101/ENG/GRM033R6YA104KE14-01A.pdf'
+PRP Height '0.33mm'
+PRP Manufacturer_Name 'Murata Electronics'
+PRP Manufacturer_Part_Number 'GRM033R6YA104KE14D'
+PRP Mouser_Part_Number '81-GRM33R6YA104KE14D'
+PRP Mouser_Price/Stock 'https://www.mouser.co.uk/ProductDetail/Murata-Electronics/GRM033R6YA104KE14D?qs=P%2FC4Eoq9CDwTt3wOuyKhXw%3D%3D'
+TOP 0 164.19079938 55.9102006 180 N 82 8 1
+TOP 1 163.5308007 55.9102006 180 N 73 101 2
+#
+# CMP 108
+CMP 5 176.10000086 27.70000048 90 N ANT1 2450AT18B100 ;0=1,1=0.0000
+PRP Arrow_Part_Number ''
+PRP Arrow_Price/Stock ''
+PRP Datasheet_Link 'https://www.johansontechnology.com/docs/3829/Antenna-2450AT18B0100001E-Rev5.0_uMmswfC.pdf'
+PRP Height '1.4mm'
+PRP Manufacturer_Name 'JOHANSON TECHNOLOGY'
+PRP Manufacturer_Part_Number '2450AT18B0100001E'
+PRP Mouser_Part_Number ''
+PRP Mouser_Price/Stock ''
+TOP 0 176.10000086 29.15000012 0 N 72 1 1
+TOP 1 176.10000086 26.25000084 0 N 0 13 2
+#

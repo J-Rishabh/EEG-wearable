@@ -204,7 +204,7 @@ def plot_confusion_matrix(df, match_ms=400, stem=''):
     ax.set_xticks([0, 1])
     ax.set_xticklabels(['Blink\n(CV truth)', 'No Blink\n(CV truth)'])
     ax.set_yticks([0, 1])
-    ax.set_yticklabels(['Blink\n(EEG)', 'No Blink\n(EEG)'])
+    ax.set_yticklabels(['Blink\n(EOG)', 'No Blink\n(EOG)'])
 
     cell_labels = [[str(TP), str(FN)], [str(FP), 'N/A']]
     for i in range(2):
@@ -218,9 +218,8 @@ def plot_confusion_matrix(df, match_ms=400, stem=''):
     rec  = TP / (TP + FN) if (TP + FN) else 0
     f1   = 2 * prec * rec / (prec + rec) if (prec + rec) else 0
 
-    ax.set_title('Confusion Matrix (event-based)', loc='left')
+    ax.set_title('Confusion Matrix')
     ax.set_xlabel(
-        f'±{match_ms} ms match window\n'
         f'Prec={prec:.2f}  Rec={rec:.2f}  F1={f1:.2f}',
         fontsize=9)
 
@@ -273,14 +272,14 @@ def plot_roc(df, match_ms=400, stem=''):
     tprs.append(1.0); fprs.append(1.0)
     auc = float(np.trapz(tprs, fprs))
 
-    ax.plot(fprs, tprs, color='#2060CC', lw=2, label=f'EEG  AUC = {auc:.3f}')
+    ax.plot(fprs, tprs, color='#2060CC', lw=2, label=f'EOG = {auc:.3f}')
     ax.plot([0, 1], [0, 1], '--', color='#888888', lw=1, label='Random')
     ax.fill_between(fprs, tprs, alpha=0.10, color='#2060CC')
 
     ax.set_xlim(0, 1); ax.set_ylim(0, 1.02)
     ax.set_xlabel('False Positive Rate')
     ax.set_ylabel('True Positive Rate')
-    ax.set_title(f'ROC Curve (event-aligned, ±{match_ms} ms)', loc='left')
+    ax.set_title(f'ROC Curve')
     ax.legend(fontsize=9)
     ax.grid(True, alpha=0.25)
 

@@ -290,6 +290,74 @@ static void drdy_isr(const struct device *port, struct gpio_callback *cb,
     k_work_submit(&eeg_work);
 }
 
+/* ---------- Internal: ADS1299 register configuration ----------
+ *
+ * Runs SDATAC → ID verify → CONFIG registers → CHnSET × 8 → BIAS → MISC1
+ * → START → RDATAC.  Called by eeg_init() (first boot) and eeg_powerup()
+ * (after PWDN cycle).  GPIO directions and the DRDY interrupt are already
+ * configured by eeg_init() before the first call; eeg_powerup() relies on
+ * them persisting.
+ *
+ * Does NOT touch ads_ready — caller sets it after the DRDY interrupt is
+ * confirmed live (eeg_init) or immediately (eeg_powerup, interrupt already set).
+ */
+static int _ads_configure(void)
+{
+    int ret;
+
+    ret = ads_cmd(CMD_SDATAC);
+    if (ret) { LOG_ERR("SDATAC failed (%d)", ret); return ret; }
+    k_busy_wait(5);
+
+    int id = ads_rreg(REG_ID);
+    if (id < 0) { LOG_ERR("ID register read failed (%d)", id); return id; }
+    if ((uint8_t)id != ADS1299_ID_EXPECTED) {
+        LOG_ERR("ADS1299 ID mismatch: got 0x%02X, expected 0x%02X",
+                (uint8_t)id, ADS1299_ID_EXPECTED);
+        return -EIO;
+    }
+    LOG_INF("ADS1299 ID OK (0x%02X)", (uint8_t)id);
+
+    ret = ads_wreg(REG_CONFIG3, CFG3_ACTIVE);
+    if (ret) { LOG_ERR("CONFIG3 write failed (%d)", ret); return ret; }
+    k_busy_wait(150);   /* 150 µs reference buffer settle */
+
+    ret = ads_wreg(REG_CONFIG1, CFG1_250SPS);
+    if (ret) { LOG_ERR("CONFIG1 write failed (%d)", ret); return ret; }
+
+    ret = ads_wreg(REG_CONFIG2, CFG2_RESET);
+    if (ret) { LOG_ERR("CONFIG2 write failed (%d)", ret); return ret; }
+
+    for (uint8_t reg = REG_CH1SET; reg <= REG_CH6SET; reg++) {
+        ret = ads_wreg(reg, CHNSET_EEG);
+        if (ret) {
+            LOG_ERR("CH%uSET write failed (%d)", reg - REG_CH1SET + 1, ret);
+            return ret;
+        }
+    }
+    ret = ads_wreg(REG_CH7SET, CHNSET_OFF);
+    if (ret) { LOG_ERR("CH7SET write failed (%d)", ret); return ret; }
+
+    ret = ads_wreg(REG_CH8SET, CHNSET_BIASMEAS);
+    if (ret) { LOG_ERR("CH8SET write failed (%d)", ret); return ret; }
+
+    ret = ads_wreg(REG_BIAS_SENSP, BIAS_SENS_CH1_6);
+    if (ret) { LOG_ERR("BIAS_SENSP write failed (%d)", ret); return ret; }
+
+    ret = ads_wreg(REG_BIAS_SENSN, BIAS_SENS_CH1_6);
+    if (ret) { LOG_ERR("BIAS_SENSN write failed (%d)", ret); return ret; }
+
+    ret = ads_wreg(REG_MISC1, MISC1_SRB1);
+    if (ret) { LOG_ERR("MISC1 write failed (%d)", ret); return ret; }
+
+    gpio_pin_set_dt(&start_gpio, 1);
+
+    ret = ads_cmd(CMD_RDATAC);
+    if (ret) { LOG_ERR("RDATAC failed (%d)", ret); return ret; }
+
+    return 0;
+}
+
 /* ---------- Public API ---------- */
 
 int eeg_init(void)
@@ -344,79 +412,15 @@ int eeg_init(void)
     gpio_pin_set_dt(&reset_gpio, 0);    /* deassert: RESET = HIGH */
     k_busy_wait(18);                    /* 9 CLKIN cycles settle before SPI */
 
-    /* --- Step 3: Stop any leftover RDATAC from a prior session ---
-     * SDATAC must be the first command after reset; it is safe to issue even
-     * if the device was not in RDATAC. */
-    ret = ads_cmd(CMD_SDATAC);
-    if (ret) { LOG_ERR("SDATAC failed (%d)", ret); return ret; }
-    k_busy_wait(5);
-
-    /* --- Step 4: Verify device ID ---
-     * Confirms SPI wiring + polarity are correct before touching any registers. */
-    int id = ads_rreg(REG_ID);
-    if (id < 0) {
-        LOG_ERR("ID register read failed (%d)", id);
-        return id;
+    /* --- Steps 3–10, 12: configure ADS1299 registers and start conversions --- */
+    ret = _ads_configure();
+    if (ret) {
+        LOG_ERR("ADS1299 configuration failed (%d) — halting", ret);
+        return ret;
     }
-    if ((uint8_t)id != ADS1299_ID_EXPECTED) {
-        LOG_ERR("ADS1299 ID mismatch: got 0x%02X, expected 0x%02X",
-                (uint8_t)id, ADS1299_ID_EXPECTED);
-        return -EIO;
-    }
-    LOG_INF("ADS1299 ID OK (0x%02X)", (uint8_t)id);
-
-    /* --- Step 5: CONFIG3 — reference + bias block ---
-     * 0xF8 = PD_REFBUF=1, reserved=1, BIAS_MEAS=1, BIASREF_INT=1, PD_BIAS=1,
-     *         BIAS_LOFF_SENS=0.
-     * After writing, wait 150 µs for the internal reference buffer to settle. */
-    ret = ads_wreg(REG_CONFIG3, CFG3_ACTIVE);
-    if (ret) { LOG_ERR("CONFIG3 write failed (%d)", ret); return ret; }
-    k_busy_wait(150);
-
-    /* --- Step 6: CONFIG1 — 250 SPS data rate ---
-     * Reset value is already 0x96 (250 SPS); written explicitly for clarity. */
-    ret = ads_wreg(REG_CONFIG1, CFG1_250SPS);
-    if (ret) { LOG_ERR("CONFIG1 write failed (%d)", ret); return ret; }
-
-    /* --- Step 7: CONFIG2 — leave at reset (0xC0), no test signals --- */
-    ret = ads_wreg(REG_CONFIG2, CFG2_RESET);
-    if (ret) { LOG_ERR("CONFIG2 write failed (%d)", ret); return ret; }
-
-    /* --- Step 8: Channel configuration ---
-     *
-     * CH1–CH6  CHNSET_EEG  (0x60): GAIN=24, MUX=electrode, powered up
-     * CH7      CHNSET_OFF  (0x81): powered down — IN7P/N tied to AVDD on schematic
-     * CH8      CHNSET_BIASMEAS (0x00): GAIN=1, MUX=000, powered up for BIAS_MEAS
-     */
-    for (uint8_t reg = REG_CH1SET; reg <= REG_CH6SET; reg++) {
-        ret = ads_wreg(reg, CHNSET_EEG);
-        if (ret) {
-            LOG_ERR("CH%uSET write failed (%d)", reg - REG_CH1SET + 1, ret);
-            return ret;
-        }
-    }
-    ret = ads_wreg(REG_CH7SET, CHNSET_OFF);
-    if (ret) { LOG_ERR("CH7SET write failed (%d)", ret); return ret; }
-
-    ret = ads_wreg(REG_CH8SET, CHNSET_BIASMEAS);
-    if (ret) { LOG_ERR("CH8SET write failed (%d)", ret); return ret; }
-
-    /* --- Step 9: BIAS sense inputs ---
-     * CH1–CH6 feed the BIAS amplifier's common-mode averaging circuit.
-     * The amplifier output drives BIASOUT (DRL electrode via protection resistor). */
-    ret = ads_wreg(REG_BIAS_SENSP, BIAS_SENS_CH1_6);
-    if (ret) { LOG_ERR("BIAS_SENSP write failed (%d)", ret); return ret; }
-
-    ret = ads_wreg(REG_BIAS_SENSN, BIAS_SENS_CH1_6);
-    if (ret) { LOG_ERR("BIAS_SENSN write failed (%d)", ret); return ret; }
-
-    /* --- Step 10: MISC1 — referential montage ---
-     * SRB1=1 connects the SRB1 pin (reference electrode) to the inverting
-     * input of all active channels — all measurements are vs the reference. */
-    ret = ads_wreg(REG_MISC1, MISC1_SRB1);
-    if (ret) { LOG_ERR("MISC1 write failed (%d)", ret); return ret; }
 
     /* --- Step 11: DRDY interrupt ---
+     * Set up once here; persists across eeg_stop/start and eeg_powerdown/up cycles.
      * DRDY is active-low; GPIO_INT_EDGE_TO_ACTIVE fires on the falling edge.
      * The ISR only submits a work item — no SPI in interrupt context. */
     k_work_init(&eeg_work, eeg_work_handler);
@@ -427,15 +431,6 @@ int eeg_init(void)
 
     ret = gpio_pin_interrupt_configure_dt(&drdy_gpio, GPIO_INT_EDGE_TO_ACTIVE);
     if (ret) { LOG_ERR("DRDY interrupt configure failed (%d)", ret); return ret; }
-
-    /* --- Step 12: Begin continuous conversions ---
-     * Assert START (active-high) then enter RDATAC.
-     * After RDATAC, the ADS1299 sends a frame on every DRDY pulse; the ISR
-     * picks these up and the workqueue handler reads them via SPI. */
-    gpio_pin_set_dt(&start_gpio, 1);
-
-    ret = ads_cmd(CMD_RDATAC);
-    if (ret) { LOG_ERR("RDATAC failed (%d)", ret); return ret; }
 
     ads_ready = true;
     LOG_INF("ADS1299 ready: gains=[%d,%d,%d,%d] CH7 off, CH8 BIAS_MEAS, "
@@ -643,4 +638,67 @@ void eeg_set_drl(bool enable)
 bool eeg_drl_active(void)
 {
     return drl_on;
+}
+
+/* ---------- Power management ---------- */
+
+/* eeg_stop() — deassert START, clear ring buffer.
+ * ADS1299 keeps its reference buffer and BIAS amp powered (~2-3 mA).
+ * DRDY stops toggling → ISR / workqueue go idle.
+ * Call eeg_start() to resume without re-init. */
+void eeg_stop(void)
+{
+    ads_ready = false;               /* prevent workqueue handler from writing */
+    gpio_pin_set_dt(&start_gpio, 0); /* deassert START → conversions stop */
+    ring_buf_reset(&eeg_ring);       /* discard buffered samples */
+    LOG_INF("ADS1299 stopped (START=0, ~2-3 mA)");
+}
+
+/* eeg_start() — reassert START after eeg_stop().
+ * RDATAC is still active from _ads_configure(); DRDY resumes within ~4 ms. */
+void eeg_start(void)
+{
+    ring_buf_reset(&eeg_ring);       /* clear stale data from before stop */
+    gpio_pin_set_dt(&start_gpio, 1); /* assert START → conversions resume */
+    ads_ready = true;
+    LOG_INF("ADS1299 restarted (START=1, instant resume)");
+}
+
+/* eeg_powerdown() — assert PWDN, ~65 µA total.
+ * Must only be called after eeg_stop() — ADS1299 should be idle.
+ * SDATAC sent first to cleanly exit RDATAC before power-down.
+ * Full re-init required on next eeg_powerup() call. */
+void eeg_powerdown(void)
+{
+    ads_ready = false;
+    ads_cmd(CMD_SDATAC);             /* clean exit from RDATAC */
+    gpio_pin_set_dt(&start_gpio, 0); /* ensure START is low */
+    gpio_pin_set_dt(&pwdn_gpio, 1);  /* assert PWDN (active-low: 1 → pin LOW) */
+    ring_buf_reset(&eeg_ring);
+    LOG_INF("ADS1299 powered down (~65 µA)");
+}
+
+/* eeg_powerup() — deassert PWDN, RESET pulse, full register reconfiguration.
+ * Calls _ads_configure() to replay all register writes and restart RDATAC.
+ * DRDY interrupt persists from eeg_init() — no re-registration needed.
+ * @return 0 on success, negative errno on failure. */
+int eeg_powerup(void)
+{
+    gpio_pin_set_dt(&pwdn_gpio, 0);  /* deassert PWDN → device powers on */
+    k_msleep(1);                     /* tPOR settle */
+
+    gpio_pin_set_dt(&reset_gpio, 1); /* assert RESET = LOW */
+    k_busy_wait(10);
+    gpio_pin_set_dt(&reset_gpio, 0); /* deassert RESET = HIGH */
+    k_busy_wait(18);                 /* 9 CLKIN cycles settle before SPI */
+
+    int ret = _ads_configure();
+    if (ret) {
+        LOG_ERR("ADS1299 reconfigure after power-up failed (%d)", ret);
+        return ret;
+    }
+
+    ads_ready = true;
+    LOG_INF("ADS1299 powered up and reconfigured");
+    return 0;
 }

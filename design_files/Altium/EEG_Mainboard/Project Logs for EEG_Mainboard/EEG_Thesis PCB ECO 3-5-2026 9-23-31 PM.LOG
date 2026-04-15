@@ -1,0 +1,76 @@
+Change Footprint: Footprint Not Found QFN40P600X600X90-48N
+Added Component: Designator=C42(0402_Generic_CAP)
+Add component (AddParameter): Name = "Artikkelnr Noca"; Value = "N.A."; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Assembly"; Value = ""; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Author"; Value = "getr"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Component Class"; Value = "Capacitors"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Component Status"; Value = "Active"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "ComponentLink1Description"; Value = "Datasheet"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "ComponentLink1URL"; Value = "N.A."; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "ComponentLink2Description"; Value = "Supplier link"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "ComponentLink2URL"; Value = "N.A."; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Footprint Doc"; Value = "0402"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "HelpURL"; Value = "N.A."; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "LatestRevisionDate"; Value = "2021-06-25"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Manufacturer"; Value = "N.A."; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Manufacturer Part Number"; Value = "N.A."; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Note"; Value = "6.3V"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Pad Count"; Value = "2"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Part Number"; Value = "C0402-10µF-6.3V-X6S"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Part number IPS"; Value = "N.A."; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Part number NEMS"; Value = "100200478"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Part number Norautron"; Value = "N.A."; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "PartId"; Value = "100200478"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Published"; Value = "2021-06-25"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Supplier 1"; Value = "N.A."; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Supplier 2"; Value = "N.A."; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Supplier Part Number 1"; Value = "N.A."; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Supplier Part Number 2"; Value = "N.A."; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Value"; Value = "10µF"; VariantName = "[No Variations]"
+Add Component: Footprint Not Found CAPC0603X03L_C
+Add Component: Footprint Not Found CAPC0603X03L_C
+Add Component: Footprint Not Found CAPC0603X03L_C
+Add Component: Footprint Not Found INDC0603X03L_C
+Add Component: Footprint Not Found INDC0603X03L_C
+Add Component: Footprint Not Found INDC0603X03L_C
+Add Component: Footprint Not Found QFN40P600X600X90-48N
+Added Pin To Net: NetName=GND Pin=C42-1
+Added Pin To Net: NetName=VDD_nRF Pin=C42-2
+Add Pin To Net: Unknown Pin: Pin C45-1
+Add Pin To Net: Unknown Pin: Pin C45-2
+Add Pin To Net: Unknown Pin: Pin C46-1
+Add Pin To Net: Unknown Pin: Pin C46-2
+Add Pin To Net: Unknown Pin: Pin C47-1
+Add Pin To Net: Unknown Pin: Pin C47-2
+Add Pin To Net: Unknown Pin: Pin L5-1
+Add Pin To Net: Unknown Pin: Pin L5-2
+Add Pin To Net: Unknown Pin: Pin L6-1
+Add Pin To Net: Unknown Pin: Pin L6-2
+Add Pin To Net: Unknown Pin: Pin L7-1
+Add Pin To Net: Unknown Pin: Pin L7-2
+Add Pin To Net: Unknown Pin: Pin U4-10
+Add Pin To Net: Unknown Pin: Pin U4-22
+Add Pin To Net: Unknown Pin: Pin U4-25
+Add Pin To Net: Unknown Pin: Pin U4-26
+Add Pin To Net: Unknown Pin: Pin U4-30
+Add Pin To Net: Unknown Pin: Pin U4-31
+Add Pin To Net: Unknown Pin: Pin U4-32
+Add Pin To Net: Unknown Pin: Pin U4-33
+Add Pin To Net: Unknown Pin: Pin U4-34
+Add Pin To Net: Unknown Pin: Pin U4-35
+Add Pin To Net: Unknown Pin: Pin U4-36
+Add Pin To Net: Unknown Pin: Pin U4-43
+Add Pin To Net: Unknown Pin: Pin U4-44
+Add Pin To Net: Unknown Pin: Pin U4-45
+Add Pin To Net: Unknown Pin: Pin U4-46
+Add Pin To Net: Unknown Pin: Pin U4-47
+Add Pin To Net: Unknown Pin: Pin U4-48
+Add Pin To Net: Unknown Pin: Pin U4-49
+Added Member To Class: ClassName=EEG_Thesis Member=Component C42 CL05A106MQ5NUNC
+Add Class Member: Failed to add class member : Component C45 1.5pF
+Add Class Member: Failed to add class member : Component C46 2.0pF
+Add Class Member: Failed to add class member : Component C47 0.3pF
+Add Class Member: Failed to add class member : Component L5 2.7nH
+Add Class Member: Failed to add class member : Component L6 3.5nH
+Add Class Member: Failed to add class member : Component L7 3.5nH
+Add Class Member: Failed to add class member : Component U4 nRF54L15-QFAA

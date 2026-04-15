@@ -16,3 +16,12 @@ build*/
 # Editor temp files
 *.swp
 *~
+
+#p ython stuff
+__pycache__/
+*.pyc
+*.pyo
+
+# Large files (exceed GitHub's file size limits)
+python/recordings/eeg_20260412_034658_SLEEP.edf
+design_files/CAD/simpleAsaroHead01.stp

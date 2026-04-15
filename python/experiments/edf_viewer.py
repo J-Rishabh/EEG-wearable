@@ -29,7 +29,7 @@ matplotlib.use("TkAgg")
 import matplotlib.pyplot as plt
 import matplotlib.gridspec as gridspec
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
-from scipy.signal import butter, iirnotch, sosfilt, tf2sos, welch, spectrogram
+from scipy.signal import butter, iirnotch, sosfilt, sosfiltfilt, tf2sos, welch, spectrogram
 
 import tkinter as tk
 from tkinter import ttk, filedialog, messagebox
@@ -82,28 +82,40 @@ class Recording:
         import pyedflib
         f = pyedflib.EdfReader(edf_path)
         try:
-            self.labels  = list(f.getSignalLabels())
-            n            = f.signals_in_file
-            fs_vals      = [int(f.getSampleFrequency(i)) for i in range(n)]
-            self.fs      = fs_vals[0]
-            self.data    = np.array([f.readSignal(i) for i in range(n)],
-                                    dtype=np.float64)   # (n_ch, n_samples)
+            self.labels   = list(f.getSignalLabels())
+            n             = f.signals_in_file
+            fs_vals       = [int(f.getSampleFrequency(i)) for i in range(n)]
+            self.fs       = fs_vals[0]
+            self.fs_per_ch = fs_vals
+            # Store as list of 1-D arrays — channels have different lengths when
+            # EEG (250 Hz) and IMU (25 Hz) are mixed in the same EDF.
+            self.data     = [np.array(f.readSignal(i), dtype=np.float64)
+                             for i in range(n)]
             self.start_dt = f.getStartdatetime()        # datetime or None
         finally:
             f.close()
         self.path         = edf_path
-        self.n_samples    = self.data.shape[1]
+        self.n_samples    = len(self.data[0])
         self.duration_s   = self.n_samples / self.fs
-        # Try to load matching meta.json for rec_start_epoch
-        self.rec_start_epoch = self._load_rec_start()
+        # Try to load matching meta.json for rec_start_epoch + packet times
+        self.rec_start_epoch = None
+        self.pkt_times       = None   # float64 array of BLE packet arrival times, or None
+        self._load_meta()
 
-    def _load_rec_start(self) -> float | None:
-        stem     = os.path.splitext(os.path.basename(self.path))[0]
-        meta_path = os.path.join(os.path.dirname(self.path), f"{stem}_meta.json")
-        if os.path.exists(meta_path):
-            with open(meta_path) as f:
-                return json.load(f)["rec_start_epoch"]
-        return None
+    def _load_meta(self):
+        stem      = os.path.splitext(os.path.basename(self.path))[0]
+        rec_dir   = os.path.dirname(self.path)
+        meta_path = os.path.join(rec_dir, f"{stem}_meta.json")
+        if not os.path.exists(meta_path):
+            return
+        with open(meta_path) as f:
+            meta = json.load(f)
+        self.rec_start_epoch = meta.get("rec_start_epoch")
+        pkt_file = meta.get("packet_times_file")
+        if pkt_file:
+            pkt_path = os.path.join(rec_dir, pkt_file)
+            if os.path.exists(pkt_path):
+                self.pkt_times = np.load(pkt_path)
 
     def channel_index(self, label: str) -> int | None:
         for i, l in enumerate(self.labels):
@@ -120,7 +132,7 @@ class Recording:
         for ch in channels:
             idx = self.channel_index(ch)
             if idx is not None:
-                rows.append(self.data[idx, s0:s1])
+                rows.append(self.data[idx][s0:s1])
         return np.array(rows), t
 
 
@@ -128,41 +140,110 @@ class Recording:
 
 def _hp_filter(data: np.ndarray, fs: int, cutoff: float) -> np.ndarray:
     sos = butter(2, cutoff / (fs / 2), btype="high", output="sos")
-    return sosfilt(sos, data, axis=-1)
+    return sosfiltfilt(sos, data, axis=-1)
 
 def _lp_filter(data: np.ndarray, fs: int, cutoff: float) -> np.ndarray:
     sos = butter(4, cutoff / (fs / 2), btype="low", output="sos")
-    return sosfilt(sos, data, axis=-1)
+    return sosfiltfilt(sos, data, axis=-1)
 
 def _notch_filter(data: np.ndarray, fs: int, freq: float = 60.0) -> np.ndarray:
     b, a = iirnotch(freq, Q=30, fs=fs)
     sos  = tf2sos(b, a)
-    return sosfilt(sos, data, axis=-1)
+    return sosfiltfilt(sos, data, axis=-1)
 
 def _apply_filters(data: np.ndarray, fs: int,
                    hp: float | None, lp: float | None,
                    notch: bool) -> np.ndarray:
     out = data.copy()
-    if hp:
-        out = _hp_filter(out, fs, hp)
-    if lp:
-        out = _lp_filter(out, fs, lp)
-    if notch:
-        out = _notch_filter(out, fs)
+    try:
+        if hp:
+            out = _hp_filter(out, fs, hp)
+        if lp:
+            out = _lp_filter(out, fs, lp)
+        if notch:
+            out = _notch_filter(out, fs)
+    except ValueError:
+        # Signal too short for sosfiltfilt (padlen > n_samples) — return unfiltered
+        return data.copy()
     return out
 
 
 # ── Plot functions ─────────────────────────────────────────────────────────────
 
+def _parse_derived_channels(
+    rec: Recording, exprs_text: str, t_start: float, t_end: float
+) -> list[tuple[str, np.ndarray]]:
+    """
+    Parse newline-separated derivation expressions and return raw data arrays.
+
+    Each line is a Python expression using channel label names, e.g.:
+        EEG_L1 - EEG_L3
+        0.5 * EEG_L1 + 0.5 * EEG_L2
+
+    Optionally prefix with a custom y-axis label separated by ' : ', e.g.:
+        Occipital bipolar : EEG_L1 - EEG_L3
+
+    Channel names are mapped to safe Python identifiers before eval().
+    Returns list of (label, raw_array) — filters are applied later by plot_traces/plot_psd.
+    """
+    import re
+    s0 = max(0, int(t_start * rec.fs))
+    s1 = min(rec.n_samples, int(t_end * rec.fs))
+
+    # Map each channel label to a safe Python identifier and load its data slice
+    safe_map: dict[str, str] = {}
+    ns: dict[str, np.ndarray] = {}
+    for label in rec.labels:
+        key = label.strip()
+        safe = re.sub(r"\W", "_", key)
+        safe_map[key] = safe
+        idx = rec.channel_index(label)
+        if idx is not None:
+            ns[safe] = rec.data[idx][s0:s1].copy()
+
+    results: list[tuple[str, np.ndarray]] = []
+    for line in exprs_text.strip().splitlines():
+        line = line.strip()
+        if not line:
+            continue
+        # Optional  "My label : expression"  syntax
+        if " : " in line:
+            row_label, expr_raw = line.split(" : ", 1)
+            row_label = row_label.strip()
+        else:
+            row_label = line
+            expr_raw  = line
+        expr = expr_raw
+        # Replace channel names longest-first to avoid partial matches
+        for orig in sorted(safe_map, key=len, reverse=True):
+            expr = expr.replace(orig, safe_map[orig])
+        try:
+            arr = eval(expr, {"__builtins__": {}, "np": np}, ns)  # noqa: S307
+            results.append((row_label, np.asarray(arr, dtype=np.float64)))
+        except Exception as e:
+            raise ValueError(f"Cannot evaluate '{expr_raw}': {e}") from e
+    return results
+
+
 def plot_traces(rec: Recording, channels: list[str],
                 t_start: float, t_end: float,
                 hp: float | None, lp: float | None, notch: bool,
-                title_suffix: str = "") -> plt.Figure:
+                title_suffix: str = "",
+                extras: list[tuple[str, np.ndarray]] | None = None) -> plt.Figure:
     """Time-domain traces for selected channels and window."""
     data, t = rec.time_slice(channels, t_start, t_end)
     data = _apply_filters(data, rec.fs, hp, lp, notch)
 
-    n_ch = len(channels)
+    all_labels = list(channels)
+    all_rows   = list(data)
+
+    if extras:
+        for label, arr in extras:
+            filt = _apply_filters(arr[np.newaxis, :], rec.fs, hp, lp, notch)[0]
+            all_labels.append(label)
+            all_rows.append(filt)
+
+    n_ch = len(all_labels)
     fig, axes = plt.subplots(n_ch, 1, figsize=(12, 1.8 * n_ch + 0.5),
                              sharex=True)
     if n_ch == 1:
@@ -176,10 +257,10 @@ def plot_traces(rec: Recording, channels: list[str],
 
     fig.suptitle(f"EEG traces — {filt_label}{title_suffix}", fontweight="bold")
 
-    for ax, ch, row in zip(axes, channels, data):
-        color = CHANNEL_COLORS.get(ch, "#888888")
+    for ax, ch, row in zip(axes, all_labels, all_rows):
+        color = CHANNEL_COLORS.get(ch, "#f38ba8")   # pink for derived channels
         ax.plot(t, row, color=color, linewidth=0.7)
-        ax.set_ylabel(f"{ch}\n(µV)", fontsize=9)
+        ax.set_ylabel(f"{ch.replace('_', ' ')}\n(uV)", fontsize=9)
         ax.set_xlim(t[0], t[-1])
         # Auto-scale per channel
         p1, p99 = np.percentile(row, [1, 99])
@@ -194,15 +275,25 @@ def plot_traces(rec: Recording, channels: list[str],
 def plot_psd(rec: Recording, channels: list[str],
              t_start: float, t_end: float,
              hp: float | None, lp: float | None, notch: bool,
-             per_channel: bool = True) -> plt.Figure:
+             per_channel: bool = True,
+             extras: list[tuple[str, np.ndarray]] | None = None) -> plt.Figure:
     """Welch power spectral density."""
     data, _ = rec.time_slice(channels, t_start, t_end)
     data = _apply_filters(data, rec.fs, hp, lp, notch)
 
-    nperseg = min(rec.fs * 4, data.shape[1])
+    all_labels = list(channels)
+    all_rows   = list(data)
+
+    if extras:
+        for label, arr in extras:
+            filt = _apply_filters(arr[np.newaxis, :], rec.fs, hp, lp, notch)[0]
+            all_labels.append(label)
+            all_rows.append(filt)
+
+    nperseg = min(rec.fs * 4, len(all_rows[0]) if all_rows else rec.fs * 4)
     fig, ax = plt.subplots(figsize=(9, 5))
 
-    for ch, row in zip(channels, data):
+    for ch, row in zip(all_labels, all_rows):
         f, psd = welch(row, fs=rec.fs, nperseg=nperseg)
         color  = CHANNEL_COLORS.get(ch, "#888888")
         if per_channel:
@@ -210,10 +301,10 @@ def plot_psd(rec: Recording, channels: list[str],
         else:
             ax.semilogy(f, psd, color=color, alpha=0.3, linewidth=0.8)
 
-    if not per_channel and len(data) > 0:
+    if not per_channel and len(all_rows) > 0:
         # Compute and plot average PSD
-        psds = [welch(row, fs=rec.fs, nperseg=nperseg)[1] for row in data]
-        f, _ = welch(data[0], fs=rec.fs, nperseg=nperseg)
+        psds = [welch(row, fs=rec.fs, nperseg=nperseg)[1] for row in all_rows]
+        f, _ = welch(all_rows[0], fs=rec.fs, nperseg=nperseg)
         ax.semilogy(f, np.mean(psds, axis=0), color="black",
                     linewidth=1.5, label="mean")
 
@@ -227,7 +318,7 @@ def plot_psd(rec: Recording, channels: list[str],
                 fontsize=8, color="#555555")
 
     ax.set_xlabel("Frequency (Hz)")
-    ax.set_ylabel("PSD (µV²/Hz)")
+    ax.set_ylabel("PSD (uV²/Hz)")
     ax.set_xlim(0, min(rec.fs / 2, 80))
     ax.set_title("Power spectral density (Welch)", fontweight="bold")
     if per_channel:
@@ -246,7 +337,7 @@ def plot_spectrogram_fig(rec: Recording, channel: str,
         raise ValueError(f"Channel {channel!r} not found")
     s0 = int(t_start * rec.fs)
     s1 = int(t_end   * rec.fs)
-    raw = rec.data[idx, s0:s1]
+    raw = rec.data[idx][s0:s1]
     raw = _apply_filters(raw[np.newaxis, :], rec.fs, hp, lp, notch)[0]
 
     nperseg = min(rec.fs, len(raw) // 4)
@@ -258,7 +349,7 @@ def plot_spectrogram_fig(rec: Recording, channel: str,
                                          gridspec_kw={"height_ratios": [1, 2.5]})
     t_full = np.arange(s0, s1) / rec.fs
     ax_sig.plot(t_full, raw, color=CHANNEL_COLORS.get(channel, "#888"), linewidth=0.6)
-    ax_sig.set_ylabel("µV")
+    ax_sig.set_ylabel("uV")
     ax_sig.set_xlim(t_start, t_end)
     ax_sig.set_title(f"Spectrogram — {channel}", fontweight="bold")
 
@@ -274,11 +365,24 @@ def plot_spectrogram_fig(rec: Recording, channel: str,
 
 def plot_erp(rec: Recording, channels: list[str],
              events_df, rec_start: float,
-             tmin: float = -0.2, tmax: float = 0.8) -> plt.Figure:
+             tmin: float = -0.2, tmax: float = 0.8,
+             hp_hz: float = 1.0,
+             audio_latency_s: float = 0.006,
+             reject_uv: float = 75.0,
+             use_pkt_timing: bool = False) -> plt.Figure:
     """
     P300 ERP: epoch around deviant onsets, average with SEM band.
     events_df must have columns: wall_time, event  (values: 'deviant', 'standard').
     rec_start: time.time() epoch when EEG recording started.
+
+    hp_hz: high-pass cutoff applied before epoching to remove slow drift.
+    audio_latency_s: pygame mixer buffer latency — shifts epoch onset forward
+                     so t=0 aligns with actual sound delivery (~6 ms for buffer=256).
+
+    Timing: if rec.pkt_times is available (saved by eeg_stream_pg.py), a linear
+    fit over BLE packet arrival times is used to map wall-clock → sample index.
+    This removes BLE delivery jitter (~15-130 ms) that would otherwise smear ERPs.
+    Falls back to rec_start + n/fs if no packet times file exists.
     """
     import pandas as pd
 
@@ -291,34 +395,82 @@ def plot_erp(rec: Recording, channels: list[str],
     n_epoch = n_pre + n_post
     t_ep = np.linspace(tmin, tmax, n_epoch)
 
-    def _epoch(onset_times):
+    # Build wall-clock → sample-index converter.
+    # If packet arrival times exist, fit a line through (packet_index, t_arrival)
+    # to get slope (s/packet) and intercept. This corrects for:
+    #   • the gap between rec_start and first packet (BLE connection delay)
+    #   • slow clock drift between device crystal and PC system clock
+    # The per-packet jitter is averaged out by the fit.
+    timing_note = "timing: rec_start fallback"
+    if use_pkt_timing and rec.pkt_times is not None and len(rec.pkt_times) > 10:
+        pkt_idx = np.arange(len(rec.pkt_times), dtype=np.float64)
+        slope, intercept = np.polyfit(pkt_idx, rec.pkt_times, 1)
+        # t_arrival[k] ≈ intercept + slope*k  (slope ≈ 8/fs = 0.032 s/packet)
+        # Sample n is in packet n//8; assign t_sample[n] = intercept + slope*(n/8)
+        samples_per_pkt = float(fs) * slope  # should be ~8.0
+        def _wall_to_sample(t_wall):
+            # invert: n/8 = (t_wall - intercept) / slope  →  n = 8*(t_wall-intercept)/slope
+            return int(8.0 * (t_wall - intercept) / slope)
+        timing_note = (f"timing: pkt fit  slope={slope*1000:.1f} ms/pkt "
+                       f"(ideal {8000/fs:.1f})  n_pkts={len(rec.pkt_times)}")
+    else:
+        def _wall_to_sample(t_wall):
+            return int((t_wall - rec_start) * fs)
+    print(f"[ERP] {timing_note}")
+
+    # Pre-filter each channel with HP to remove slow electrode drift before epoching.
+    # Done on the full signal so filter transients don't land inside epochs.
+    filtered = {}
+    for ch in channels:
+        idx = rec.channel_index(ch)
+        if idx is not None:
+            filtered[ch] = _hp_filter(rec.data[idx], fs, hp_hz)
+
+    n_rejected = [0, 0]  # [deviant, standard] rejection counts
+
+    def _epoch(onset_times, reject_idx=0):
         epochs = []
         for wt in onset_times:
-            s0 = int((wt - rec_start) * fs) - n_pre
+            # Shift onset by audio pipeline latency so t=0 = sound at ears
+            t_onset = wt + audio_latency_s
+            s0 = _wall_to_sample(t_onset) - n_pre
             s1 = s0 + n_epoch
             if s0 < 0 or s1 > rec.n_samples:
                 continue
             rows = []
             for ch in channels:
-                idx = rec.channel_index(ch)
-                if idx is not None:
-                    rows.append(rec.data[idx, s0:s1])
+                if ch in filtered:
+                    rows.append(filtered[ch][s0:s1])
             if rows:
                 ep = np.array(rows)
                 # Baseline correct to pre-stimulus window
                 bl = ep[:, :n_pre].mean(axis=1, keepdims=True)
-                epochs.append(ep - bl)
+                ep = ep - bl
+                # Artifact rejection — drop epoch if peak-to-peak on any channel
+                # exceeds threshold (catches coughs, movement, electrode pop)
+                ptp = ep.max(axis=1) - ep.min(axis=1)
+                if np.any(ptp > reject_uv):
+                    n_rejected[reject_idx] += 1
+                    continue
+                epochs.append(ep)
         return np.array(epochs) if epochs else None   # (n_epochs, n_ch, n_samples)
 
-    dev_ep  = _epoch(deviant_times)
-    std_ep  = _epoch(standard_times)
+    dev_ep  = _epoch(deviant_times,  reject_idx=0)
+    std_ep  = _epoch(standard_times, reject_idx=1)
+    print(f"[ERP] Rejected: {n_rejected[0]} deviant, {n_rejected[1]} standard  "
+          f"(threshold ±{reject_uv} uV p-p)")
 
     n_ch = len(channels)
     fig, axes = plt.subplots(1, n_ch, figsize=(4.5 * n_ch, 4.5), sharey=True)
     if n_ch == 1:
         axes = [axes]
 
-    fig.suptitle("ERP — P300 (deviant vs standard)", fontweight="bold")
+    timing_label = "pkt-fit timing" if (use_pkt_timing and rec.pkt_times is not None and len(rec.pkt_times) > 10) else "rec_start timing"
+    fig.suptitle(
+        f"ERP — P300 (deviant vs standard)  |  HP {hp_hz} Hz  |  "
+        f"audio +{int(audio_latency_s*1000)} ms  |  {timing_label}  |  "
+        f"rejected: {n_rejected[0]}dev {n_rejected[1]}std (>{reject_uv:.0f}uV)",
+        fontweight="bold", fontsize=9)
 
     for ax, ch in zip(axes, channels):
         color = CHANNEL_COLORS.get(ch, "#888")
@@ -340,79 +492,235 @@ def plot_erp(rec: Recording, channels: list[str],
         ax.set_title(ch)
         ax.legend(fontsize=8)
 
-    axes[0].set_ylabel("Amplitude (µV, baseline corrected)")
+    axes[0].set_ylabel("Amplitude (uV)")
+    fig.tight_layout()
+    return fig
+
+
+def plot_ssvep_snr(rec: Recording, channels: list[str],
+                   events_df, rec_start: float,
+                   warmup_s: float = 2.0,
+                   snr_bw_hz: float = 0.5) -> plt.Figure:
+    """
+    SSVEP SNR bar chart: for each target frequency and each channel,
+    compute peak / flanking-noise SNR and plot as grouped bars.
+    Includes 2nd and 3rd harmonics.
+    """
+    flicker_starts  = events_df[events_df["event"] == "FLICKER_START"].copy()
+    flicker_ends    = events_df[events_df["event"] == "FLICKER_END"].copy()
+    analysis_starts = events_df[events_df["event"] == "ANALYSIS_START"].copy() \
+                      if "ANALYSIS_START" in events_df["event"].values else None
+
+    if flicker_starts.empty:
+        raise ValueError("No FLICKER_START events found in event log")
+
+    target_freqs = sorted(flicker_starts["freq_hz"].dropna().unique())
+    NPERSEG      = int(rec.fs * 4)   # fixed across all epochs so PSDs are same length
+
+    def _snr(psd_arr, f_arr, target_hz, bw):
+        df = f_arr[1] - f_arr[0]
+        peak_mask  = np.abs(f_arr - target_hz) < df * 0.6
+        flank_mask = (np.abs(f_arr - target_hz) <= bw) & ~peak_mask
+        if not peak_mask.any() or not flank_mask.any():
+            return np.nan
+        noise = np.mean(psd_arr[flank_mask])
+        return float(np.mean(psd_arr[peak_mask]) / noise) if noise > 1e-30 else np.nan
+
+    # Compute per-freq, per-channel mean PSD
+    results = {}   # freq -> {ch: mean_psd, f_axis}
+    for freq in target_freqs:
+        rows_s = flicker_starts[flicker_starts["freq_hz"] == freq].reset_index(drop=True)
+        rows_e = flicker_ends[flicker_ends["freq_hz"] == freq].reset_index(drop=True) \
+                 if not flicker_ends.empty else None
+        rows_a = analysis_starts[analysis_starts["freq_hz"] == freq].reset_index(drop=True) \
+                 if analysis_starts is not None and not analysis_starts.empty else None
+
+        ch_psds = {ch: [] for ch in channels}
+        f_axis  = None
+        for i, row in rows_s.iterrows():
+            if rows_a is not None and i < len(rows_a):
+                t0 = rows_a.iloc[i]["wall_time"] - rec_start
+            else:
+                t0 = row["wall_time"] - rec_start + warmup_s
+            t1 = row["wall_time"] - rec_start + 12.0
+            if rows_e is not None and i < len(rows_e):
+                t1 = rows_e.iloc[i]["wall_time"] - rec_start
+            s0 = max(0, int(t0 * rec.fs))
+            s1 = min(rec.n_samples, int(t1 * rec.fs))
+            if s1 - s0 < NPERSEG:   # skip epochs too short for the fixed nperseg
+                continue
+            for ch in channels:
+                idx = rec.channel_index(ch)
+                if idx is None:
+                    continue
+                seg = rec.data[idx][s0:s1]
+                f_seg, psd = welch(seg, fs=rec.fs, nperseg=NPERSEG)
+                ch_psds[ch].append(psd)
+                if f_axis is None:
+                    f_axis = f_seg
+        results[freq] = {"ch_psds": ch_psds, "f_axis": f_axis}
+
+    harmonics = [1, 2, 3]
+    n_freq    = len(target_freqs)
+    n_harm    = len(harmonics)
+    n_ch      = len(channels)
+
+    fig, axes = plt.subplots(1, n_freq, figsize=(4.5 * n_freq, 4.5), sharey=False)
+    if n_freq == 1:
+        axes = [axes]
+
+    fig.suptitle("SSVEP SNR — peak / flanking-noise ratio per channel and harmonic",
+                 fontweight="bold")
+
+    bar_w   = 0.8 / n_ch
+    x_base  = np.arange(n_harm)   # one group per harmonic
+
+    for ax, freq in zip(axes, target_freqs):
+        res = results[freq]
+        if res["f_axis"] is None:
+            ax.set_title(f"{freq:.0f} Hz — no data")
+            continue
+
+        for ci, ch in enumerate(channels):
+            if not res["ch_psds"][ch]:
+                continue
+            color    = CHANNEL_COLORS.get(ch, "#888")
+            mean_psd = np.mean(res["ch_psds"][ch], axis=0)
+            snr_vals = [_snr(mean_psd, res["f_axis"], freq * h, snr_bw_hz)
+                        for h in harmonics]
+            x_pos = x_base + (ci - n_ch / 2 + 0.5) * bar_w
+            bars  = ax.bar(x_pos, snr_vals, width=bar_w * 0.9,
+                           color=color, alpha=0.82, label=ch)
+
+        ax.axhline(1.0, color="#888", linewidth=0.8, linestyle="--")
+        ax.set_xticks(x_base)
+        ax.set_xticklabels([f"{freq * h:.0f} Hz\n({h}f)" for h in harmonics])
+        ax.set_xlabel("Harmonic")
+        ax.set_title(f"Stimulus: {freq:.0f} Hz  (n={len(flicker_starts[flicker_starts['freq_hz']==freq])} epochs)")
+        ax.legend(fontsize=7, framealpha=0.7)
+
+    axes[0].set_ylabel("SNR (peak / noise floor)")
     fig.tight_layout()
     return fig
 
 
 def plot_ssvep(rec: Recording, channels: list[str],
-               events_df, rec_start: float) -> plt.Figure:
+               events_df, rec_start: float,
+               warmup_s: float = 2.0,
+               snr_bw_hz: float = 0.5) -> plt.Figure:
     """
-    SSVEP: FFT of flicker epochs per target frequency.
-    events_df must have columns: wall_time, freq_hz, event.
+    SSVEP: Welch PSD of flicker epochs per target frequency, averaged across runs.
+
+    events_df columns: wall_time, freq_hz, event.
+    Epochs start at ANALYSIS_START if present (skips warmup transient), otherwise
+    WARMUP_SEC=2s after FLICKER_START, so the visual cortex has time to entrain.
+
+    SNR is computed as peak power at each harmonic / mean of flanking noise bins
+    (±snr_bw_hz Hz either side, excluding the peak bin itself).
     """
-    flicker_starts = events_df[events_df["event"] == "FLICKER_START"].copy()
-    flicker_ends   = events_df[events_df["event"] == "FLICKER_END"].copy()
+    flicker_starts  = events_df[events_df["event"] == "FLICKER_START"].copy()
+    flicker_ends    = events_df[events_df["event"] == "FLICKER_END"].copy()
+    analysis_starts = events_df[events_df["event"] == "ANALYSIS_START"].copy() \
+                      if "ANALYSIS_START" in events_df["event"].values else None
 
     if flicker_starts.empty:
         raise ValueError("No FLICKER_START events found in event log")
 
     target_freqs = sorted(flicker_starts["freq_hz"].dropna().unique())
     n_freqs = len(target_freqs)
+
     fig, axes = plt.subplots(1, n_freqs, figsize=(4.5 * n_freqs, 4.5), sharey=True)
     if n_freqs == 1:
         axes = [axes]
 
-    fig.suptitle("SSVEP — power spectrum during flicker epochs", fontweight="bold")
+    fig.suptitle("SSVEP — mean Welch PSD per stimulus frequency (occipital channels)",
+                 fontweight="bold")
+
+    def _snr(psd_arr, f_arr, target_hz, bw):
+        """Peak / mean-of-flanks SNR at target_hz."""
+        peak_mask = np.abs(f_arr - target_hz) < (f_arr[1] - f_arr[0]) * 0.6
+        flank_mask = (np.abs(f_arr - target_hz) <= bw) & ~peak_mask
+        if not peak_mask.any() or not flank_mask.any():
+            return np.nan
+        noise = np.mean(psd_arr[flank_mask])
+        if noise < 1e-30:
+            return np.nan
+        return float(np.mean(psd_arr[peak_mask]) / noise)
 
     for ax, freq in zip(axes, target_freqs):
-        rows_s = flicker_starts[flicker_starts["freq_hz"] == freq]
-        rows_e = flicker_ends[flicker_ends["freq_hz"] == freq] if not flicker_ends.empty else None
+        rows_s  = flicker_starts[flicker_starts["freq_hz"] == freq].reset_index(drop=True)
+        rows_e  = flicker_ends[flicker_ends["freq_hz"] == freq].reset_index(drop=True) \
+                  if not flicker_ends.empty else None
+        rows_a  = analysis_starts[analysis_starts["freq_hz"] == freq].reset_index(drop=True) \
+                  if analysis_starts is not None and not analysis_starts.empty else None
 
         all_psds = {ch: [] for ch in channels}
+        nperseg  = int(rec.fs * 4)   # fixed so all PSDs are the same length
+        f_axis   = None   # computed from first valid segment; reused for all
 
-        for i, (_, row) in enumerate(rows_s.iterrows()):
-            t0 = row["wall_time"] - rec_start
-            # Try to get actual end time; fallback to 12 s epoch
-            t1 = t0 + 12.0
-            if rows_e is not None and len(rows_e) > i:
+        for i, row in rows_s.iterrows():
+            # Analysis window start: prefer logged ANALYSIS_START, else warmup_s offset
+            if rows_a is not None and i < len(rows_a):
+                t0 = rows_a.iloc[i]["wall_time"] - rec_start
+            else:
+                t0 = row["wall_time"] - rec_start + warmup_s
+
+            # Analysis window end: prefer logged FLICKER_END, else 15s default
+            t1 = row["wall_time"] - rec_start + 15.0
+            if rows_e is not None and i < len(rows_e):
                 t1 = rows_e.iloc[i]["wall_time"] - rec_start
 
             s0 = max(0, int(t0 * rec.fs))
             s1 = min(rec.n_samples, int(t1 * rec.fs))
-            if s1 - s0 < rec.fs:
+            if s1 - s0 < nperseg:   # skip epochs too short for fixed nperseg
                 continue
 
             for ch in channels:
-                idx = rec.channel_index(ch)
-                if idx is not None:
-                    seg  = rec.data[idx, s0:s1]
-                    nperseg = min(rec.fs * 4, len(seg))
-                    f, psd = welch(seg, fs=rec.fs, nperseg=nperseg)
-                    all_psds[ch].append(psd)
+                ch_idx = rec.channel_index(ch)
+                if ch_idx is None:
+                    continue
+                seg = rec.data[ch_idx][s0:s1]
+                f_seg, psd = welch(seg, fs=rec.fs, nperseg=nperseg)
+                all_psds[ch].append(psd)
+                if f_axis is None:
+                    f_axis = f_seg
+
+        if f_axis is None:
+            ax.set_title(f"{freq:.0f} Hz — no valid epochs")
+            continue
+
+        mask40 = f_axis <= 40
+        snr_lines = []
 
         for ch in channels:
             if not all_psds[ch]:
                 continue
             color  = CHANNEL_COLORS.get(ch, "#888")
             mean_p = np.mean(all_psds[ch], axis=0)
-            ax.semilogy(f[f <= 40], mean_p[f <= 40], color=color,
+            ax.semilogy(f_axis[mask40], mean_p[mask40], color=color,
                         linewidth=1.2, label=ch)
+            # Accumulate SNR at fundamental for subtitle
+            s = _snr(mean_p, f_axis, freq, snr_bw_hz)
+            if not np.isnan(s):
+                snr_lines.append(f"{ch}: {s:.1f}×")
 
-        # Mark target frequency and harmonics
+        # Mark target frequency and harmonics with correctly-positioned labels
+        # Use axes-fraction coordinates (x=data, y=axes fraction) to avoid ylim issues
+        trans = ax.get_xaxis_transform()
         for h in [1, 2, 3]:
             hf = freq * h
             if hf <= 40:
                 ax.axvline(hf, color="#e53935", linewidth=0.8, linestyle="--", alpha=0.7)
-                ax.text(hf, ax.get_ylim()[1] if ax.get_ylim()[1] > 0 else 1,
-                        f"{hf:.0f}", ha="center", va="bottom",
-                        fontsize=8, color="#e53935")
+                ax.text(hf, 0.97, f"{hf:.0f} Hz", transform=trans,
+                        ha="center", va="top", fontsize=7, color="#e53935")
 
+        snr_str = "  SNR: " + ", ".join(snr_lines) if snr_lines else ""
         ax.set_xlabel("Frequency (Hz)")
-        ax.set_title(f"{freq:.0f} Hz stimulus")
-        ax.legend(fontsize=8)
+        ax.set_title(f"{freq:.0f} Hz stimulus\n(n={len(rows_s)} epochs){snr_str}",
+                     fontsize=9)
+        ax.legend(fontsize=7)
 
-    axes[0].set_ylabel("PSD (µV²/Hz)")
+    axes[0].set_ylabel("PSD (uV²/Hz)")
     fig.tight_layout()
     return fig
 
@@ -428,7 +736,7 @@ def plot_eog_trace(rec: Recording,
 
     s0 = int(t_start * rec.fs)
     s1 = int(t_end   * rec.fs)
-    raw = rec.data[idx, s0:s1].copy()
+    raw = rec.data[idx][s0:s1].copy()
 
     # HP filter to remove drift
     sos = butter(2, 0.5 / (rec.fs / 2), btype="high", output="sos")
@@ -444,15 +752,15 @@ def plot_eog_trace(rec: Recording,
     fig, ax = plt.subplots(figsize=(12, 3.5))
     ax.plot(t, sig, color=CHANNEL_COLORS["EOG"], linewidth=0.7, label="EOG (HP 0.5 Hz)")
     ax.axhline( threshold_uv, color="#e53935", linewidth=0.8, linestyle="--",
-                label=f"+{threshold_uv:.0f} µV threshold")
+                label=f"+{threshold_uv:.0f} uV threshold")
     ax.axhline(-threshold_uv, color="#1565c0", linewidth=0.8, linestyle="--",
-                label=f"−{threshold_uv:.0f} µV threshold")
+                label=f"−{threshold_uv:.0f} uV threshold")
     ax.scatter(t[r_onsets], sig[r_onsets], color="#e53935", s=25, zorder=5,
                label=f"Right saccades (n={len(r_onsets)})")
     ax.scatter(t[l_onsets], sig[l_onsets], color="#1565c0", s=25, zorder=5,
                label=f"Left saccades  (n={len(l_onsets)})")
     ax.set_xlabel("Time (s)")
-    ax.set_ylabel("EOG (µV)")
+    ax.set_ylabel("EOG (uV)")
     ax.set_title("EOG trace — horizontal saccade detection", fontweight="bold")
     ax.legend(fontsize=8, ncol=3)
     ax.set_xlim(t[0], t[-1])
@@ -511,9 +819,12 @@ class EDFViewer(tk.Tk):
         tk.Button(top, text="Browse", command=self._browse_events,
                   bg="#45475a", fg="#cdd6f4", relief="flat",
                   activebackground="#585b70").grid(row=1, column=2, **PAD)
+        tk.Button(top, text="Latest", command=self._load_latest_events,
+                  bg="#45475a", fg="#cdd6f4", relief="flat",
+                  activebackground="#585b70").grid(row=1, column=3, **PAD)
         tk.Button(top, text="Load", command=self._do_load,
                   bg="#89b4fa", fg="#1e1e2e", relief="flat", font=("monospace", 9, "bold"),
-                  activebackground="#74c7ec").grid(row=1, column=3, **PAD)
+                  activebackground="#74c7ec").grid(row=1, column=4, **PAD)
         top.columnconfigure(1, weight=1)
 
         # ── Info bar ──────────────────────────────────────────────────────────
@@ -551,6 +862,17 @@ class EDFViewer(tk.Tk):
                            bg="#181825", fg=c, selectcolor="#313244",
                            activebackground="#181825", relief="flat",
                            font=("monospace", 8)).pack(anchor="w")
+
+        # Custom derivations
+        _lbl(left, "CUSTOM DERIVATIONS")
+        tk.Label(left, text="e.g.  EEG_L1 - EEG_L3\n      label : EEG_L1 - EEG_L3",
+                 bg="#181825", fg="#6c7086",
+                 font=("monospace", 7), justify="left").pack(anchor="w", padx=6)
+        self._derived_text = tk.Text(
+            left, height=3, width=22, bg="#313244", fg="#cdd6f4",
+            insertbackground="#cdd6f4", relief="flat", font=("monospace", 8),
+            wrap="none")
+        self._derived_text.pack(fill="x", padx=6, pady=(2, 4))
 
         # Time range
         _lbl(left, "TIME RANGE (s)")
@@ -595,7 +917,7 @@ class EDFViewer(tk.Tk):
                                                     columnspan=2, sticky="w")
 
         # EOG threshold
-        _lbl(left, "EOG THRESHOLD (µV)")
+        _lbl(left, "EOG THRESHOLD (uV)")
         self._eog_thr = tk.DoubleVar(value=50.0)
         tk.Entry(left, textvariable=self._eog_thr, width=8,
                  bg="#313244", fg="#cdd6f4", relief="flat").pack(
@@ -663,15 +985,21 @@ class EDFViewer(tk.Tk):
                      state="readonly").pack(side="left", padx=4)
 
         _section(right, "ERP / BCI  (requires events CSV)")
-        self._plot_erp   = tk.BooleanVar(value=False)
-        self._plot_ssvep = tk.BooleanVar(value=False)
+        self._plot_erp      = tk.BooleanVar(value=False)
+        self._plot_ssvep    = tk.BooleanVar(value=False)
+        self._plot_ssvep_snr = tk.BooleanVar(value=False)
         tk.Checkbutton(right, text="ERP — P300  (auditory oddball)",
                        variable=self._plot_erp,
                        bg="#181825", fg="#a6e3a1", selectcolor="#313244",
                        activebackground="#181825", relief="flat",
                        font=("monospace", 9)).pack(anchor="w", padx=18)
-        tk.Checkbutton(right, text="SSVEP spectrum",
+        tk.Checkbutton(right, text="SSVEP spectrum  (PSD per freq)",
                        variable=self._plot_ssvep,
+                       bg="#181825", fg="#a6e3a1", selectcolor="#313244",
+                       activebackground="#181825", relief="flat",
+                       font=("monospace", 9)).pack(anchor="w", padx=18)
+        tk.Checkbutton(right, text="SSVEP SNR bar chart  (1f/2f/3f)",
+                       variable=self._plot_ssvep_snr,
                        bg="#181825", fg="#a6e3a1", selectcolor="#313244",
                        activebackground="#181825", relief="flat",
                        font=("monospace", 9)).pack(anchor="w", padx=18)
@@ -727,6 +1055,34 @@ class EDFViewer(tk.Tk):
             return
         self._edf_var.set(files[0])
         self._do_load()
+        # Auto-find the closest events file by modification time
+        self._auto_match_events(files[0])
+
+    def _load_latest_events(self):
+        """Load the most recently modified events CSV from the events directory."""
+        files = sorted(glob.glob(os.path.join(EVENTS_DIR, "*.csv")),
+                       key=os.path.getmtime, reverse=True)
+        if not files:
+            messagebox.showwarning("No events", f"No CSV files found in {EVENTS_DIR}")
+            return
+        self._events_var.set(files[0])
+        self._load_events(files[0])
+
+    def _auto_match_events(self, edf_path: str):
+        """Try to find an events CSV whose timestamp is closest to the EDF's mtime."""
+        ev_files = sorted(glob.glob(os.path.join(EVENTS_DIR, "*.csv")),
+                          key=os.path.getmtime, reverse=True)
+        if not ev_files:
+            return
+        edf_mtime = os.path.getmtime(edf_path)
+        # Pick the events file whose mtime is closest to the EDF mtime
+        best = min(ev_files, key=lambda p: abs(os.path.getmtime(p) - edf_mtime))
+        delta = abs(os.path.getmtime(best) - edf_mtime)
+        # Only auto-load if within 30 minutes — avoids matching unrelated sessions
+        if delta <= 1800:
+            self._events_var.set(best)
+            self._load_events(best)
+            self._status(f"Auto-matched events: {os.path.basename(best)}")
 
     def _do_load(self):
         edf_path = self._edf_var.get().strip()
@@ -794,7 +1150,7 @@ class EDFViewer(tk.Tk):
         try:
             self._do_generate()
         except Exception as e:
-            self.after(0, lambda: messagebox.showerror("Plot error", str(e)))
+            self.after(0, lambda err=e: messagebox.showerror("Plot error", str(err)))
         finally:
             self.after(0, lambda: self._gen_btn.config(state="normal"))
 
@@ -809,9 +1165,19 @@ class EDFViewer(tk.Tk):
                     and rec.channel_index(ch) is not None]
         fmt      = self._fmt_var.get()
 
-        if not channels:
-            self.after(0, lambda: messagebox.showwarning("No channels", "Select at least one channel"))
+        derived_exprs = self._derived_text.get("1.0", tk.END).strip()
+        if not channels and not derived_exprs:
+            self.after(0, lambda: messagebox.showwarning("No channels", "Select at least one channel or enter a custom derivation"))
             return
+
+        # Parse custom derivations (raw arrays; filters applied inside plot functions)
+        extras: list[tuple[str, np.ndarray]] = []
+        if derived_exprs:
+            try:
+                extras = _parse_derived_channels(rec, derived_exprs, t_start, t_end)
+            except ValueError as e:
+                self.after(0, lambda err=e: messagebox.showerror("Derivation error", str(err)))
+                return
 
         os.makedirs(FIGURES_DIR, exist_ok=True)
         stem = os.path.splitext(os.path.basename(rec.path))[0]
@@ -827,25 +1193,25 @@ class EDFViewer(tk.Tk):
 
         if self._plot_raw.get():
             fig = plot_traces(rec, channels, t_start, t_end,
-                              None, None, False, " — raw")
+                              None, None, False, " — raw", extras=extras)
             _save(fig, "raw_traces")
             self._status(f"Saved raw traces ({len(saved)} so far)")
 
         if self._plot_filt.get():
             fig = plot_traces(rec, channels, t_start, t_end,
-                              hp, lp, notch, " — filtered")
+                              hp, lp, notch, " — filtered", extras=extras)
             _save(fig, "filtered_traces")
             self._status(f"Saved filtered traces ({len(saved)} so far)")
 
         if self._plot_psd_per.get():
             fig = plot_psd(rec, channels, t_start, t_end, hp, lp, notch,
-                           per_channel=True)
+                           per_channel=True, extras=extras)
             _save(fig, "psd_per_channel")
             self._status(f"Saved PSD per channel ({len(saved)} so far)")
 
         if self._plot_psd_avg.get():
             fig = plot_psd(rec, channels, t_start, t_end, hp, lp, notch,
-                           per_channel=False)
+                           per_channel=False, extras=extras)
             _save(fig, "psd_averaged")
             self._status(f"Saved PSD averaged ({len(saved)} so far)")
 
@@ -877,25 +1243,41 @@ class EDFViewer(tk.Tk):
                     _save(fig, "ERP_P300")
                     self._status(f"Saved ERP ({len(saved)} so far)")
                 except Exception as e:
-                    self.after(0, lambda: messagebox.showerror("ERP error", str(e)))
+                    self.after(0, lambda err=e: messagebox.showerror("ERP error", str(err)))
 
-        if self._plot_ssvep.get():
+        def _ssvep_preflight(label):
             if self._events_df is None:
                 self.after(0, lambda: messagebox.showwarning(
-                    "SSVEP", "Load an events CSV first (ssvep events)"))
-            elif rec.rec_start_epoch is None:
+                    label, "Load an events CSV first (ssvep events)"))
+                return False
+            if rec.rec_start_epoch is None:
                 self.after(0, lambda: messagebox.showwarning(
-                    "SSVEP", "No meta.json — rec_start_epoch unknown"))
-            elif not eeg_channels:
-                self.after(0, lambda: messagebox.showwarning("SSVEP", "Select EEG channels"))
-            else:
+                    label, "No meta.json — rec_start_epoch unknown"))
+                return False
+            if not eeg_channels:
+                self.after(0, lambda: messagebox.showwarning(label, "Select EEG channels"))
+                return False
+            return True
+
+        if self._plot_ssvep.get():
+            if _ssvep_preflight("SSVEP"):
                 try:
                     fig = plot_ssvep(rec, eeg_channels, self._events_df,
                                      rec.rec_start_epoch)
                     _save(fig, "SSVEP_spectrum")
-                    self._status(f"Saved SSVEP ({len(saved)} so far)")
+                    self._status(f"Saved SSVEP spectrum ({len(saved)} so far)")
                 except Exception as e:
-                    self.after(0, lambda: messagebox.showerror("SSVEP error", str(e)))
+                    self.after(0, lambda err=e: messagebox.showerror("SSVEP error", str(err)))
+
+        if self._plot_ssvep_snr.get():
+            if _ssvep_preflight("SSVEP SNR"):
+                try:
+                    fig = plot_ssvep_snr(rec, eeg_channels, self._events_df,
+                                         rec.rec_start_epoch)
+                    _save(fig, "SSVEP_SNR")
+                    self._status(f"Saved SSVEP SNR ({len(saved)} so far)")
+                except Exception as e:
+                    self.after(0, lambda err=e: messagebox.showerror("SSVEP SNR error", str(err)))
 
         if self._plot_eog.get():
             try:
@@ -904,7 +1286,7 @@ class EDFViewer(tk.Tk):
                 _save(fig, "EOG_saccades")
                 self._status(f"Saved EOG trace ({len(saved)} so far)")
             except ValueError as e:
-                self.after(0, lambda: messagebox.showwarning("EOG", str(e)))
+                self.after(0, lambda err=e: messagebox.showwarning("EOG", str(err)))
 
         msg = f"Done — {len(saved)} figure(s) saved to {FIGURES_DIR}"
         self._status(msg)

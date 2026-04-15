@@ -90,8 +90,9 @@ import pygame
 TARGET_FREQS   = [6, 10, 12, 15]   # Hz — must divide MONITOR_HZ evenly
 MONITOR_HZ     = 60                # display refresh rate
 REST_SEC       = 3.0               # rest between epochs
-FLICKER_SEC    = 12.0              # flicker duration per epoch
-RUNS           = 3                 # cycles through all frequencies
+FLICKER_SEC    = 15.0              # flicker duration per epoch
+WARMUP_SEC     = 2.0               # first N seconds excluded from analysis (visual cortex entrainment transient)
+RUNS           = 6                 # cycles through all frequencies
 
 BOARD_COLS     = 8
 BOARD_ROWS     = 8
@@ -123,13 +124,19 @@ def _draw_fixation(surface):
     pygame.draw.line(surface, (255, 0, 0), (cx, cy - 15), (cx, cy + 15), 3)
 
 
-def _draw_rest(surface, msg: str = "REST — relax and fixate"):
+def _draw_rest(surface, msg: str = "REST — relax and fixate", countdown: float = None):
     surface.fill(COLOR_REST)
     font  = pygame.font.SysFont("monospace", 28)
     label = font.render(msg, True, COLOR_TEXT)
     rect  = label.get_rect(center=(surface.get_width() // 2,
                                    surface.get_height() // 2 + 60))
     surface.blit(label, rect)
+    if countdown is not None:
+        cd_font  = pygame.font.SysFont("monospace", 48)
+        cd_label = cd_font.render(f"{countdown:.1f}", True, (200, 200, 200))
+        cd_rect  = cd_label.get_rect(center=(surface.get_width() // 2,
+                                              surface.get_height() // 2 + 120))
+        surface.blit(cd_label, cd_rect)
     _draw_fixation(surface)
 
 
@@ -221,7 +228,9 @@ def main():
                     if pump():
                         aborted = True
                         break
-                    _draw_rest(screen, f"REST  —  next: {freq_hz} Hz")
+                    remaining = deadline - time.time()
+                    _draw_rest(screen, f"REST  —  next: {freq_hz} Hz",
+                               countdown=max(0.0, remaining))
                     pygame.display.flip()
                     clock.tick(MONITOR_HZ)
 
@@ -233,6 +242,10 @@ def main():
                 writer.writerow([t_flicker, run_idx, freq_hz, "FLICKER_START", ""])
                 print(f"  [{run_idx}/{RUNS}] {freq_hz} Hz  start  t={t_flicker:.3f}")
 
+                # Log when the entrainment transient is over — analysis starts here
+                t_analysis = t_flicker + WARMUP_SEC
+                warmup_logged = False
+
                 phase        = 0
                 accum        = 0.0
                 frame_count  = 0
@@ -242,6 +255,11 @@ def main():
                     if pump():
                         aborted = True
                         break
+                    now = time.time()
+                    if not warmup_logged and now >= t_analysis:
+                        writer.writerow([now, run_idx, freq_hz, "ANALYSIS_START",
+                                         f"warmup={WARMUP_SEC}s"])
+                        warmup_logged = True
                     accum += 1.0
                     if accum >= frames_per_toggle:
                         accum -= frames_per_toggle
@@ -249,7 +267,7 @@ def main():
                     _draw_checkerboard(screen, phase)
                     _draw_fixation(screen)
                     _draw_flicker_label(screen, freq_hz,
-                                        time.time() - t_flicker, FLICKER_SEC)
+                                        now - t_flicker, FLICKER_SEC)
                     pygame.display.flip()
                     clock.tick(MONITOR_HZ)
                     frame_count += 1

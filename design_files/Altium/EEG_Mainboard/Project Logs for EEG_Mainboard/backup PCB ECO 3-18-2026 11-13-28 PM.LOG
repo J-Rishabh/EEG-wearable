@@ -1,0 +1,8 @@
+Removed Pin From Net: NetName=NRF_ADS_START Pin=U1-9
+Removed Pin From Net: NetName=NRF_IMU_INT1 Pin=U1-23
+Removed Pin From Net: NetName=NRF_IMU_INT2 Pin=U1-24
+Removed Pin From Net: NetName=NRF_ADS_PWDN Pin=U1-38
+Removed Pin From Net: NetName=NRF_ADS_RESET Pin=U1-39
+Removed Pin From Net: NetName=NRF_ADS_DRDY Pin=U1-40
+Added Pin To Net: NetName=NRF_IMU_INT1 Pin=U1-8
+Added Pin To Net: NetName=NRF_IMU_INT2 Pin=U1-9

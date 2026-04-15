@@ -1,0 +1,42 @@
+Removed Member From Class: ClassName=EEG_Electrodes Member=E1
+Removed Member From Class: ClassName=EEG_Electrodes Member=E2
+Removed Member From Class: ClassName=EEG_Electrodes Member=E3
+Removed Member From Class: ClassName=EEG_Electrodes Member=E4
+Removed Member From Class: ClassName=EEG_Electrodes Member=E5
+Removed Member From Class: ClassName=EEG_Electrodes Member=E6
+Removed Member From Class: ClassName=EEG_Electrodes Member=E7
+Added Component: Designator=E1A(EEG_Electrode)
+Added Component: Designator=E1B(EEG_Electrode)
+Added Component: Designator=E1C(EEG_Electrode)
+Added Component: Designator=E1D(EEG_Electrode)
+Added Component: Designator=E1E(EEG_Electrode)
+Added Component: Designator=E1F(EEG_Electrode)
+Added Component: Designator=E1G(EEG_Electrode)
+Added Pin To Net: NetName=NetE1A_1 Pin=E1A-1
+Added Pin To Net: NetName=NetE1A_1 Pin=R5A-1
+Added Net: Name=NetE1A_1
+Added Pin To Net: NetName=NetE1B_1 Pin=E1B-1
+Added Pin To Net: NetName=NetE1B_1 Pin=R5B-1
+Added Net: Name=NetE1B_1
+Added Pin To Net: NetName=NetE1C_1 Pin=E1C-1
+Added Pin To Net: NetName=NetE1C_1 Pin=R5C-1
+Added Net: Name=NetE1C_1
+Added Pin To Net: NetName=NetE1D_1 Pin=E1D-1
+Added Pin To Net: NetName=NetE1D_1 Pin=R5D-1
+Added Net: Name=NetE1D_1
+Added Pin To Net: NetName=NetE1E_1 Pin=E1E-1
+Added Pin To Net: NetName=NetE1E_1 Pin=R5E-1
+Added Net: Name=NetE1E_1
+Added Pin To Net: NetName=NetE1F_1 Pin=E1F-1
+Added Pin To Net: NetName=NetE1F_1 Pin=R5F-1
+Added Net: Name=NetE1F_1
+Added Pin To Net: NetName=NetE1G_1 Pin=E1G-1
+Added Pin To Net: NetName=NetE1G_1 Pin=R5G-1
+Added Net: Name=NetE1G_1
+Added Member To Class: ClassName=Designator1 Member=Component E1A (E1) EEG_Electrode
+Added Member To Class: ClassName=Designator2 Member=Component E1B (E1) EEG_Electrode
+Added Member To Class: ClassName=Designator3 Member=Component E1C (E1) EEG_Electrode
+Added Member To Class: ClassName=Designator4 Member=Component E1D (E1) EEG_Electrode
+Added Member To Class: ClassName=Designator5 Member=Component E1E (E1) EEG_Electrode
+Added Member To Class: ClassName=Designator6 Member=Component E1F (E1) EEG_Electrode
+Added Member To Class: ClassName=Designator7 Member=Component E1G (E1) EEG_Electrode

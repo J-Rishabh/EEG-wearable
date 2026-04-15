@@ -128,4 +128,32 @@ void eeg_set_drl(bool enable);
 /** True if DRL is currently active (default: true after eeg_init). */
 bool eeg_drl_active(void);
 
+/* ---------- Power management ---------- */
+
+/**
+ * Stop ADS1299 conversions by deasserting START.
+ * Analog front-end stays powered (~2-3 mA). DRDY stops toggling.
+ * Call eeg_start() to resume without re-init.
+ */
+void eeg_stop(void);
+
+/**
+ * Resume conversions after eeg_stop().
+ * Reasserts START — RDATAC still active, resumes within one conversion period (~4 ms).
+ */
+void eeg_start(void);
+
+/**
+ * Power down ADS1299 completely (~65 µA).
+ * Must be called after eeg_stop(). Full re-init required via eeg_powerup().
+ */
+void eeg_powerdown(void);
+
+/**
+ * Power up ADS1299 after eeg_powerdown().
+ * Deasserts PWDN, issues RESET pulse, replays full register configuration.
+ * @return 0 on success, negative errno on failure.
+ */
+int eeg_powerup(void);
+
 #endif /* EEG_H */

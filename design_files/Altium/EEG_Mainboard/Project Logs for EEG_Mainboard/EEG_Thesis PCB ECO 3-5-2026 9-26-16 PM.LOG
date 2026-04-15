@@ -1,0 +1,26 @@
+Add Component: Footprint Not Found CAPC0603X03L_C
+Add Component: Footprint Not Found CAPC0603X03L_C
+Add Component: Footprint Not Found CAPC0603X03L_C
+Add Component: Footprint Not Found INDC0603X03L_C
+Add Component: Footprint Not Found INDC0603X03L_C
+Add Component: Footprint Not Found INDC0603X03L_C
+Add Component: Footprint Not Found QFN40P600X600X90-48N
+Add Pin To Net: Unknown Pin: Pin C45-1
+Add Pin To Net: Unknown Pin: Pin C45-2
+Add Pin To Net: Unknown Pin: Pin C46-1
+Add Pin To Net: Unknown Pin: Pin C46-2
+Add Pin To Net: Unknown Pin: Pin C47-1
+Add Pin To Net: Unknown Pin: Pin C47-2
+Add Pin To Net: Unknown Pin: Pin L5-1
+Add Pin To Net: Unknown Pin: Pin L5-2
+Add Pin To Net: Unknown Pin: Pin L6-1
+Add Pin To Net: Unknown Pin: Pin L6-2
+Add Pin To Net: Unknown Pin: Pin L7-1
+Add Pin To Net: Unknown Pin: Pin L7-2
+Add Class Member: Failed to add class member : Component C45 1.5pF
+Add Class Member: Failed to add class member : Component C46 2.0pF
+Add Class Member: Failed to add class member : Component C47 0.3pF
+Add Class Member: Failed to add class member : Component L5 2.7nH
+Add Class Member: Failed to add class member : Component L6 3.5nH
+Add Class Member: Failed to add class member : Component L7 3.5nH
+Added Member To Class: ClassName=EEG_Thesis Member=Component U4 nRF54L15-QFAA

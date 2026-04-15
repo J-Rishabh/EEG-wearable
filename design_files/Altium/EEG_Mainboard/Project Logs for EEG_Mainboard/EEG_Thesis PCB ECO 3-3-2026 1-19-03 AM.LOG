@@ -1,0 +1,98 @@
+Added Component: Designator=C?(GRM033D70J224ME01D)
+Add component (AddParameter): Name = "Arrow Part Number"; Value = ""; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Arrow Price/Stock"; Value = ""; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Datasheet Link"; Value = "https://search.murata.co.jp/Ceramy/image/img/A01X/G101/ENG/GRM035R61C225ME01-01A.pdf"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Height"; Value = "0.33mm"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Manufacturer_Name"; Value = "Murata Electronics"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Manufacturer_Part_Number"; Value = "GRM035R61C225ME01D"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Mouser Part Number"; Value = "81-GRM035R61C225ME1D"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Mouser Price/Stock"; Value = "https://www.mouser.co.uk/ProductDetail/Murata-Electronics/GRM035R61C225ME01D?qs=DPoM0jnrROXTliYh3Jmu1A%3D%3D"; VariantName = "[No Variations]"
+Added Component: Designator=C?(GRM033D70J224ME01D)
+Add component (AddParameter): Name = "Arrow Part Number"; Value = ""; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Arrow Price/Stock"; Value = ""; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Datasheet Link"; Value = "https://search.murata.co.jp/Ceramy/image/img/A01X/G101/ENG/GRM035R61C225ME01-01A.pdf"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Height"; Value = "0.33mm"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Manufacturer_Name"; Value = "Murata Electronics"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Manufacturer_Part_Number"; Value = "GRM035R61C225ME01D"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Mouser Part Number"; Value = "81-GRM035R61C225ME1D"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Mouser Price/Stock"; Value = "https://www.mouser.co.uk/ProductDetail/Murata-Electronics/GRM035R61C225ME01D?qs=DPoM0jnrROXTliYh3Jmu1A%3D%3D"; VariantName = "[No Variations]"
+Added Component: Designator=D?(ESD108B1CSP0201XTSA1)
+Add component (AddParameter): Name = "Arrow Part Number"; Value = "ESD108B1CSP0201XTSA1"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Arrow Price/Stock"; Value = "https://www.arrow.com/en/products/esd108b1csp0201xtsa1/infineon-technologies-ag?region=nac"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Datasheet Link"; Value = "https://www.infineon.com/dgdl/Infineon-ESD108-B1-CSP0201-DS-v01_00-EN.pdf?fileId=5546d4624b0b249c014b1746e4d05aa8"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Height"; Value = "0.16mm"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Manufacturer_Name"; Value = "Infineon"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Manufacturer_Part_Number"; Value = "ESD108B1CSP0201XTSA1"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Mouser Part Number"; Value = "726-ESD108B1CSP0201X"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Mouser Price/Stock"; Value = "https://www.mouser.co.uk/ProductDetail/Infineon-Technologies/ESD108B1CSP0201XTSA1?qs=3Bi3m9r5MQZFyNTZtNMRAQ%3D%3D"; VariantName = "[No Variations]"
+Added Component: Designator=IC?(SOTFL50P160X60-6N)
+Add component (AddParameter): Name = "Arrow Part Number"; Value = "TPD4E1B06DRLR"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Arrow Price/Stock"; Value = "https://www.arrow.com/en/products/tpd4e1b06drlr/texas-instruments?utm_currency=USD&region=nac"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Datasheet Link"; Value = "http://www.ti.com/lit/ds/symlink/tpd4e1b06.pdf"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Height"; Value = "0.6mm"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Manufacturer_Name"; Value = "Texas Instruments"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Manufacturer_Part_Number"; Value = "TPD4E1B06DRLR"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Mouser Part Number"; Value = "595-TPD4E1B06DRLR"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Mouser Price/Stock"; Value = "https://www.mouser.co.uk/ProductDetail/Texas-Instruments/TPD4E1B06DRLR?qs=1MXlzafEN387aRSX0e2MEQ%3D%3D"; VariantName = "[No Variations]"
+Added Component: Designator=R?(RESC0603X26N)
+Add component (AddParameter): Name = "Arrow Part Number"; Value = ""; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Arrow Price/Stock"; Value = ""; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Datasheet Link"; Value = "http://www.yageo.com/documents/recent/PYu-RC0201_51_RoHS_L_8.pdf"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Height"; Value = "0.26mm"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Manufacturer_Name"; Value = "Yageo Group"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Manufacturer_Part_Number"; Value = "RC0201JR-075K1L"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Mouser Part Number"; Value = "603-RC0201JR-075K1L"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Mouser Price/Stock"; Value = "https://www.mouser.com/Search/Refine.aspx?Keyword=603-RC0201JR-075K1L"; VariantName = "[No Variations]"
+Added Component: Designator=R?(RESC0603X26N)
+Add component (AddParameter): Name = "Arrow Part Number"; Value = ""; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Arrow Price/Stock"; Value = ""; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Datasheet Link"; Value = "http://www.yageo.com/documents/recent/PYu-RC0201_51_RoHS_L_8.pdf"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Height"; Value = "0.26mm"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Manufacturer_Name"; Value = "Yageo Group"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Manufacturer_Part_Number"; Value = "RC0201JR-075K1L"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Mouser Part Number"; Value = "603-RC0201JR-075K1L"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Mouser Price/Stock"; Value = "https://www.mouser.com/Search/Refine.aspx?Keyword=603-RC0201JR-075K1L"; VariantName = "[No Variations]"
+Added Pin To Net: NetName=GND Pin=C?-2
+Added Pin To Net: NetName=GND Pin=C?-2
+Added Pin To Net: NetName=GND Pin=D?-1
+Added Pin To Net: NetName=GND Pin=IC?-2
+Added Pin To Net: NetName=GND Pin=J?-A1B12
+Added Pin To Net: NetName=GND Pin=J?-B1A12
+Added Pin To Net: NetName=GND Pin=J?-SH1
+Added Pin To Net: NetName=GND Pin=J?-SH2
+Added Pin To Net: NetName=GND Pin=J?-SH3
+Added Pin To Net: NetName=GND Pin=J?-SH4
+Added Pin To Net: NetName=GND Pin=R?-2
+Added Pin To Net: NetName=GND Pin=R?-2
+Added Pin To Net: NetName=CC1 Pin=IC?-1
+Added Pin To Net: NetName=CC1 Pin=J?-A5
+Added Pin To Net: NetName=CC1 Pin=R?-1
+Added Net: Name=CC1
+Added Pin To Net: NetName=CC2 Pin=IC?-3
+Added Pin To Net: NetName=CC2 Pin=J?-B5
+Added Pin To Net: NetName=CC2 Pin=R?-1
+Added Net: Name=CC2
+Added Pin To Net: NetName=NetIC?_4 Pin=IC?-4
+Added Pin To Net: NetName=NetIC?_4 Pin=J?-A6
+Added Pin To Net: NetName=NetIC?_4 Pin=J?-B6
+Added Net: Name=NetIC?_4
+Added Pin To Net: NetName=NetIC?_6 Pin=IC?-6
+Added Pin To Net: NetName=NetIC?_6 Pin=J?-A7
+Added Pin To Net: NetName=NetIC?_6 Pin=J?-B7
+Added Net: Name=NetIC?_6
+Added Pin To Net: NetName=VBUS Pin=C?-1
+Added Pin To Net: NetName=VBUS Pin=C?-1
+Added Pin To Net: NetName=VBUS Pin=D?-2
+Added Pin To Net: NetName=VBUS Pin=J?-A4B9
+Added Pin To Net: NetName=VBUS Pin=J?-B4A9
+Added Net: Name=VBUS
+Add Differential Pair: Number of nets in differential pair NetIC?_4 is 1 instead of 2
+Add Differential Pair: Number of nets in differential pair NetIC?_6 is 1 instead of 2
+Added Member To Class: ClassName=EEG_Thesis Member=Component C? GRM035R61C225ME01D
+Added Member To Class: ClassName=EEG_Thesis Member=Component C? GRM035R61C225ME01D
+Added Member To Class: ClassName=EEG_Thesis Member=Component D? ESD108B1CSP0201XTSA1
+Added Member To Class: ClassName=EEG_Thesis Member=Component IC? TPD4E1B06DRLR
+Added Member To Class: ClassName=EEG_Thesis Member=Component J? TC2030-MCP
+Added Member To Class: ClassName=EEG_Thesis Member=Component R? RC0201JR-075K1L
+Added Member To Class: ClassName=EEG_Thesis Member=Component R? RC0201JR-075K1L
+Added Rule: Name=Schematic Supply Nets_2

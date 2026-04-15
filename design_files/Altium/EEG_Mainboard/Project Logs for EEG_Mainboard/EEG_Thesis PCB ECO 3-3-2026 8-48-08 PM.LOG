@@ -1,0 +1,95 @@
+Removed Pin From Net: NetName=VBUS Pin=F1-1
+Removed Pin From Net: NetName=+5V Pin=F1-2
+Removed Member From Class: ClassName=EEG_Thesis Member=F1
+Added Component: Designator=C?(GRM033D70J224ME01D)
+Add component (AddParameter): Name = "Arrow Part Number"; Value = ""; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Arrow Price/Stock"; Value = ""; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Datasheet Link"; Value = "https://search.murata.co.jp/Ceramy/image/img/A01X/G101/ENG/GRM035R61C225ME01-01A.pdf"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Height"; Value = "0.33mm"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Manufacturer_Name"; Value = "Murata Electronics"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Manufacturer_Part_Number"; Value = "GRM035R61C225ME01D"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Mouser Part Number"; Value = "81-GRM035R61C225ME1D"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Mouser Price/Stock"; Value = "https://www.mouser.co.uk/ProductDetail/Murata-Electronics/GRM035R61C225ME01D?qs=DPoM0jnrROXTliYh3Jmu1A%3D%3D"; VariantName = "[No Variations]"
+Added Component: Designator=C?(GRM033D70J224ME01D)
+Add component (AddParameter): Name = "Arrow Part Number"; Value = ""; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Arrow Price/Stock"; Value = ""; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Datasheet Link"; Value = "https://search.murata.co.jp/Ceramy/image/img/A01X/G101/ENG/GRM035R61C225ME01-01A.pdf"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Height"; Value = "0.33mm"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Manufacturer_Name"; Value = "Murata Electronics"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Manufacturer_Part_Number"; Value = "GRM035R61C225ME01D"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Mouser Part Number"; Value = "81-GRM035R61C225ME1D"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Mouser Price/Stock"; Value = "https://www.mouser.co.uk/ProductDetail/Murata-Electronics/GRM035R61C225ME01D?qs=DPoM0jnrROXTliYh3Jmu1A%3D%3D"; VariantName = "[No Variations]"
+Added Component: Designator=F?(0402L010SLKR)
+Add component (AddParameter): Name = "Arrow Part Number"; Value = "0402L035SLKR"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Arrow Price/Stock"; Value = "https://www.arrow.com/en/products/0402l035slkr/littelfuse?region=nac"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Datasheet Link"; Value = "https://g.componentsearchengine.com/Datasheets/1/0402L010SLKR.pdf"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Height"; Value = "0.6mm"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Manufacturer_Name"; Value = "LITTELFUSE"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Manufacturer_Part_Number"; Value = "0402L035SLKR"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Mouser Part Number"; Value = "576-0402L035SLKR"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Mouser Price/Stock"; Value = "https://www.mouser.co.uk/ProductDetail/Littelfuse/0402L035SLKR?qs=l%252BmC%252BYUP1cpZgakJ0rfNKw%3D%3D"; VariantName = "[No Variations]"
+Added Component: Designator=J?(S2BPHSM4TBLFSN)
+Add component (AddParameter): Name = "Arrow Part Number"; Value = "S2B-PH-SM4-TB(LF)(SN)"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Arrow Price/Stock"; Value = "https://www.arrow.com/en/products/s2b-ph-sm4-tb-lf-sn/jst-manufacturing?utm_currency=USD&region=europe"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Datasheet Link"; Value = "https://www.jst-mfg.com/product/pdf/eng/ePH.pdf"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Height"; Value = "6.6mm"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Manufacturer_Name"; Value = "JST (JAPAN SOLDERLESS TERMINALS)"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Manufacturer_Part_Number"; Value = "S2B-PH-SM4-TB(LF)(SN)"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Mouser Part Number"; Value = "N/A"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Mouser Price/Stock"; Value = "https://www.mouser.co.uk/ProductDetail/JST-Commercial/S2B-PH-SM4-TBLFSN?qs=QpmGXVUTftEA9IU90i0xlg%3D%3D"; VariantName = "[No Variations]"
+Added Component: Designator=R?(RESC0603X26N)
+Add component (AddParameter): Name = "Arrow Part Number"; Value = "RC0201FR-0710KL"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Arrow Price/Stock"; Value = "https://www.arrow.com/en/products/rc0201fr-0710kl/yageo?utm_currency=USD&region=nac"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Datasheet Link"; Value = "https://www.yageo.com/upload/media/product/productsearch/datasheet/rchip/PYu-RC_Group_51_RoHS_L_12.pdf"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Height"; Value = "0.26mm"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Manufacturer_Name"; Value = "Yageo Group"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Manufacturer_Part_Number"; Value = "RC0201FR-0710KL"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Mouser Part Number"; Value = "603-RC0201FR-0710KL"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Mouser Price/Stock"; Value = "https://www.mouser.co.uk/ProductDetail/YAGEO/RC0201FR-0710KL?qs=FLc6udek5PS1AiJCgpc6bQ%3D%3D"; VariantName = "[No Variations]"
+Added Component: Designator=R?(RESC0603X26N)
+Add component (AddParameter): Name = "Arrow Part Number"; Value = "RC0201FR-071K8L"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Arrow Price/Stock"; Value = "https://www.arrow.com/en/products/rc0201fr-071k8l/yageo?region=nac"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Datasheet Link"; Value = "http://www.yageo.com/documents/recent/PYu-RC0201_51_RoHS_L_8.pdf"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Height"; Value = "0.26mm"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Manufacturer_Name"; Value = "Yageo Group"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Manufacturer_Part_Number"; Value = "RC0201FR-071K8L"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Mouser Part Number"; Value = "603-RC0201FR-071K8L"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Mouser Price/Stock"; Value = "https://www.mouser.com/Search/Refine.aspx?Keyword=603-RC0201FR-071K8L"; VariantName = "[No Variations]"
+Added Pin To Net: NetName=+5V Pin=C?-1
+Added Pin To Net: NetName=GND Pin=C?-2
+Added Pin To Net: NetName=GND Pin=C?-2
+Added Pin To Net: NetName=VBUS Pin=F?-1
+Added Pin To Net: NetName=+5V Pin=F?-2
+Added Pin To Net: NetName=VSYS Pin=IC?-9
+Added Pin To Net: NetName=VSYS Pin=IC?-16
+Added Pin To Net: NetName=+5V Pin=IC?-17
+Added Pin To Net: NetName=GND Pin=J?-2
+Added Pin To Net: NetName=GND Pin=J?-MP1
+Added Pin To Net: NetName=GND Pin=J?-MP2
+Added Pin To Net: NetName=GND Pin=R?-2
+Added Pin To Net: NetName=GND Pin=R?-2
+Added Pin To Net: NetName=GND Pin=S?-4
+Added Pin To Net: NetName=GND Pin=S?-5
+Added Pin To Net: NetName=NetIC?_12 Pin=IC?-12
+Added Pin To Net: NetName=NetIC?_12 Pin=R?-1
+Added Net: Name=NetIC?_12
+Added Pin To Net: NetName=NetIC?_14 Pin=IC?-14
+Added Pin To Net: NetName=NetIC?_14 Pin=R?-1
+Added Net: Name=NetIC?_14
+Added Pin To Net: NetName=VBAT_PRE Pin=J?-1
+Added Pin To Net: NetName=VBAT_PRE Pin=S?-3
+Added Net: Name=VBAT_PRE
+Added Pin To Net: NetName=VBAT Pin=C?-1
+Added Pin To Net: NetName=VBAT Pin=IC?-15
+Added Pin To Net: NetName=VBAT Pin=S?-1
+Added Net: Name=VBAT
+Add Differential Pair: Number of nets in differential pair NetIC5_4 is 1 instead of 2
+Add Differential Pair: Number of nets in differential pair NetIC5_6 is 1 instead of 2
+Added Member To Class: ClassName=EEG_Thesis Member=Component C? GRM035R61C225ME01D
+Added Member To Class: ClassName=EEG_Thesis Member=Component C? GRM035R61C225ME01D
+Added Member To Class: ClassName=EEG_Thesis Member=Component F? 0402L035SLKR
+Added Member To Class: ClassName=EEG_Thesis Member=Component J? S2B-PH-SM4-TB_LF__SN_
+Added Member To Class: ClassName=EEG_Thesis Member=Component R? RC0201FR-0710KL
+Added Member To Class: ClassName=EEG_Thesis Member=Component R? RC0201FR-071K8L
+Added Rule: Name=Schematic Supply Nets_4
+Added Rule: Name=Schematic Supply Nets_5

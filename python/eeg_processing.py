@@ -14,8 +14,10 @@ always applied so that DC drift is always removed.
 Dependencies: numpy, scipy
 """
 
+from typing import Optional
+
 import numpy as np
-from scipy.signal import butter, iirnotch, sosfilt, sosfilt_zi, tf2sos
+from scipy.signal import butter, iirnotch, sosfilt, sosfilt_zi, tf2sos, welch
 
 # ---------------------------------------------------------------------------
 # Channel / signal constants
@@ -281,3 +283,91 @@ class EEGProcessor:
         self._zi_notch = _make_zi(self._sos_notch)
         self._zi_hp    = _make_zi(self._sos_hp)
         self._zi_lp    = _make_zi(self._sos_lp_for_mode(self.band_mode))
+
+
+# ---------------------------------------------------------------------------
+# Live HR estimation
+# ---------------------------------------------------------------------------
+
+def estimate_hr_live(
+    ecg_seg: np.ndarray,
+    fs: float,
+    lo_bpm: float = 40.0,
+    hi_bpm: float = 180.0,
+    agree_tol_bpm: float = 5.0,
+) -> Optional[float]:
+    """
+    Robust live heart-rate estimate from a segment of filtered ECG.
+
+    Combines two periodicity-based methods that require no peak detection and
+    therefore work on weak/noisy single-electrode ECG signals:
+
+      Method D  Autocorrelation — normalised lag-domain periodicity.
+                Dominant lag in [40–180 BPM] range with parabolic sub-sample
+                refinement.  Robust to non-stationarity and amplitude variation.
+
+      Method F  Welch PSD — dominant frequency in the cardiac band.
+                Uses 8-second Welch segments for good frequency resolution.
+                Independent of D: time vs frequency domain.
+
+    Consensus rule
+    --------------
+    • Both valid, agree within agree_tol_bpm  →  return their mean
+    • Both valid, disagree                    →  return D (autocorr; more robust
+                                                  to slow HR drift in short windows)
+    • Only one valid                          →  return whichever succeeded
+    • Both fail                               →  return None
+
+    Parameters
+    ----------
+    ecg_seg        : filtered ECG segment (HP-filtered; notch/LP already applied)
+    fs             : sample rate in Hz
+    lo_bpm/hi_bpm  : physiological search range (BPM)
+    agree_tol_bpm  : max difference (BPM) for the two estimates to be averaged
+    """
+    # ── Method D: autocorrelation ─────────────────────────────────────────────
+    bpm_d = np.nan
+    x = ecg_seg - ecg_seg.mean()
+    std = x.std()
+    if std > 1e-12:
+        x  = x / std
+        ac = np.correlate(x, x, mode="full")[len(x) - 1:]   # positive lags only
+        ac = ac / ac[0]                                       # normalise: lag-0 = 1
+        lo_lag = max(1, int(60.0 / hi_bpm * fs))
+        hi_lag = min(len(ac) - 1, int(60.0 / lo_bpm * fs))
+        if lo_lag < hi_lag:
+            region   = ac[lo_lag : hi_lag + 1]
+            peak_off = int(np.argmax(region))
+            lag      = lo_lag + peak_off
+            # parabolic sub-sample refinement
+            if 0 < peak_off < len(region) - 1:
+                a, b, c = region[peak_off - 1], region[peak_off], region[peak_off + 1]
+                denom   = a - 2 * b + c
+                lag_f   = lag + (0.5 * (a - c) / denom if abs(denom) > 1e-12 else 0.0)
+            else:
+                lag_f = float(lag)
+            bpm_d = 60.0 * fs / lag_f
+
+    # ── Method F: Welch PSD ────────────────────────────────────────────────────
+    bpm_f  = np.nan
+    nperseg = min(len(ecg_seg), int(fs * 8))
+    if nperseg >= 64:
+        f, psd = welch(ecg_seg, fs=fs, nperseg=nperseg)
+        lo_hz  = lo_bpm / 60.0
+        hi_hz  = hi_bpm / 60.0
+        mask   = (f >= lo_hz) & (f <= hi_hz)
+        if mask.any():
+            bpm_f = float(f[mask][np.argmax(psd[mask])]) * 60.0
+
+    # ── Consensus ─────────────────────────────────────────────────────────────
+    d_ok = not np.isnan(bpm_d)
+    f_ok = not np.isnan(bpm_f)
+    if not d_ok and not f_ok:
+        return None
+    if not d_ok:
+        return bpm_f
+    if not f_ok:
+        return bpm_d
+    if abs(bpm_d - bpm_f) <= agree_tol_bpm:
+        return (bpm_d + bpm_f) / 2.0
+    return bpm_d   # autocorr more robust when they disagree
